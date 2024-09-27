@@ -1,0 +1,122 @@
+/* Navbar existente */
+.transparent-nav {
+    background: rgba(0, 0, 0, 0.6); /* Transparência do menu */
+    position: fixed; /* Navbar fixa */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+    padding: 15px 0;
+}
+
+.transparent-nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transparent-nav ul li {
+    margin: 0 15px;
+    position: relative;
+}
+
+.transparent-nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.transparent-nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.transparent-nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #ffc107;
+    transition: width 0.3s ease;
+}
+
+.transparent-nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Seção de Cuidadores */
+.caregivers {
+    padding: 100px 20px 20px; /* Espaçamento superior para evitar a navbar */
+    background-color: #f9f9f9;
+}
+
+.caregivers h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+/* Estilo dos blocos de cuidadores */
+.caregiver {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    position: relative; /* Necessário para o posicionamento absoluto do botão */
+}
+
+/* Estilo do avatar do cuidador */
+.avatar {
+    width: 80px;
+    height: 80px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+/* Estilo dos detalhes do cuidador */
+.details h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #007bff;
+}
+
+.details p {
+    margin: 5px 0;
+    font-family: 'Roboto', sans-serif;
+    color: #555;
+}
+
+/* Estilo do botão de agendamento */
+.schedule-button {
+    position: absolute; /* Posiciona o botão na parte direita */
+    right: 20px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.schedule-button:hover {
+    background-color: #0056b3;
+}
