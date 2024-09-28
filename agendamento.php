@@ -1,3 +1,8 @@
+<?php
+
+    include('login/protect.php');
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,10 +11,11 @@
     <title>Cuidadores Disponíveis - SafePet</title>
     <link rel="stylesheet" href="agendamento.css">
 </head>
-<body>
+<body> 
     <!-- Navbar -->
     <header>
         <nav class="transparent-nav">
+            <a href="login/logout.php">SAIR</a>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="index.html/#services">Serviços</a></li>
