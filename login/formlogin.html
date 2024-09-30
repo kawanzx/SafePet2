@@ -3,19 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login SafePet</title>
+    <title>SafePet</title>
+    <link rel="stylesheet" href="style-login.css">
 </head>
 <body>
-    <h1>Acesse sua conta</h1>
-    <p><a href="../index.html">VOLTAR</a></p>
-    <form action="login.php" method="post">
-        <label for="email">E-mail: </label>
-        <input type="email" name="email"> <br>
-        <label for="senha">Senha: </label>
-        <input type="password" name="senha"> <br>
-        <button type="submit">Entrar</button>
-        <p><a href="esqueci_senha.php">Esqueci a senha</a></p>
-        <p>Não tem conta? <a href="formcadastro.html">crie uma</a></p>
-    </form>
+    <div class="main">
+        <div class="esquerda">
+            <h1>Faça login <br>para acessar sua conta</h1>
+            <img src="assets/cachorro.svg" class="imagem-esquerda" alt="Cachorro">
+        </div>
+        <div class="direita">
+            <div class="card-login">   
+                <div class="container">
+                    <a href="../index.html"><img src="assets/seta-voltar.svg" class="seta-voltar"></a>
+                    <h1>Login</h1>
+                </div>
+                <form action="login.php" method="post">
+                    <div class="textfield"> 
+                        <label for="email">E-mail: </label>
+                        <input type="email" name="email" placeholder="E-mail"> 
+                    </div>
+                    <div class="textfield">
+                        <label for="senha">Senha: </label>
+                        <input type="password" name="senha" placeholder="Senha"> 
+                    </div>
+                    <button type="submit" class="btn-login">Entrar</button>
+                    <p class="esqueci-senha"><a href="esqueci-senha.php">Esqueceu sua senha</a></p>
+                    <p class="criar-conta">Não tem conta? <a href="formcadastro.html">crie uma</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
