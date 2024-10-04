@@ -42,7 +42,13 @@ if(isset($_POST['email'])){
 
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-    $mysqli->query("INSERT INTO cadastro (nome_completo, email, senha, telefone, tipo_usuario, endereco, data_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$tipo_usuario', '$endereco', '$data_nascimento', '$cpf')");
+    if($tipo_usuario === 'tutor'){
+        $mysqli->query("INSERT INTO tutores (nome_completo, email, senha, telefone, endereco, data_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$endereco', '$data_nascimento', '$cpf')");
+    } elseif($tipo_usuario === 'cuidador'){
+        $mysqli->query("INSERT INTO cuidadores (nome_completo, email, senha, telefone, endereco, data_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$endereco', '$data_nascimento', '$cpf')");
+    }
+
+    //$mysqli->query("INSERT INTO cadastro (nome_completo, email, senha, telefone, tipo_usuario, endereco, data_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$tipo_usuario', '$endereco', '$data_nascimento', '$cpf')");
     
     echo "<script>alert('Cadastro bem sucedido. Realize o login para acessar sua conta');window.location.href='formlogin.html';</script>";
     exit();

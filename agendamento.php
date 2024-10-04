@@ -15,12 +15,13 @@
     <!-- Navbar -->
     <header>
         <nav class="transparent-nav">
-            <a href="login/logout.php">SAIR</a>
+            
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html/#services">Serviços</a></li>
-                <li><a href="index.html/#about">Sobre</a></li>
-                <li><a href="index.html/#contact">Contato</a></li>
+                <li><a href="login/logout.php">Sair</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="index.php/#services">Serviços</a></li>
+                <li><a href="index.php/#about">Sobre</a></li>
+                <li><a href="index.php/#contact">Contato</a></li>
             </ul>
         </nav>
     </header>

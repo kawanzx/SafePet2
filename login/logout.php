@@ -6,4 +6,4 @@ if(!isset($_SESSION)){
 
 session_destroy();
 
-header("Location: formlogin.html");
+header("Location: ../index.php");

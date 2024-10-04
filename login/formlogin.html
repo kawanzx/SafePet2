@@ -16,10 +16,17 @@
         <div class="direita">
             <div class="card-login">   
                 <div class="container">
-                    <a href="../index.html"><img src="assets/seta-voltar.svg" class="seta-voltar"></a>
+                    <a href="../index.php"><img src="assets/seta-voltar.svg" class="seta-voltar"></a>
                     <h1>Login</h1>
                 </div>
                 <form action="login.php" method="post">
+                    <div class="textfield">
+                        <label for="tipo_usuario">Tipo de usuário: </label>
+                        <select name="tipo_usuario" required>
+                            <option value="tutor">Tutor</option>
+                            <option value="cuidador">Cuidador</option>
+                        </select> <br>
+                    </div>
                     <div class="textfield"> 
                         <label for="email">E-mail: </label>
                         <input type="email" name="email" placeholder="E-mail"> 
