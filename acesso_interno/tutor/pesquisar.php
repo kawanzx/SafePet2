@@ -1,33 +1,30 @@
 <?php
 
-    include('login/protect.php');
+include('../../login/protect.php');
+include 'navbar.php';
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuidadores Disponíveis - SafePet</title>
-    <link rel="stylesheet" href="agendamento.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body> 
-    <!-- Navbar -->
-    <header>
-        <nav class="transparent-nav">
-            
-            <ul>
-                <li><a href="login/logout.php">Sair</a></li>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="index.php/#services">Serviços</a></li>
-                <li><a href="index.php/#about">Sobre</a></li>
-                <li><a href="index.php/#contact">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
 
+<body>
     <!-- Seção de Cuidadores Disponíveis -->
     <section class="caregivers">
+
+        <div id="divBusca">
+            <img src="search3.png" alt="Buscar..." />
+            <input type="text" id="txtBusca" placeholder="Buscar..." />
+            <button id="btnBusca">Buscar</button>
+        </div>
+
         <h2>Cuidadores Disponíveis</h2>
 
         <div class="caregiver">
@@ -63,5 +60,7 @@
             <a href="#schedule" class="schedule-button">Agendar</a>
         </div>
     </section>
+    <script type="text/javascript" src="script.js"></script>
 </body>
+
 </html>

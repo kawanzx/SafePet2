@@ -1,3 +1,4 @@
+//Validação do login
 function validarNome(nome) {
     var regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
     return regex.test(nome);
@@ -24,3 +25,5 @@ function validarFormulario() {
 
     return true;
 }
+
+

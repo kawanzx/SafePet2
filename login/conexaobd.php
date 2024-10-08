@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$bd = "loginsp";
+$bd = "safepet";
 
 $mysqli = new mysqli($host, $user, $pass, $bd);
 

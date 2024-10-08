@@ -24,31 +24,45 @@ if(isset($_POST['email'])){
         die("A senha deve ter pelo menos 6 caracteres.");
     }
 
-    $stmt = $mysqli->prepare("SELECT id FROM cadastro WHERE email = ? OR cpf = ?");
-
-    $stmt->bind_param("ss", $email, $cpf);
-
-    $stmt->execute();
-        
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        echo "E-mail ou CPF já cadastrados. Por favor, realize o <a href='login.php'>login</a>.";
-        exit();
-    }
-    
-    $stmt->close();
-
-
-    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-
     if($tipo_usuario === 'tutor'){
-        $mysqli->query("INSERT INTO tutores (nome_completo, email, senha, telefone, endereco, data_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$endereco', '$data_nascimento', '$cpf')");
-    } elseif($tipo_usuario === 'cuidador'){
-        $mysqli->query("INSERT INTO cuidadores (nome_completo, email, senha, telefone, endereco, data_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$endereco', '$data_nascimento', '$cpf')");
-    }
+        $stmt = $mysqli->prepare("SELECT id FROM tutores WHERE email = ? OR cpf = ?");
 
-    //$mysqli->query("INSERT INTO cadastro (nome_completo, email, senha, telefone, tipo_usuario, endereco, data_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$tipo_usuario', '$endereco', '$data_nascimento', '$cpf')");
+        $stmt->bind_param("ss", $email, $cpf);
+    
+        $stmt->execute();
+            
+        $stmt->store_result();
+    
+        if ($stmt->num_rows > 0) {
+            echo "E-mail ou CPF já cadastrados. Por favor, realize o <a href='formlogin.html'>login</a>.";
+            exit();
+        }
+        
+        $stmt->close();
+    
+        $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+        $mysqli->query("INSERT INTO tutores (nome, email, senha, telefone, endereco, dt_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$endereco', '$data_nascimento', '$cpf')");
+    } elseif($tipo_usuario === 'cuidador'){
+        $stmt = $mysqli->prepare("SELECT id FROM cuidadores WHERE email = ? OR cpf = ?");
+
+        $stmt->bind_param("ss", $email, $cpf);
+    
+        $stmt->execute();
+            
+        $stmt->store_result();
+    
+        if ($stmt->num_rows > 0) {
+            echo "E-mail ou CPF já cadastrados. Por favor, realize o <a href='formlogin.html'>login</a>.";
+            exit();
+        }
+        
+        $stmt->close();
+    
+        $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+        $mysqli->query("INSERT INTO cuidadores (nome, email, senha, telefone, endereco, dt_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$endereco', '$data_nascimento', '$cpf')");
+    }
     
     echo "<script>alert('Cadastro bem sucedido. Realize o login para acessar sua conta');window.location.href='formlogin.html';</script>";
     exit();
