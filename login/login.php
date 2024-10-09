@@ -28,18 +28,16 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['tipo_usuar
                 session_start();
             }
 
-            // $_SESSION['id'] = $usuario['id'];
-            // $_SESSION['nome'] = $usuario['nome'];
-            // $_SESSION['tipo_usuario'] ;
+             $_SESSION['id'] = $usuario['id'];
+             $_SESSION['nome'] = $usuario['nome'];
+
 
             if ($tipo_usuario === 'tutor') {  
-                $_SESSION['id'] = $usuario['id'];
-                $_SESSION['nome'] = $usuario['nome'];
+
                 $_SESSION['tipo_usuario'] = 'tutor' ;
                 header("Location: ../acesso_interno/tutor/pesquisar.php");
             } else if ($tipo_usuario === 'cuidador') {
-                $_SESSION['id'] = $usuario['id'];
-                $_SESSION['nome'] = $usuario['nome'];
+
                 $_SESSION['tipo_usuario'] = 'cuidador';
                 header("Location: ../acesso_interno/cuidador/pesquisar.php");
             }

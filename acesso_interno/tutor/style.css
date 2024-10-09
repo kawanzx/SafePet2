@@ -1,11 +1,23 @@
-*{
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 /* Navbar existente */
 .transparent-nav {
-    background: rgba(0, 0, 0, 0.6); /* Transparência do menu */
-    position: fixed; /* Navbar fixa */
+    background: rgba(0, 0, 0, 0.6);
+    /* Transparência do menu */
+    position: fixed;
+    /* Navbar fixa */
     top: 0;
     left: 0;
     width: 100%;
@@ -61,17 +73,18 @@
 
 /* Validação se estiver na página correta  */
 .transparent-nav ul li a.active {
-    background: rgba(255, 255, 255, 0.2); 
-    color: #fff; 
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
 }
 
 .transparent-nav ul li a.active::after {
-    width: 100%; 
+    width: 100%;
 }
 
-/* Seção de Cuidadores */
+/* Seção pesquisar */
 .caregivers {
-    padding: 100px 20px 20px; /* Espaçamento superior para evitar a navbar */
+    padding: 100px 20px 20px;
+    /* Espaçamento superior para evitar a navbar */
     background-color: #f9f9f9;
 }
 
@@ -91,7 +104,8 @@
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    position: relative; /* Necessário para o posicionamento absoluto do botão */
+    position: relative;
+    /* Necessário para o posicionamento absoluto do botão */
 }
 
 /* Estilo do avatar do cuidador */
@@ -118,7 +132,8 @@
 
 /* Estilo do botão de agendamento */
 .schedule-button {
-    position: absolute; /* Posiciona o botão na parte direita */
+    position: absolute;
+    /* Posiciona o botão na parte direita */
     right: 20px;
     background-color: #007bff;
     color: #fff;
@@ -134,112 +149,235 @@
 .schedule-button:hover {
     background-color: #0056b3;
 }
+
 /*
 
 /* Perfil */
 
-.container{
-    width: 100vw;
-    height: 100vh;
-    background: white;
-    display: flex;
-}
-
-.sidebar{
-    margin-top: 48px;
-    position: fixed;
+/* Menu Lateral (Sidebar) */
+.sidebar {
+    width: 250px;
+    background-color: #007bff;
+    color: white;
     padding: 25px 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    width: 240px;
     height: 100%;
-    border: 1px solid black;
-    background: #007bff;
-    overflow: auto;
-    list-style: none;
+    position: fixed;
+    top: 48px;
+    /* Alinhar abaixo da navbar */
+    left: 0;
 }
 
-.sidebar-header{
+.sidebar-header {
     display: flex;
     align-items: center;
     margin: 0 20px 20px
 }
 
-.sidebar-header img{
+.sidebar-header img {
     width: 42px;
     border-radius: 50%;
 }
 
-.sidebar-header h2{
+.sidebar-header h2 {
     width: 42px;
     border-radius: 50%;
     margin-left: 23px;
     color: white;
 }
 
-.sidebar ul li a {
-    display: flex;
-    align-items: center;
-    gap: 0 20px;
-    text-decoration: none;
-    font-weight: 800;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    position: relative;
-    color: white;
+.sidebar ul {
+    list-style: none;
+    padding: 0;
 }
 
 .sidebar ul li {
-    list-style: none;
-    margin-right: 40px;
-    position: relative;
+    margin-bottom: 15px;
 }
 
-.sidebar a {    
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar a {
     padding: 16px;
     text-decoration: none;
-  }
-  
+}
+
 .sidebar a.active {
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
-  }
-  
+}
+
 .sidebar a:hover:not(.active) {
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
-  }
+}
 
-.conteudo{
+/* Layout Principal */
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.conteudo {
     margin: 100px 0 0 290px;
     padding: 1px 16px;
-    
-  }
+
+}
 
 .content-section {
     display: none;
-  }
-  
+}
+
 .content-section.active {
     display: block;
-  }
+}
 
-  /* On screens that are less than 700px wide, make the sidebar into a topbar */
+ /* Meu Perfil */
+
+.perfil-completo {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.perfil-completo .perfil-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.tutor-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #007bff;
+}
+
+.perfil-header h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.perfil-completo p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.perfil-completo .info-label {
+    font-weight: bold;
+}
+
+.perfil-completo .avaliacao {
+    margin-top: 10px;
+    font-size: 1.3rem;
+    color: #ffc107;
+}
+
+/* Estilos para as seções adicionais */
+.perfil-completo .section {
+    margin-top: 20px;
+}
+
+.perfil-completo .section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+
+/* Meus Pets */
+
+ .content-section .container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} 
+
+.content-section h2 {
+    text-align: center;
+    color: #333;
+}
+
+.conteudo{
+    width: 100vw;
+    display: block;
+}
+
+.section{
+    
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 15px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
 @media screen and (max-width: 700px) {
     .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
+        width: 100%;
+        height: auto;
+        position: relative;
     }
-    .sidebar a {float: left;}
-    div.conteudo {margin-left: 0;}
-  }
-  
-  /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-  @media screen and (max-width: 400px) {
+
     .sidebar a {
-      text-align: center;
-      float: none;
+        float: left;
     }
-  }
+
+    div.conteudo {
+        margin-left: 0;
+    }
+}
+
+
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+}

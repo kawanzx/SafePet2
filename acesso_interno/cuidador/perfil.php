@@ -13,14 +13,11 @@ include 'navbar.php';
     <title>Perfil Completo do Cuidador</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <!-- Fonte do Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Container Principal -->
     <div class="container">
-        <!-- Sidebar (Menu Lateral) -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <img src="../../assets/favicon.ico" alt="">
@@ -38,36 +35,47 @@ include 'navbar.php';
 
         </aside>
         <main class="conteudo">
-        <div class="content-1">
-            <h1>Perfil do Cuidador</h1>
-            <!-- Seção Completa do Perfil -->
-            <div class="perfil-completo">
-                <div class="perfil-header">
-                    <img src="https://cdn-icons-png.flaticon.com/512/9706/9706583.png" alt="Foto do Cuidador" class="cuidador-avatar">
-                    <div>
-                        <h2>Nome do Cuidador</h2>
-                        <p><span class="info-label">Avaliação:</span> ⭐⭐⭐⭐ (4.8)</p>
+            <div id="conteudo-1" class="content-section active">
+                <h1>Perfil do Cuidador</h1>
+                <!-- Seção Completa do Perfil -->
+                <div class="perfil-completo">
+                    <div class="perfil-header">
+                        <img src="https://cdn-icons-png.flaticon.com/512/9706/9706583.png" alt="Foto do Cuidador" class="cuidador-avatar">
+                        <div>
+                            <h2>Nome do Cuidador</h2>
+                            <p><span class="info-label">Avaliação:</span> ⭐⭐⭐⭐ (4.8)</p>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <h3>Bio</h3>
+                        <p>Apaixonado por animais, cuidando de pets há 5 anos. Sempre tive uma ligação forte com animais e dedico meu tempo a proporcionar o melhor cuidado possível aos pets.</p>
+                    </div>
+                    <div class="section">
+                        <h3>Experiência</h3>
+                        <p>Especialista em raças de pequeno porte e animais idosos. Tenho experiência com passeios, alimentação e cuidados gerais, além de lidar com pets que possuem necessidades especiais.</p>
+                    </div>
+                    <div class="section">
+                        <h3>Disponibilidade</h3>
+                        <p>Segunda a Sexta: 08:00 - 18:00</p>
+                        <p>Sábados: 10:00 - 14:00</p>
                     </div>
                 </div>
-                <div class="section">
-                    <h3>Bio</h3>
-                    <p>Apaixonado por animais, cuidando de pets há 5 anos. Sempre tive uma ligação forte com animais e dedico meu tempo a proporcionar o melhor cuidado possível aos pets.</p>
-                </div>
-                <div class="section">
-                    <h3>Experiência</h3>
-                    <p>Especialista em raças de pequeno porte e animais idosos. Tenho experiência com passeios, alimentação e cuidados gerais, além de lidar com pets que possuem necessidades especiais.</p>
-                </div>
-                <div class="section">
-                    <h3>Disponibilidade</h3>
-                    <p>Segunda a Sexta: 08:00 - 18:00</p>
-                    <p>Sábados: 10:00 - 14:00</p>
-                </div>
             </div>
-        </div>
+            <div id="conteudo-2" class="content-section">
+                <p>conteudo 2</p>
+            </div>
+            <div id="conteudo-3" class="content-section">
+                <p>conteudo 3</p>
+            </div>
+            <div id="conteudo-4" class="content-section">
+                <p>conteudo 4</p>
+            </div>
+            <div id="conteudo-5" class="content-section">
+                <p>conteudo 5</p>
+            </div>
         </main>
-        <!-- Conteúdo Principal -->
-
     </div>
+    <script type="text/javascript" src="script.js"></script>
 </body>
 
 </html>

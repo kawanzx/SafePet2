@@ -19,9 +19,9 @@ session_start();
 <body>
     <header>
         <?php
-        if (isset($_SESSION['tipo_usuario']) === 'tutor') {
+        if ($_SESSION['tipo_usuario'] == 'tutor') {
             include 'acesso_interno/tutor/navbar.php';
-        } else if(isset($_SESSION['tipo_usuario']) === 'cuidador'){
+        } else if($_SESSION['tipo_usuario'] == 'cuidador'){
             include 'acesso_interno/cuidador/navbar.php';
         }else{ ?>
             <nav class="transparent-nav">
