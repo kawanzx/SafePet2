@@ -19,9 +19,11 @@ session_start();
 <body>
     <header>
         <?php
-        if (isset($_SESSION['nome'])) {
+        if (isset($_SESSION['tipo_usuario']) === 'tutor') {
             include 'acesso_interno/tutor/navbar.php';
-        } else { ?>
+        } else if(isset($_SESSION['tipo_usuario']) === 'cuidador'){
+            include 'acesso_interno/cuidador/navbar.php';
+        }else{ ?>
             <nav class="transparent-nav">
                 <ul>
                     <li><a href="#hero">Home</a></li>
@@ -38,7 +40,7 @@ session_start();
     <section id="hero" class="hero">
         <h1>Seu Parceiro para Passeios com Pets</h1>
         <p>Conecte-se com cuidadores certificados para momentos de diversão e segurança.</p>
-        <?php if (isset($_SESSION['nome'])): ?>
+        <?php if (isset($_SESSION['tipo_usuario'])): ?>
             <a href="acesso_interno/tutor/pesquisar.php" class="cta-button">Começar Agora</a>
         <?php else: ?>
             <a href="login/formlogin.html" class="cta-button">Começar Agora</a>
