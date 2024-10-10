@@ -68,10 +68,50 @@ include 'navbar.php';
                 <p>conteudo 3</p>
             </div>
             <div id="conteudo-4" class="content-section">
-                <p>conteudo 4</p>
+             <div class="suporte">
+                <h2>Suporte para Cuidadores</h2>
+
+                <h4 class="faq-question">Como cuidar de pets?</h4>
+                <p class="faq-answer">Dicas sobre cuidados e bem-estar dos pets.</p>
+
+                <h4 class="faq-question">Quais são as políticas do SafePet?</h4>
+                <p class="faq-answer">Informações sobre as diretrizes para cuidadores.</p>
+
+                <h4 class="faq-question">Como gerenciar meus agendamentos?</h4>
+                <p class="faq-answer">Orientações para agendamentos e confirmações.</p>
+
+                <h4 class="faq-question">Como funciona o pagamento?</h4>
+                <p class="faq-answer">Detalhes sobre pagamentos e comissões.</p>
+
+                <h4 class="faq-question">Como entrar em contato com o suporte?</h4>
+                <p class="faq-answer">Informações para entrar em contato com a equipe de suporte.</p>
+            </div>
+
+            </div>
+                
             </div>
             <div id="conteudo-5" class="content-section">
-                <p>conteudo 5</p>
+                <div class="politica-privacidade">
+                    <h2>Política de Privacidade</h2>
+                    <p>Na SafePet, respeitamos sua privacidade e estamos comprometidos em proteger suas informações pessoais. Esta política explica como coletamos, usamos e protegemos seus dados.</p>
+                    
+                    <h4>1. Coleta de Informações</h4>
+                    <p>Coletamos informações pessoais que você nos fornece ao se cadastrar, como nome, e-mail e telefone.</p>
+                    
+                    <h4>2. Uso das Informações</h4>
+                    <p>Utilizamos suas informações para melhorar nossos serviços, enviar notificações e atender às suas solicitações.</p>
+                    
+                    <h4>3. Proteção de Dados</h4>
+                    <p>Adotamos medidas de segurança para proteger suas informações contra acesso não autorizado.</p>
+                    
+                    <h4>4. Compartilhamento de Informações</h4>
+                    <p>Não compartilhamos suas informações pessoais com terceiros sem seu consentimento.</p>
+                    
+                    <h4>5. Alterações na Política</h4>
+                    <p>Podemos atualizar esta política periodicamente. Avisaremos sobre mudanças significativas.</p>
+                    
+                    <p>Se você tiver dúvidas sobre nossa política de privacidade, entre em contato conosco.</p>
+                </div>
             </div>
         </main>
     </div>

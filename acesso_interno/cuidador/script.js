@@ -37,4 +37,11 @@ function showContent(sectionId, element) {
     element.classList.add('active');
 }
 
+// exibir as respostas do suporte
+document.querySelectorAll('.faq-question').forEach(item => {
+    item.addEventListener('click', () => {
+        const answer = item.nextElementSibling;
+        answer.classList.toggle('active'); // Adiciona ou remove a classe active
+    });
+});
 

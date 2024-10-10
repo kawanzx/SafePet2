@@ -83,6 +83,8 @@ body {
     display: flex;
     width: 100vw;
     height: 100vh;
+    max-width: 100vw; /* Limita a largura máxima à largura da tela */
+    overflow-x: hidden;
 }
 
 /* Menu Lateral (Sidebar) */
@@ -300,5 +302,70 @@ body {
 
     .content h1 {
         font-size: 1.8rem;
+    }
+}
+
+/* Suporte */
+.suporte {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.suporte h2 {
+    margin-bottom: 20px; /* Espaço abaixo do título */
+}
+
+.faq-question {
+    cursor: pointer; /* Indica que o item é clicável */
+    margin-bottom: 15px; /* Espaço entre as perguntas */
+    color: #007bff; /* Cor do texto para perguntas */
+}
+
+.faq-answer {
+    max-height: 0; /* Inicia escondido */
+    overflow: hidden; /* Esconde o conteúdo que excede a altura */
+    transition: max-height 0.3s ease; /* Animação suave */
+    margin-bottom: 20px; /* Espaço abaixo das respostas */
+    padding-left: 15px; /* Indentação para as respostas */
+    color: #555; /* Cor do texto das respostas */
+}
+
+.faq-answer.active {
+    max-height: 200px; /* Altura máxima ao exibir (ajuste conforme necessário) */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .suporte {
+        padding: 20px; /* Reduz o padding em telas menores */
+    }
+}
+
+
+.politica-privacidade {
+    margin-left: 290px; /* Afasta da sidebar */
+    width: calc(100% - 290px); /* Ajusta para ocupar o restante da tela */
+
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.politica-privacidade h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.politica-privacidade p {
+    margin-bottom: 15px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .politica-privacidade {
+        padding: 20px; /* Reduz o padding em telas menores */
     }
 }
