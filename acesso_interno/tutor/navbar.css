@@ -1,0 +1,68 @@
+/* Navbar existente */
+.transparent-nav {
+    background: rgba(0, 0, 0, 0.6);
+    /* Transparência do menu */
+    position: fixed;
+    /* Navbar fixa */
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+    padding: 15px 0;
+}
+
+.transparent-nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transparent-nav ul li {
+    margin: 0 15px;
+    position: relative;
+}
+
+.transparent-nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.transparent-nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.transparent-nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #ffc107;
+    transition: width 0.3s ease;
+}
+
+.transparent-nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Validação se estiver na página correta  */
+.transparent-nav ul li a.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.transparent-nav ul li a.active::after {
+    width: 100%;
+}

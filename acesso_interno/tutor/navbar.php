@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/acesso_interno/tutor/style.css">
+<link rel="stylesheet" href="\acesso_interno\tutor\navbar.css">
 <nav class="transparent-nav">
     <ul>
         <li><a href="/index.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">Home</a></li>

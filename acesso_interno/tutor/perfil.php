@@ -21,7 +21,7 @@ $result = $stmt->get_result();
     <title>Perfil</title>
     <link rel="shortcut icon" href="../../assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="\acesso_interno\tutor\perfil.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
@@ -42,6 +42,9 @@ $result = $stmt->get_result();
                 </ul>
             </nav>
         </aside>
+
+        <!--  Tela de Perfil  -->
+
         <main class="conteudo">
             <div id="conteudo-1" class="content-section active">
                 <h1>Perfil do Tutor</h1>
@@ -59,11 +62,12 @@ $result = $stmt->get_result();
                     </div>
                     <div class="section">
                         <h3>Pets</h3>
+                    <div class='pets-container'>
                         <?php
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo "<div class='pet'>";
-                                echo "<h2>" . htmlspecialchars($row['nome']) . "</h2>";
+                                echo "<h2 class='nomePet-perfil'>" . htmlspecialchars($row['nome']) . "</h2>";
                                 echo "<p>Espécie: " . htmlspecialchars($row['especie']) . "</p>";
                                 echo "<p>Raça: " . htmlspecialchars($row['raca']) . "</p>";
                                 echo "<p>Idade: " . htmlspecialchars($row['idade']) . " anos</p>";
@@ -81,13 +85,11 @@ $result = $stmt->get_result();
                         }
                         ?>
                     </div>
-                    <div class="section">
-                        <h3>Disponibilidade</h3>
-                        <p>Segunda a Sexta: 08:00 - 18:00</p>
-                        <p>Sábados: 10:00 - 14:00</p>
                     </div>
                 </div>
             </div>
+                
+            <!--  Tela de Pets  -->
 
             <div id="conteudo-2" class="content-section">
                 <div class="container">
