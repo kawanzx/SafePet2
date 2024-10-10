@@ -5,27 +5,27 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    margin: 0;
 }
 
 /* Menu Lateral (Sidebar) */
 .sidebar {
-    width: 250px;
+    width: 12vw;
     background-color: #007bff;
     color: white;
     padding: 25px 20px;
     display: flex;
     flex-direction: column;
     height: 100%;
-    position: fixed;
-    top: 48px;
-    /* Alinhar abaixo da navbar */
+    margin-top: 48px;
     left: 0;
 }
 
 .sidebar-header {
     display: flex;
     align-items: center;
-    margin: 0 20px 20px
+    margin: 0 20px 20px;
+    overflow: hidden;
 }
 
 .sidebar-header img {
@@ -41,8 +41,10 @@ body {
 }
 
 .sidebar ul {
+    width: 100%;
     list-style: none;
     padding: 0;
+    overflow: hidden;
 }
 
 .sidebar ul li {
@@ -86,7 +88,8 @@ body {
 }
 
 .conteudo {
-    margin: 100px 0 0 290px;
+    margin: 100px 30px 0;
+    width: 90vw;
     padding: 1px 16px;
 
 }
@@ -111,6 +114,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    
 }
 
 .meu-perfil .perfil-header {
@@ -197,6 +201,14 @@ body {
 
 /* Meus Pets */
 
+.fotoPetImg{
+    cursor: pointer;
+}
+
+.fotoPetInput {
+    display: none;
+}
+
  .cadastrar-pet {
     padding: 40px;
     border-radius: 10px;
@@ -248,13 +260,21 @@ body {
 
 @media screen and (max-width: 700px) {
     .sidebar {
-        width: 100%;
+        width: 15%;
         height: auto;
         position: relative;
+        display: flex;
+
+    }
+
+    .sidebar-header{
+        width: 100%;
     }
 
     .sidebar a {
-        float: left;
+        float: none;
+        width: 15%;
+        text-align: center;
     }
 
     div.conteudo {

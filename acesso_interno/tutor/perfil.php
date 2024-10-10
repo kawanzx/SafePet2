@@ -100,7 +100,7 @@ $result = $stmt->get_result();
                     <div class="section">
                         <h2>Meus Pets</h2>
                         <?php
-                        $sql = "SELECT nome, especie, raca, idade, sexo, peso, castrado, descricao, foto FROM pets WHERE tutor_id = ?";
+                        $sql = "SELECT id, nome, especie, raca, idade, sexo, peso, castrado, descricao, foto FROM pets WHERE tutor_id = ?";
                         $stmt = $mysqli->prepare($sql);
                         $stmt->bind_param("i", $tutor_id);
                         $stmt->execute();
@@ -110,25 +110,63 @@ $result = $stmt->get_result();
                         <div class="pets-container">
                             <?php
                             if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<div class='pet'>";
-                                    echo "<div class='pet-header'>";
-                                    if (!empty($row['foto'])) {
-                                        echo "<img src='" . htmlspecialchars($row['foto']) . "' alt='Foto do pet'>";
-                                    } else {
-                                        echo "<img src='" . "' alt=''>";
-                                    }
-                                    echo "<h2 class='nomePet-perfil'>" . htmlspecialchars($row['nome']) . "</h2>";
-                                    echo "</div>";
-                                    echo "<p>Espécie: " . htmlspecialchars($row['especie']) . "</p>";
-                                    echo "<p>Raça: " . htmlspecialchars($row['raca']) . "</p>";
-                                    echo "<p>Idade: " . htmlspecialchars($row['idade']) . " anos</p>";
-                                    echo "<p>Sexo: " . htmlspecialchars($row['sexo']) . "</p>";
-                                    echo "<p>Peso: " . htmlspecialchars($row['peso']) . " kg</p>";
-                                    echo "<p>Castrado: " . ($row['castrado'] == 1 ? "Sim" : "Não") . "</p>";
-                                    echo "<p>Descrição: " . htmlspecialchars($row['descricao']) . "</p>";
-                                    echo "</div>";
-                                }
+                                while ($row = $result->fetch_assoc()) { ?>
+                                    <div class='pet' data-pet-id="<?php echo $row['id']; ?>">
+                                        <div class='pet-header'>
+                                            <span class="fotoPet">
+                                                <?php if (!empty($row['foto'])) { ?>
+                                                    <img src="<?php echo htmlspecialchars($row['foto']); ?>" alt='Foto do pet' class="fotoPetImg">
+                                                <?php } else { ?>
+                                                    <img src='" . "' alt=''>
+                                                <?php } ?>
+                                            </span>
+                                            <input type="file" name="foto" class="fotoPetInput" style="display:none;">
+                                            <input type="hidden" class="fotoPetAtual" name="foto_atual" value="<?php echo htmlspecialchars($row['foto']); ?>">
+                                            <input type="hidden" class="fotoPetAtual" value="<?php echo htmlspecialchars($row['foto']); ?>">
+                                            <h2 class="nomePet-perfil">
+                                                <span class="nomePetText"><?php echo htmlspecialchars($row['nome']); ?></span>
+                                                <input type="text" class="nomePetInput" value="<?php echo htmlspecialchars($row['nome']); ?>" style="display: none;">
+                                            </h2>
+                                            <button class="editar-btn">Editar</button>
+                                            <button class="salvar-btn" style="display: none;">Salvar</button>
+                                        </div>
+
+                                        <p>Espécie:
+                                            <span class="especieText"><?php echo htmlspecialchars($row['especie']); ?></span>
+                                            <select class="especieInput" style="display: none;">
+                                                <option value="cachorro" <?php if ($row['especie'] == 'cachorro') echo 'selected'; ?>>Cachorro</option>
+                                                <option value="gato" <?php if ($row['especie'] == 'gato') echo 'selected'; ?>>Gato</option>
+                                            </select>
+                                        </p>
+                                        <p>Raça:
+                                            <span class="racaText"><?php echo htmlspecialchars($row['raca']); ?></span>
+                                            <input type="text" class="racaInput" value="<?php echo htmlspecialchars($row['raca']); ?>" style="display: none;">
+                                        </p>
+                                        <p>Idade:
+                                            <span class="idadeText"><?php echo htmlspecialchars($row['idade']); ?></span>
+                                            <input type="text" class="idadeInput" value="<?php echo htmlspecialchars($row['idade']); ?>" style="display: none;">
+                                        </p>
+                                        <p>Sexo:
+                                            <span class="sexoText"><?php echo htmlspecialchars($row['sexo']); ?></span>
+                                            <input type="text" class="sexoInput" value="<?php echo htmlspecialchars($row['sexo']); ?>" style="display: none;">
+                                        </p>
+                                        <p>Peso:
+                                            <span class="pesoText"><?php echo htmlspecialchars($row['peso']); ?></span>
+                                            <input type="text" class="pesoInput" value="<?php echo htmlspecialchars($row['peso']); ?>" style="display: none;">
+                                        </p>
+                                        <p>Castrado:
+                                            <span class="castradoText"><?php echo htmlspecialchars($row['castrado']); ?></span>
+                                            <select class="castradoInput" style="display: none;">
+                                                <option value="1" <?php if ($row['castrado'] == 1) echo 'selected'; ?>>Sim</option>
+                                                <option value="0" <?php if ($row['castrado'] == 0) echo 'selected'; ?>>Não</option>
+                                            </select>
+                                        </p>
+                                        <p>Descrição:
+                                            <span class="descricaoText"><?php echo htmlspecialchars($row['descricao']); ?></span>
+                                            <input type="text" class="descricaoInput" value="<?php echo htmlspecialchars($row['descricao']); ?>" style="display: none;">
+                                        </p>
+                                    </div>
+                            <?php }
                             } else {
                                 echo "<p>Você ainda não cadastrou nenhum pet.</p>";
                             }
@@ -140,6 +178,7 @@ $result = $stmt->get_result();
                         <h2>Cadastrar Pet</h2>
                         <div class="cadastrar-pet">
                             <form action="cadastro-pet.php" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" id="petId" name="petId">
                                 <div class="coluna">
                                     <label for="nome">Nome do Pet:</label>
                                     <input type="text" id="nome" name="nome" required>
