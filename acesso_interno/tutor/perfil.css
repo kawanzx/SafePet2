@@ -83,8 +83,6 @@ body {
 /* Layout Principal */
 .container {
     display: flex;
-    width: 100vw;
-    height: 100vh;
 }
 
 .conteudo {
@@ -101,19 +99,21 @@ body {
     display: block;
 }
 
+
+
  /* Meu Perfil */
 
-.perfil-completo {
+.meu-perfil {
     background-color: white;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
-.perfil-completo .perfil-header {
+.meu-perfil .perfil-header {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -124,6 +124,7 @@ body {
     height: 150px;
     border-radius: 50%;
     border: 3px solid #007bff;
+    object-fit: cover;
 }
 
 .perfil-header h2 {
@@ -131,80 +132,118 @@ body {
     color: #333;
 }
 
-.perfil-completo p {
+.meu-perfil p {
     font-size: 1.1rem;
     color: #555;
     margin-bottom: 10px;
 }
 
-.perfil-completo .info-label {
+.meu-perfil .info-label {
     font-weight: bold;
 }
 
-.perfil-completo .avaliacao {
+.meu-perfil .avaliacao {
     margin-top: 10px;
     font-size: 1.3rem;
     color: #ffc107;
 }
 
 /* Estilos para as seções adicionais */
-.perfil-completo .section {
+.meu-perfil .section {
     margin-top: 20px;
 }
 
-.perfil-completo .section h3 {
+.meu-perfil .section h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
     color: #007bff;
 }
 
+.pets-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que as divs quebrem para a próxima linha */
+    gap: 20px; 
+    margin-bottom: 50px;
+}
+
+.pet {
+    background-color: white; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(50% - 20px); 
+    box-sizing: border-box; 
+}
+
+.pet-header{
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.nomePet-perfil { 
+    color: #333;
+    margin-left: 15px;
+}
+
+.pets-container img{
+    width: 110px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid #007bff;
+}
+
 
 /* Meus Pets */
 
- .content-section .container {
-    max-width: 600px;
-    margin: 50px auto;
-    background-color: white;
-    padding: 20px;
+ .cadastrar-pet {
+    padding: 40px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 } 
 
-
-.conteudo{
-    width: 100vw;
-    display: block;
+.cadastrar-pet form {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    gap: 20px;
 }
 
-.section{
-    
+.coluna {
+    display: flex;
+    flex-direction: column;
 }
 
-label {
-    display: block;
-    margin: 10px 0 5px;
-}
-
-input,
-select,
-textarea {
+.cadastrar-pet label{
     width: 100%;
-    padding: 10px;
-    margin: 5px 0 15px;
+}
+
+.cadastrar-pet input,
+.cadastrar-pet select,
+.cadastrar-pet textarea {
+    width: 100%;
+    margin: 10px 0 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-input[type="submit"] {
-    background-color: #4CAF50;
+.cadastrar-pet textarea,
+.cadastrar-pet input[type="file"],
+.cadastrar-pet input[type="submit"] {
+    grid-column: span 3;
+}
+
+.cadastrar-pet input[type="submit"] {
+    background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
     padding: 15px;
+    margin-top: 20px;
 }
 
-input[type="submit"]:hover {
-    background-color: #45a049;
+.cadastrar-pet input[type="submit"]:hover {
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 @media screen and (max-width: 700px) {
@@ -231,30 +270,10 @@ input[type="submit"]:hover {
     }
 }
 
-.pets-container {
-    display: flex;
-    flex-wrap: wrap; /* Permite que as divs quebrem para a próxima linha */
-    gap: 20px; /* Espaçamento entre as colunas */
-}
-
-/* Ajustando o tamanho dos cards */
-.pet {
-    background-color: white; /* Fundo para as divs */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    flex: 1 1 calc(50% - 20px); /* 50% de largura menos o espaço do gap */
-    box-sizing: border-box; /* Para garantir que o padding não afete a largura total */
-}
 
 /* Responsividade */
 @media (max-width: 768px) {
     .pet {
         flex: 1 1 100%; /* 100% de largura em telas menores */
     }
-}
-
-.nomePet-perfil {
-    text-align: left;
-    color: #333;
 }

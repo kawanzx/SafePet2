@@ -42,11 +42,16 @@ session_start();
         <section id="hero" class="hero">
             <h1>Seu Parceiro para Passeios com Pets</h1>
             <p>Conecte-se com cuidadores certificados para momentos de diversão e segurança.</p>
-            <?php if (isset($_SESSION['tipo_usuario'])): ?>
-                <a href="acesso_interno/tutor/pesquisar.php" class="cta-button">Começar Agora</a>
-            <?php else: ?>
+            <?php if (isset($_SESSION['nome'])){ 
+                    if($_SESSION['tipo_usuario'] == 'tutor'){?>
+                        <a href="acesso_interno/tutor/pesquisar.php" class="cta-button">Começar Agora</a>
+            <?php }elseif($_SESSION['tipo_usuario'] == 'cuidador'){ ?>
+                        <a href="acesso_interno/cuidador/pesquisar.php" class="cta-button">Começar Agora</a>
+            <?php } 
+                
+             } else { ?>
                 <a href="login/formlogin.html" class="cta-button">Começar Agora</a>
-            <?php endif; ?>
+           <?php } ?>
         </section>
 
         <!-- Cards com Serviços - Sessão grande -->
