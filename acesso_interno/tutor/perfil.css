@@ -209,6 +209,24 @@ body {
     display: none;
 }
 
+.pet-header .editar-btn , .salvar-btn , .cancelar-btn{
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.pet-header .excluir-btn{
+    background:#ff6b6b;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
  .cadastrar-pet {
     padding: 40px;
     border-radius: 10px;

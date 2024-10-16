@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $sql = "UPDATE pets SET nome = ?, raca = ?, especie = ?, idade = ?, sexo = ?, peso = ?, castrado = ?, descricao = ?, foto = ? WHERE id = ?";
         if ($stmt = $mysqli->prepare($sql)) {
-            $stmt->bind_param("sssisdissi", $nome, $raca, $especie, $idade, $sexo, $peso, $castrado, $descricao, $foto, $petId);
+            $stmt->bind_param("sssisdsssi", $nome, $raca, $especie, $idade, $sexo, $peso, $castrado, $descricao, $foto, $petId);
 
             if ($stmt->execute()) {
                 if ($stmt->affected_rows > 0) {

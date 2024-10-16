@@ -14,7 +14,7 @@ if (!$mysqli) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $pet_id = $_POST['petId'];
-    $nome = $_POST['nome'];
+    $nome = $_POST['nome-pet'];
     $especie = $_POST['especie'];
     $raca = $_POST['raca'];
     $idade = $_POST['idade'];
@@ -60,7 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (move_uploaded_file($_FILES['foto']['tmp_name'], $target_file)) {
                 $foto = $target_file; // Caminho da foto para ser salvo no banco de dados
             } else {
-                echo "Erro ao enviar a imagem. Por favor, tente novamente.";
+                echo json_encode(['status' => 'error', 'message' => "Erro ao enviar a imagem. Por favor, tente novamente."]);
+                exit;
             }
         }
     }
@@ -72,9 +73,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssisissss", $nome, $especie, $raca, $idade, $sexo, $peso, $castrado, $descricao, $tutor_id, $foto);
 
     if ($stmt->execute()) {
-        echo "Pet cadastrado com sucesso!";
+        echo json_encode(['status' => 'success', 'message' => "Pet cadastrado com sucesso!"]);
     } else {
-        echo "Erro ao cadastrar o pet: " . $stmt->error;
+        echo json_encode(['status' => 'error', 'message' => "Erro ao cadastrar o pet: " . $stmt->error]);
     }
 
     $stmt->close();

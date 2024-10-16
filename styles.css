@@ -73,7 +73,7 @@ body {
     padding-left: 5%; /* Dá espaço da borda esquerda */
     padding-right: 35%; /* Deixa o lado direito livre para o personagem */
     box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
-    margin-top: 60px; /* Ajusta para que a hero não fique coberta pela navbar */
+    margin-top: 56px; /* Ajusta para que a hero não fique coberta pela navbar */
 }
 
 
