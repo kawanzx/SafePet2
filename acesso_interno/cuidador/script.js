@@ -1,5 +1,4 @@
-
-/* NavBar confirmação de logout*/
+/* NavBar confirmação de logout */
 document.getElementById('logoutLink').addEventListener('click', function(event) {
     event.preventDefault();  
 
@@ -9,7 +8,6 @@ document.getElementById('logoutLink').addEventListener('click', function(event) 
     }
 });
 
-
 /* Sidebar */
 // Função para exibir o conteúdo com base no ID da seção
 function showContent(sectionId, element) {
@@ -18,10 +16,6 @@ function showContent(sectionId, element) {
     sections.forEach(function (section) {
         section.classList.remove('active');
     });
-
-    // Exibe a seção selecionada
-    var activeSection = document.getElementById(sectionId);
-    activeSection.classList.add('active');
 
     // Exibe a seção selecionada
     var activeSection = document.getElementById(sectionId);
@@ -44,4 +38,3 @@ document.querySelectorAll('.faq-question').forEach(item => {
         answer.classList.toggle('active'); // Adiciona ou remove a classe active
     });
 });
-

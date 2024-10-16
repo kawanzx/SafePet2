@@ -345,7 +345,7 @@ body {
 
 
 .politica-privacidade {
-    margin-left: 290px; /* Afasta da sidebar */
+    margin-left: 270px; /* Afasta da sidebar */
     width: calc(100% - 290px); /* Ajusta para ocupar o restante da tela */
 
     background-color: white;
@@ -368,4 +368,9 @@ body {
     .politica-privacidade {
         padding: 20px; /* Reduz o padding em telas menores */
     }
+}
+
+#ganhosChart {
+    width: 100% !important; /* Faz o canvas ocupar toda a largura */
+    height: 400px; /* Defina uma altura desejada */
 }
