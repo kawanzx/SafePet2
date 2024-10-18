@@ -241,34 +241,46 @@ $result = $stmt->get_result();
                 <div class="session">
                     <div class="informacoes-pessoais" tutor-id="<?php echo $tutor_id; ?>">
                         <h2>Informações Pessoais</h2>
-                        <label for="nome-tutor">Nome Completo:</label>
-                        <span class="nome-tutorText"><?php echo htmlspecialchars($nome); ?></span>
-                        <input type="text" class="nome-tutorInput" name="nome-tutor" value="<?php echo htmlspecialchars($nome); ?>" style="display: none" required>
-                        <button class="btn-editar-nome">Editar</button>
-                        <span id="nomeErro" class="erro"></span>
-                        <label for="endereco">Endereço:</label>
-                        <span class="enderecoText"><?php echo htmlspecialchars($endereco); ?></span>
-                        <input type="text" class="enderecoInput" name="endereco" value="<?php echo htmlspecialchars($endereco); ?>" style="display: none" required>
-                        <button class="btn-editar-endereco">Editar</button>
-                        <span id="enderecoErro" class="erro"></span>
-                        <label for="telefone">Telefone:</label>
-                        <span class="telefoneText"><?php echo htmlspecialchars($telefone); ?></span>
-                        <input type="tel" class="telefoneInput" name="telefone" value="<?php echo htmlspecialchars($telefone); ?>" style="display: none" pattern="[0-9]{10,11}" required>
-                        <button class="btn-editar-telefone">Editar</button>
-                        <span id="telefoneErro" class="erro"></span>
-                        <label for="email">E-mail:</label>
-                        <span class="emailText"><?php echo htmlspecialchars($email); ?></span>
-                        <input type="email" class="emailInput" name="email" value="<?php echo htmlspecialchars($email); ?>" style="display: none" required>
-                        <button class="btn-editar-email">Editar</button>
-                        <span id="emailErro" class="erro"></span>
-                        <label for="dt_nascimento">Data de Nascimento:</label>
-                        <span class="dt_nascimentoText"><?php echo htmlspecialchars($dt_nascimento); ?></span>
-                        <input type="date" class="dt_nascimentoInput" name="dt_nascimento" value="<?php echo htmlspecialchars($dt_nascimento); ?>" style="display: none" required>
-                        <button class="btn-editar-dt_nascimento">Editar</button>
-                        <span id="dtNascimentoErro" class="erro"></span>
-                        <label for="cpf">CPF:</label>
-                        <span class="cpfText"><?php echo htmlspecialchars($cpf); ?></span>
-                        <button class="btn-salvar">Salvar Alterações</button>
+                        <div class="textfield">
+                            <label for="nome-tutor">Nome Completo:</label>
+                            <span class="nome-tutorText"><?php echo htmlspecialchars($nome); ?></span>
+                            <input type="text" class="nome-tutorInput" name="nome-tutor" value="<?php echo htmlspecialchars($nome); ?>" style="display: none" required>
+                            <button class="btn-editar-nome"><span class="material-symbols-outlined">edit</span></button>
+                        </div>
+                        <div class="textfield">
+                            <span id="nomeErro" class="erro"></span>
+                            <label for="endereco">Endereço:</label>
+                            <span class="enderecoText"><?php echo htmlspecialchars($endereco); ?></span>
+                            <input type="text" class="enderecoInput" name="endereco" value="<?php echo htmlspecialchars($endereco); ?>" style="display: none" required>
+                            <button class="btn-editar-endereco"><span class="material-symbols-outlined">edit</span></button>
+                        </div>
+                        <div class="textfield">
+                            <span id="enderecoErro" class="erro"></span>
+                            <label for="telefone">Telefone:</label>
+                            <span class="telefoneText"><?php echo htmlspecialchars($telefone); ?></span>
+                            <input type="tel" class="telefoneInput" name="telefone" value="<?php echo htmlspecialchars($telefone); ?>" style="display: none" pattern="[0-9]{10,11}" required>
+                            <button class="btn-editar-telefone"><span class="material-symbols-outlined">edit</span></button>
+                        </div>
+                        <div class="textfield">
+                            <span id="telefoneErro" class="erro"></span>
+                            <label for="email">E-mail:</label>
+                            <span class="emailText"><?php echo htmlspecialchars($email); ?></span>
+                            <input type="email" class="emailInput" name="email" value="<?php echo htmlspecialchars($email); ?>" style="display: none" required>
+                            <button class="btn-editar-email"><span class="material-symbols-outlined">edit</span></button>
+                        </div>
+                        <div class="textfield">
+                            <span id="emailErro" class="erro"></span>
+                            <label for="dt_nascimento">Data de Nascimento:</label>
+                            <span class="dt_nascimentoText"><?php echo htmlspecialchars($dt_nascimento); ?></span>
+                            <input type="date" class="dt_nascimentoInput" name="dt_nascimento" value="<?php echo htmlspecialchars($dt_nascimento); ?>" style="display: none" required>
+                            <button class="btn-editar-dt_nascimento"><span class="material-symbols-outlined">edit</span></button>
+                        </div>
+                        <div class="textfield">
+                            <span id="dtNascimentoErro" class="erro"></span>
+                            <label for="cpf">CPF:</label>
+                            <span class="cpfText"><?php echo htmlspecialchars($cpf); ?></span>
+                        </div>
+                            <button class="btn-salvar">Salvar Alterações</button>
                     </div>
                 </div>
                 <div class="session">

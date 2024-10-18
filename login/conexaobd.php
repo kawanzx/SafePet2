@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root";
-$pass = "";
+$pass = "root";
 $bd = "safepet";
 
 $mysqli = new mysqli($host, $user, $pass, $bd);

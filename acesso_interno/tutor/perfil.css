@@ -276,6 +276,61 @@ body {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+/* informações pessoais */
+
+.informacoes-pessoais{
+    background-color: white; 
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; 
+}
+
+.textfield{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 10px 0px;
+}
+
+.textfield > button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.textfield > input{   
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    background:#adb4b4 ;
+    color: #000;
+    font-size: 12pt;
+    box-shadow: 0px 10px 40px #706d6d56;
+    outline: none;
+    box-sizing: border-box;
+    margin-left: 10px;
+}
+
+
+.textfield > label{
+    color: #000;
+    margin-right: 3px;
+}
+
+.btn-salvar{
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+
 @media screen and (max-width: 700px) {
     .sidebar {
         width: 15%;
