@@ -345,8 +345,7 @@ body {
 
 
 .politica-privacidade {
-    margin-left: 270px; /* Afasta da sidebar */
-    width: calc(100% - 290px); /* Ajusta para ocupar o restante da tela */
+    width: 100%;
 
     background-color: white;
     padding: 40px;
@@ -370,7 +369,15 @@ body {
     }
 }
 
+
+.ganhos-container {
+    display: block; /* ou flex, dependendo do seu layout */
+    margin: 20px; /* Espaçamento ao redor, se necessário */
+    width: 800px;
+    height: 400px;
+}
+
 #ganhosChart {
-    width: 100% !important; /* Faz o canvas ocupar toda a largura */
-    height: 400px; /* Defina uma altura desejada */
+    width: 100%; /* Para que se ajuste ao tamanho do container */
+    height: auto; /* Ajuste automático */
 }

@@ -79,6 +79,7 @@ if ($result->num_rows > 0) {
                     </div>
                 </div>
             </div>
+            
             <div id="conteudo-2" class="content-section">
                 <h2>Meus Ganhos</h2>
                 <div class="ganhos-container">
@@ -95,65 +96,63 @@ if ($result->num_rows > 0) {
                         echo "<p>Você ainda não possui ganhos registrados.</p>";
                     }
                     ?>
+                    <canvas id="ganhosChart"></canvas>
                 </div>
-                <canvas id="ganhosChart"></canvas>
+                
                 <script>
                     const ganhos = <?php echo json_encode($valores); ?>;
 
-                // Crie um array de meses para os labels
-                const datas = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-                const ctx = document.getElementById('ganhosChart').getContext('2d');
-                const myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: datas, // Usando meses como labels
-                        datasets: [{
-                            label: 'Meus Ganhos',
-                            data: ganhos,
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
+                    // Crie um array de meses para os labels
+                    const datas = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    const ctx = document.getElementById('ganhosChart').getContext('2d');
+                    const myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: datas, // Usando meses como labels
+                            datasets: [{
+                                label: 'Meus Ganhos',
+                                data: ganhos,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
                             }
                         }
-                    }
-                });
-
+                    });
                 </script>
             </div>
             
             <div id="conteudo-3" class="content-section">
                 <p>conteudo 3</p>
             </div>
+
             <div id="conteudo-4" class="content-section">
-             <div class="suporte">
-                <h2>Suporte para Cuidadores</h2>
+                <div class="suporte">
+                    <h2>Suporte para Cuidadores</h2>
 
-                <h4 class="faq-question">Como cuidar de pets?</h4>
-                <p class="faq-answer">Para cuidar de pets, é importante entender suas necessidades específicas, como alimentação adequada, atividades físicas, e cuidados médicos regulares. Também é necessário observar o comportamento para identificar qualquer sinal de desconforto ou doença.</p>
+                    <h4 class="faq-question">Como cuidar de pets?</h4>
+                    <p class="faq-answer">Para cuidar de pets, é importante entender suas necessidades específicas, como alimentação adequada, atividades físicas, e cuidados médicos regulares. Também é necessário observar o comportamento para identificar qualquer sinal de desconforto ou doença.</p>
 
-                <h4 class="faq-question">Quais são as políticas do SafePet?</h4>
-                <p class="faq-answer">O SafePet exige que os cuidadores sigam regras de ética e responsabilidade, garantindo a segurança e bem-estar dos pets. Além disso, é importante respeitar os horários e acordos de agendamento.</p>
+                    <h4 class="faq-question">Quais são as políticas do SafePet?</h4>
+                    <p class="faq-answer">O SafePet exige que os cuidadores sigam regras de ética e responsabilidade, garantindo a segurança e bem-estar dos pets. Além disso, é importante respeitar os horários e acordos de agendamento.</p>
 
-                <h4 class="faq-question">Como gerenciar meus agendamentos?</h4>
-                <p class="faq-answer">Acesse a aba de agendamentos para verificar compromissos futuros, ou confirmar/cancelar serviços diretamente pela plataforma.</p>
+                    <h4 class="faq-question">Como gerenciar meus agendamentos?</h4>
+                    <p class="faq-answer">Acesse a aba de agendamentos para verificar compromissos futuros, ou confirmar/cancelar serviços diretamente pela plataforma.</p>
 
-                <h4 class="faq-question">Como funciona o pagamento?</h4>
-                <p class="faq-answer">O pagamento é realizado através da plataforma SafePet após a conclusão do serviço. Você pode acompanhar os valores recebidos na aba de "Ganhos" do seu perfil.</p>
+                    <h4 class="faq-question">Como funciona o pagamento?</h4>
+                    <p class="faq-answer">O pagamento é realizado através da plataforma SafePet após a conclusão do serviço. Você pode acompanhar os valores recebidos na aba de "Ganhos" do seu perfil.</p>
 
-                <h4 class="faq-question">Como entrar em contato com o suporte?</h4>
-                <p class="faq-answer">Para suporte, utilize a seção de contato no seu perfil ou envie uma mensagem diretamente via e-mail para a equipe do SafePet, que responderá em até 48 horas.</p>
+                    <h4 class="faq-question">Como entrar em contato com o suporte?</h4>
+                    <p class="faq-answer">Para suporte, utilize a seção de contato no seu perfil ou envie uma mensagem diretamente via e-mail para a equipe do SafePet, que responderá em até 48 horas.</p>
+                </div>
             </div>
-
-            </div>
-                
-            </div>
+    
             <div id="conteudo-5" class="content-section">
                 <div class="politica-privacidade">
                     <h2>Política de Privacidade</h2>
