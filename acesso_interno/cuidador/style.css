@@ -97,15 +97,14 @@ body {
     flex-direction: column;
     height: 100%;
     position: fixed;
-    top: 48px;
-    /* Alinhar abaixo da navbar */
+    top: 48px; /* Alinhar abaixo da navbar */
     left: 0;
 }
 
 .sidebar-header {
     display: flex;
     align-items: center;
-    margin: 0 20px 20px
+    margin: 0 20px 20px;
 }
 
 .sidebar-header img {
@@ -114,8 +113,6 @@ body {
 }
 
 .sidebar-header h2 {
-    width: 42px;
-    border-radius: 50%;
     margin-left: 23px;
     color: white;
 }
@@ -145,11 +142,6 @@ body {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-.sidebar a {
-    padding: 16px;
-    text-decoration: none;
-}
-
 .sidebar a.active {
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
@@ -164,7 +156,6 @@ body {
 .conteudo {
     margin: 100px 0 0 290px;
     padding: 1px 16px;
-
 }
 
 .content-section {
@@ -174,7 +165,6 @@ body {
 .content-section.active {
     display: block;
 }
-
 
 .conteudo h1 {
     font-size: 2.5rem;
@@ -242,7 +232,77 @@ body {
     color: #007bff;
 }
 
-/* Media Queries para Responsividade */
+/* Suporte */
+
+.suporte {
+    width: 100%;                              /* Largura total da tela */
+    min-height: 150px;                       /* Altura mínima para o card */
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;                   /* Inclui padding e borda na largura total */
+}
+
+.suporte h2 {
+    margin-bottom: 20px; /* Espaço abaixo do título */
+}
+
+.questions-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.question {
+    border-bottom: 1px solid #fff;
+}
+
+.question button {
+    background-color: white;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 15px;
+    border: none;
+    outline: none;
+    font-size: 22px;
+    color: #007bff; /* Cor do texto para perguntas */
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.question p {
+    font-size: 18px;
+    max-height: 0;
+    opacity: 0;
+    line-height: 1.5;
+    overflow: hidden;
+    transition: all 0.6s ease;
+}
+
+.d-arrow {
+    transition: transform 0.5s ease-in;
+    color: #fff;
+}
+
+/* Classe adicionada ao clicar */
+.question p.show {
+    max-height: 200px; 
+    opacity: 1;
+    padding: 0px 15px 30px 15px;
+}
+
+.question button .d-arrow.rotate {
+    transform: rotate(180deg);
+}
+
+a {
+    cursor: pointer;
+    color: #0000FF;
+}
+
+/* Responsividade */
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -275,6 +335,14 @@ body {
     .content h1 {
         font-size: 2rem;
     }
+
+    .suporte {
+        padding: 20px; /* Reduz o padding em telas menores */
+    }
+
+    .politica-privacidade {
+        padding: 20px; /* Reduz o padding em telas menores */
+    }
 }
 
 @media (max-width: 480px) {
@@ -305,48 +373,9 @@ body {
     }
 }
 
-/* Suporte */
-.suporte {
-    background-color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.suporte h2 {
-    margin-bottom: 20px; /* Espaço abaixo do título */
-}
-
-.faq-question {
-    cursor: pointer; /* Indica que o item é clicável */
-    margin-bottom: 15px; /* Espaço entre as perguntas */
-    color: #007bff; /* Cor do texto para perguntas */
-}
-
-.faq-answer {
-    max-height: 0; /* Inicia escondido */
-    overflow: hidden; /* Esconde o conteúdo que excede a altura */
-    transition: max-height 0.3s ease; /* Animação suave */
-    margin-bottom: 20px; /* Espaço abaixo das respostas */
-    padding-left: 15px; /* Indentação para as respostas */
-    color: #555; /* Cor do texto das respostas */
-}
-
-.faq-answer.active {
-    max-height: 200px; /* Altura máxima ao exibir (ajuste conforme necessário) */
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .suporte {
-        padding: 20px; /* Reduz o padding em telas menores */
-    }
-}
-
-
+/* Políticas de Privacidade */
 .politica-privacidade {
     width: 100%;
-
     background-color: white;
     padding: 40px;
     border-radius: 10px;
@@ -362,14 +391,7 @@ body {
     margin-bottom: 15px;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    .politica-privacidade {
-        padding: 20px; /* Reduz o padding em telas menores */
-    }
-}
-
-
+/* Ganhos */
 .ganhos-container {
     display: block; /* ou flex, dependendo do seu layout */
     margin: 20px; /* Espaçamento ao redor, se necessário */
@@ -380,4 +402,12 @@ body {
 #ganhosChart {
     width: 100%; /* Para que se ajuste ao tamanho do container */
     height: auto; /* Ajuste automático */
+}
+
+.ganho {
+    background-color: #f9f9f9; /* Cor de fundo dos itens de ganho */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px; /* Espaçamento entre os itens */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
