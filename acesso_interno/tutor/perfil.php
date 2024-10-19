@@ -286,7 +286,7 @@ $result = $stmt->get_result();
                 <div class="session">
                     <div class="trocar-senha">
                         <h2>Trocar senha</h2>
-                        <form method="POST" action="trocar-senha.php">
+                        <form method="POST" action="trocar-senha.php" onsubmit="return validarSenha();">
                             <label for="senha_antiga">Senha Antiga:</label>
                             <input type="password" name="senha_antiga" required>
 
@@ -294,7 +294,7 @@ $result = $stmt->get_result();
                             <input type="password" name="nova_senha" id="nova_senha" minlength="6" required>
 
                             <label for="confirmar_senha">Confirmar Nova Senha:</label>
-                            <input type="password" name="confirmar_senha" required>
+                            <input type="password" name="confirmar_senha" id="confirmar_senha" required>
 
                             <button type="submit" class="btn-trocar-senha">Trocar Senha</button>
                         </form>

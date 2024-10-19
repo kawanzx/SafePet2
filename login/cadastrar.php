@@ -11,8 +11,6 @@ if(isset($_POST['email'])){
     $data_nascimento = $_POST['data_nascimento'];
     $cpf = preg_replace('/\D/', '', $_POST['cpf']);
 
-
-
     if($tipo_usuario === 'tutor'){
         $stmt = $mysqli->prepare("SELECT id FROM tutores WHERE email = ? OR cpf = ?");
 

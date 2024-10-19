@@ -24,6 +24,12 @@ function validarTelefone(telefone) {
     return regex.test(telefone);
 }
 
+function validarSenha(senha) {
+    var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+    return regex.test(senha);
+}
+
+
 function validarFormulario() {
     var nome = document.getElementsByName("nome_completo")[0].value;
     var endereco = document.getElementsByName("endereco")[0].value;
@@ -31,6 +37,7 @@ function validarFormulario() {
     var cpf = document.getElementsByName("cpf")[0].value;
     var telefone = document.getElementsByName("telefone")[0].value;
     var senha = document.getElementsByName("senha")[0].value;
+    var confirmar_senha = document.getElementsByName("confirmar_senha")[0].value;
 
     if (!validarNome(nome)) {
         alert("O nome deve conter mais de 2 dígitos e apenas letras.");
@@ -54,8 +61,12 @@ function validarFormulario() {
         alert("Telefone inválido. Deve conter 10 ou 11 dígitos.");
         return false;
     }
-    if (senha.length < 6) {
-        alert("A senha deve ter pelo menos 6 caracteres.");
+    if (!validarSenha(senha)) {
+        alert("A senha deve conter pelo menos 6 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.");
+        return false;
+    }
+    if (senha !== confirmar_senha) {
+        alert("As senhas não coincidem.");
         return false;
     }
 

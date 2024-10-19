@@ -21,28 +21,33 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['tipo_usuar
             $sql_exec = $mysqli->query("SELECT * FROM cuidadores WHERE email = '$email' LIMIT 1 ") or die("Falha na conexão com o banco de dados: " . $mysqli->error);
         }
 
-        $usuario = $sql_exec->fetch_assoc();
-        if (password_verify($senha, $usuario['senha'])) {
+        if ($sql_exec->num_rows > 0) {
+            $usuario = $sql_exec->fetch_assoc();
 
-            if (!isset($_SESSION)) {
-                session_start();
-            }
+            if (password_verify($senha, $usuario['senha'])) {
 
-             $_SESSION['id'] = $usuario['id'];
-             $_SESSION['nome'] = $usuario['nome'];
+                if (!isset($_SESSION)) {
+                    session_start();
+                }
+
+                $_SESSION['id'] = $usuario['id'];
+                $_SESSION['nome'] = $usuario['nome'];
 
 
-            if ($tipo_usuario === 'tutor') {  
+                if ($tipo_usuario === 'tutor') {
 
-                $_SESSION['tipo_usuario'] = 'tutor' ;
-                header("Location: ../acesso_interno/tutor/pesquisar.php");
-            } else if ($tipo_usuario === 'cuidador') {
+                    $_SESSION['tipo_usuario'] = 'tutor';
+                    header("Location: ../acesso_interno/tutor/pesquisar.php");
+                } else if ($tipo_usuario === 'cuidador') {
 
-                $_SESSION['tipo_usuario'] = 'cuidador';
-                header("Location: ../acesso_interno/cuidador/pesquisar.php");
+                    $_SESSION['tipo_usuario'] = 'cuidador';
+                    header("Location: ../acesso_interno/cuidador/pesquisar.php");
+                }
+            } else {
+                echo "<script>alert ('Senha incorreta. Verifique se o tipo de usuário informado corresponde ao cadastrado.'); window.location.href = 'formlogin.html'; </script>";
             }
         } else {
-            echo "E-mail ou senha incorretos. Verifique se o tipo de usuário informado corresponde ao cadastrado";
+            echo "<script>alert('E-mail não encontrado. Verifique se o tipo de usuário informado está correto.'); window.location.href = 'formlogin.html'; </script>";
         }
     }
 }

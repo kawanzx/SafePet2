@@ -495,5 +495,25 @@ document.querySelectorAll('.btn-salvar').forEach(button => {
     });
 });
 
+// Trocar senha
 
+function validarSenha() {
+    var novaSenha = document.getElementById("nova_senha").value;
+    var confirmarSenha = document.getElementById("confirmar_senha").value;
+
+    // Expressão regular para verificar a senha
+    var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+
+    if (!regex.test(novaSenha)) {
+        alert("A senha deve conter pelo menos 6 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.");
+        return false;
+    }
+
+    if (novaSenha !== confirmarSenha) {
+        alert("As senhas não coincidem.");
+        return false;
+    }
+
+    return true; 
+}
 
