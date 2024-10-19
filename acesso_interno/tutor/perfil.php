@@ -280,23 +280,28 @@ $result = $stmt->get_result();
                             <label for="cpf">CPF:</label>
                             <span class="cpfText"><?php echo htmlspecialchars($cpf); ?></span>
                         </div>
-                            <button class="btn-salvar">Salvar Alterações</button>
+                        <button class="btn-salvar">Salvar Alterações</button>
                     </div>
                 </div>
                 <div class="session">
                     <div class="trocar-senha">
                         <h2>Trocar senha</h2>
                         <form method="POST" action="trocar-senha.php" onsubmit="return validarSenha();">
-                            <label for="senha_antiga">Senha Antiga:</label>
-                            <input type="password" name="senha_antiga" required>
+                            <div class="textfield">
+                                <label for="senha_antiga">Senha Antiga:</label>
+                                <input type="password" name="senha_antiga" required>
+                            </div>
 
-                            <label for="nova_senha">Nova Senha:</label>
-                            <input type="password" name="nova_senha" id="nova_senha" minlength="6" required>
+                            <div class="textfield">
+                                <label for="nova_senha">Nova Senha:</label>
+                                <input type="password" name="nova_senha" id="nova_senha" minlength="6" required>
+                            </div>
 
-                            <label for="confirmar_senha">Confirmar Nova Senha:</label>
-                            <input type="password" name="confirmar_senha" id="confirmar_senha" required>
-
-                            <button type="submit" class="btn-trocar-senha">Trocar Senha</button>
+                            <div class="textfield">
+                                <label for="confirmar_senha">Confirmar Nova Senha:</label>
+                                <input type="password" name="confirmar_senha" id="confirmar_senha" required>
+                            </div>
+                            <button class="btn-trocar-senha">Trocar Senha</button>
                         </form>
                     </div>
                 </div>

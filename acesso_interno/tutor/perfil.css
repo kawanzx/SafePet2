@@ -209,6 +209,19 @@ body {
     display: none;
 }
 
+.nomePetInput, .especieInput, .racaInput, .idadeInput, .sexoInput, .pesoInput, .castradoInput, .descricaoInput{
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    background:#adb4b4 ;
+    color: #000;
+    font-size: 12pt;
+    box-shadow: 0px 10px 40px #706d6d56;
+    outline: none;
+    box-sizing: border-box;
+    margin-left: 10px;
+}
+
 .pet-header .editar-btn , .salvar-btn , .cancelar-btn{
     background: #007bff;
     color: white;
@@ -216,9 +229,11 @@ body {
     border: none;
     cursor: pointer;
     margin-left: 20px;
+    padding: 10px;
 }
 
 .pet-header .excluir-btn{
+    padding: 10px;
     background:#ff6b6b;
     color: white;
     border-radius: 5px;
@@ -276,9 +291,9 @@ body {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-/* informações pessoais */
+/* informações pessoais  e trocar senha*/
 
-.informacoes-pessoais{
+.informacoes-pessoais, .trocar-senha{
     background-color: white; 
     padding: 20px;
     border-radius: 10px;
@@ -286,6 +301,7 @@ body {
     flex-direction: column;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box; 
+    margin-top: 20px;
 }
 
 .textfield{
@@ -321,13 +337,14 @@ body {
     margin-right: 3px;
 }
 
-.btn-salvar{
+.btn-salvar, .btn-trocar-senha{
     background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
     padding: 15px;
     margin-top: 20px;
+    width: 100%;
 }
 
 
