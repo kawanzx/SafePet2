@@ -6,10 +6,6 @@ include 'navbar.php';
 include_once '../../login/conexaobd.php';
 
 $tutor_id = $_SESSION['id'];
-$sql = "SELECT nome, especie, raca, idade, sexo, peso, castrado, descricao, foto FROM pets WHERE tutor_id = '$tutor_id'";
-$stmt = $mysqli->prepare($sql);
-$stmt->execute();
-$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -34,11 +30,18 @@ $result = $stmt->get_result();
             </div>
             <nav>
                 <ul>
-                    <li><a href="#" onclick="showContent('conteudo-1', this)"><span class="material-symbols-outlined">account_circle</span>Meu Perfil</a></li>
-                    <li><a href="#" onclick="showContent('conteudo-2', this)"><span class="material-symbols-outlined">pets</span>Meus Pets</a></li>
-                    <li><a href="#" onclick="showContent('conteudo-3', this)"><span class="material-symbols-outlined">person</span>Informações Pessoais</a></li>
-                    <li><a href="#" onclick="showContent('conteudo-4', this)"><span class="material-symbols-outlined">info</span>Suporte</a></li>
-                    <li><a href="#" onclick="showContent('conteudo-5', this)"><span class="material-symbols-outlined">lock</span>Política de Privacidade</a></li>
+                    <li><a href="#" onclick="showContent('conteudo-1', this)"><span class="material-symbols-outlined">account_circle</span><span class="item-description">Meu Perfil</span></a></li>
+                    <li><a href="#" onclick="showContent('conteudo-2', this)"><span class="material-symbols-outlined">pets</span><span class="item-description">Meus Pets</span></a></li>
+                    <li>
+                        <a href="#" onclick="alternarSubmenu(event)"><span class="material-symbols-outlined">person</span><span class="item-description">Conta</span></a>
+                        <ul class="submenu">
+                            <li><a href="#" onclick="showContent('conteudo-3', this)" data-sub-content="info-pessoais">Informações Pessoais</a></li>
+                            <li><a href="#" onclick="showContent('conteudo-3', this)" data-sub-content="trocar-senha">Trocar Senha</a></li>
+                            <li><a href="#" onclick="showContent('conteudo-3', this)" data-sub-content="excluir-conta">Excluir Conta</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" onclick="showContent('conteudo-4', this)"><span class="material-symbols-outlined">info</span><span class="item-description">Suporte</span></a></li>
+                    <li><a href="#" onclick="showContent('conteudo-5', this)"><span class="material-symbols-outlined">lock</span><span class="item-description">Política de Privacidade</span></a></li>
                 </ul>
             </nav>
         </aside>
@@ -49,21 +52,51 @@ $result = $stmt->get_result();
             <div id="conteudo-1" class="content-section active">
                 <h1>Perfil do Tutor</h1>
                 <div class="meu-perfil">
+                    <?php
+                    $sql = "SELECT nome, bio, foto_perfil FROM tutores WHERE id = ?";
+                    $stmt = $mysqli->prepare($sql);
+                    $stmt->bind_param('i', $tutor_id);
+                    $stmt->execute();
+                    $stmt->bind_result($nome, $bio, $foto_perfil);
+                    $stmt->fetch();
+                    $stmt->close();
+
+                    $foto_perfil = !empty($foto_perfil) ? 'uploads/fotos_tutores/' . $foto_perfil : '../../assets/profile-circle-icon.png';
+                    ?>
                     <div class="perfil-header">
-                        <img src="../../assets/profile-circle-icon.png" alt="Foto do tutor" class="tutor-avatar">
+                        <form action="upload_foto.php" method="POST" enctype="multipart/form-data">
+                            <div class="upload-avatar">
+                                <img src="<?php echo htmlspecialchars($foto_perfil) . '?' . time(); ?>" alt="Foto do tutor" class="tutor-avatar" id="preview-avatar" onclick="document.getElementById('input-foto').click()">
+                                <input type="file" name="nova_foto" accept="image/*" id="input-foto" style="display: none;" onchange="previewAndUploadFoto()">
+                            </div>
+                        </form>
                         <div>
-                            <h2><?php echo $_SESSION['nome']; ?></h2>
+                            <h2><?php echo htmlspecialchars($nome); ?></h2>
                             <p><span class="info-label">Avaliação:</span> ⭐⭐⭐⭐ (4.8)</p>
                         </div>
                     </div>
                     <div class="section">
-                        <h3>Bio</h3>
-                        <p>Mãe de pet. Apaixonada pelos meus bichinhos.</p>
+                        <form action="editar-bio.php" method="POST">
+                            <h3>Bio
+                                <button type="button" class="editar-bio">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                            </h3>
+                            <p><span class="bioText"><?php echo htmlspecialchars($bio); ?></span></p>
+                            <textarea class="bioInput" name="bio" rows="5" cols="50" style="display: none"><?php echo htmlspecialchars($bio); ?></textarea>
+                            <button type="submit" class="salvar-bio" style="display: none;">Salvar</button>
+                            <input type="hidden" name="tutor_id" value="<?php echo $tutor_id; ?>">
+                        </form>
                     </div>
                     <div class="section">
                         <h3>Pets</h3>
                         <div class='pets-container'>
                             <?php
+                            $sql = "SELECT nome, especie, raca, idade, sexo, peso, castrado, descricao, foto FROM pets WHERE tutor_id = '$tutor_id'";
+                            $stmt = $mysqli->prepare($sql);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<div class='pet'>";
@@ -229,7 +262,6 @@ $result = $stmt->get_result();
             </div>
             <div id="conteudo-3" class="content-section">
                 <?php
-                // Puxa os dados atuais do tutor
                 $sql = "SELECT nome, endereco, telefone, email, dt_nascimento, cpf FROM tutores WHERE id = ?";
                 $stmt = $mysqli->prepare($sql);
                 $stmt->bind_param('i', $tutor_id);
@@ -238,42 +270,37 @@ $result = $stmt->get_result();
                 $stmt->fetch();
                 $stmt->close();
                 ?>
-                <div class="session">
+                <div id="info-pessoais" class="sub-conteudo">
                     <div class="informacoes-pessoais" tutor-id="<?php echo $tutor_id; ?>">
-                        <h2>Informações Pessoais</h2>
+                        <h2>Informações Pessoais <button class="btn-editar"><span class="material-symbols-outlined">edit</span></button></h2>
                         <div class="textfield">
                             <label for="nome-tutor">Nome Completo:</label>
                             <span class="nome-tutorText"><?php echo htmlspecialchars($nome); ?></span>
                             <input type="text" class="nome-tutorInput" name="nome-tutor" value="<?php echo htmlspecialchars($nome); ?>" style="display: none" required>
-                            <button class="btn-editar-nome"><span class="material-symbols-outlined">edit</span></button>
                         </div>
                         <div class="textfield">
                             <span id="nomeErro" class="erro"></span>
                             <label for="endereco">Endereço:</label>
                             <span class="enderecoText"><?php echo htmlspecialchars($endereco); ?></span>
                             <input type="text" class="enderecoInput" name="endereco" value="<?php echo htmlspecialchars($endereco); ?>" style="display: none" required>
-                            <button class="btn-editar-endereco"><span class="material-symbols-outlined">edit</span></button>
                         </div>
                         <div class="textfield">
                             <span id="enderecoErro" class="erro"></span>
                             <label for="telefone">Telefone:</label>
                             <span class="telefoneText"><?php echo htmlspecialchars($telefone); ?></span>
                             <input type="tel" class="telefoneInput" name="telefone" value="<?php echo htmlspecialchars($telefone); ?>" style="display: none" pattern="[0-9]{10,11}" required>
-                            <button class="btn-editar-telefone"><span class="material-symbols-outlined">edit</span></button>
                         </div>
                         <div class="textfield">
                             <span id="telefoneErro" class="erro"></span>
                             <label for="email">E-mail:</label>
                             <span class="emailText"><?php echo htmlspecialchars($email); ?></span>
                             <input type="email" class="emailInput" name="email" value="<?php echo htmlspecialchars($email); ?>" style="display: none" required>
-                            <button class="btn-editar-email"><span class="material-symbols-outlined">edit</span></button>
                         </div>
                         <div class="textfield">
                             <span id="emailErro" class="erro"></span>
                             <label for="dt_nascimento">Data de Nascimento:</label>
                             <span class="dt_nascimentoText"><?php echo htmlspecialchars($dt_nascimento); ?></span>
                             <input type="date" class="dt_nascimentoInput" name="dt_nascimento" value="<?php echo htmlspecialchars($dt_nascimento); ?>" style="display: none" required>
-                            <button class="btn-editar-dt_nascimento"><span class="material-symbols-outlined">edit</span></button>
                         </div>
                         <div class="textfield">
                             <span id="dtNascimentoErro" class="erro"></span>
@@ -283,7 +310,7 @@ $result = $stmt->get_result();
                         <button class="btn-salvar">Salvar Alterações</button>
                     </div>
                 </div>
-                <div class="session">
+                <div id="trocar-senha" class="sub-conteudo" style="display:none;">
                     <div class="trocar-senha">
                         <h2>Trocar senha</h2>
                         <form method="POST" action="trocar-senha.php" onsubmit="return validarSenha();">
@@ -305,12 +332,85 @@ $result = $stmt->get_result();
                         </form>
                     </div>
                 </div>
+
+                <div id="excluir-conta" class="sub-conteudo" style="display:none;">
+                    <div class="excluir-conta">
+                        <h2>Excluir Conta</h2>
+                        <p>Tem certeza de que deseja excluir sua conta? Esta ação é irreversível.</p>
+                        <form action="excluir_conta.php" method="POST">
+                            <button type="submit" name="confirmar_exclusao" class="btn-excluir">Excluir Conta</button>
+                        </form>
+                        <a href="perfil.php" class="btn-cancelar">Cancelar</a>
+                    </div>
+                </div>
             </div>
             <div id="conteudo-4" class="content-section">
-                <p>conteudo 4</p>
+                <div class="suporte">
+                    <h2>Suporte para Tutores</h2>
+
+                    <div class="questions-container">
+                        <div class="question">
+                            <button>
+                                <span>Como encontrar um cuidador?</span>
+                                <i class="fas fa-chevron-down d-arrow"></i>
+                            </button>
+                            <p>Para encontrar um cuidador, acesse a aba de busca no SafePet e filtre os cuidadores disponíveis pela sua localização e pelos serviços que oferecem. Você pode ler avaliações de outros tutores para escolher o melhor cuidador para o seu pet.</p>
+                        </div>
+
+                        <div class="question">
+                            <button>
+                                <span>Quais são as políticas do SafePet para tutores?</span>
+                                <i class="fas fa-chevron-down d-arrow"></i>
+                            </button>
+                            <p>O SafePet exige que os tutores informem todos os detalhes relevantes sobre seus pets, como necessidades especiais, comportamentos específicos e condições de saúde. É importante também respeitar os horários combinados com o cuidador.</p>
+                        </div>
+
+                        <div class="question">
+                            <button>
+                                <span>Como faço um agendamento?</span>
+                                <i class="fas fa-chevron-down d-arrow"></i>
+                            </button>
+                            <p>Para agendar um serviço, selecione o cuidador desejado e escolha um horário disponível na plataforma. Você receberá uma confirmação após o agendamento ser concluído.</p>
+                        </div>
+
+                        <div class="question">
+                            <button>
+                                <span>Como funciona o pagamento?</span>
+                                <i class="fas fa-chevron-down d-arrow"></i>
+                            </button>
+                            <p>O pagamento é realizado através da plataforma SafePet. Após o serviço ser concluído, o valor será cobrado automaticamente e você poderá acompanhar o status na aba de "Pagamentos" do seu perfil.</p>
+                        </div>
+
+                        <div class="question">
+                            <button>
+                                <span>Como entrar em contato com o suporte?</span>
+                                <i class="fas fa-chevron-down d-arrow"></i>
+                            </button>
+                            <p>Para suporte, utilize a seção de contato no seu perfil ou envie uma mensagem diretamente via e-mail para a equipe do SafePet em <a>suporte@safepet.com</a>, que responderá em até 48 horas.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div id="conteudo-5" class="content-section">
-                <p>conteudo 5</p>
+                <div class="politica-privacidade">
+                    <h2>Política de Privacidade</h2>
+                    <p>Na SafePet, respeitamos sua privacidade e estamos comprometidos em proteger suas informações pessoais. Esta política explica como coletamos, usamos e protegemos seus dados.</p>
+
+                    <h4>1. Coleta de Informações</h4>
+                    <p>Coletamos informações pessoais que você nos fornece ao se cadastrar, como nome, e-mail e telefone.</p>
+
+                    <h4>2. Uso das Informações</h4>
+                    <p>Usamos suas informações para oferecer nossos serviços, entrar em contato e melhorar nossa plataforma.</p>
+
+                    <h4>3. Compartilhamento de Informações</h4>
+                    <p>Não compartilhamos suas informações pessoais com terceiros, exceto quando necessário para o funcionamento dos nossos serviços.</p>
+
+                    <h4>4. Segurança</h4>
+                    <p>Adotamos medidas de segurança para proteger suas informações contra acesso não autorizado.</p>
+
+                    <h4>5. Alterações na Política</h4>
+                    <p>Podemos atualizar esta política e informaremos sobre quaisquer alterações significativas.</p>
+                </div>
             </div>
         </main>
     </div>

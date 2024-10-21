@@ -1,16 +1,22 @@
 /* Navbar existente */
 .transparent-nav {
     background: rgb(68, 65, 65);
-    /* Transparência do menu */
     position: fixed;
-    /* Navbar fixa */
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 10;
+    padding: 23px 0;
+}
+
+.nav-container {
     display: flex;
     justify-content: center;
-    z-index: 10;
-    padding: 15px 0;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .transparent-nav ul {
@@ -57,7 +63,6 @@
     width: 100%;
 }
 
-/* Validação se estiver na página correta  */
 .transparent-nav ul li a.active {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
@@ -65,4 +70,87 @@
 
 .transparent-nav ul li a.active::after {
     width: 100%;
+}
+
+/* Menu Toggle (Hambúrguer) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 15;
+}
+
+.menu-toggle span {
+    display: block;
+    position: relative; /* Alinha o span no fluxo normal */
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    transition: all 0.3s ease;
+    margin: 5px 0; /* Espaçamento entre as linhas */
+}
+
+.menu-toggle span::before,
+.menu-toggle span::after {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    transition: all 0.3s ease;
+    content: '';
+    position: absolute;
+    left: 0;
+}
+
+.menu-toggle span::before {
+    top: -8px;
+}
+
+.menu-toggle span::after {
+    top: 8px;
+}
+
+@media (max-width: 768px) {
+    .transparent-nav ul {
+        flex-direction: column;
+        display: none;
+        width: 100%;
+        background-color: rgb(68, 65, 65);
+        position: absolute;
+        top: 60px;
+        left: 0;
+        padding: 20px;
+    }
+
+    .transparent-nav ul.show {
+        display: flex;
+    }
+
+    .transparent-nav ul li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .menu-toggle {
+        display: block;
+        position: relative;
+        z-index: 15;
+    }
+
+    /* Menu Toggle Animation (Transforma em X ao abrir) */
+    .menu-toggle.open span {
+        background: transparent;
+    }
+
+    .menu-toggle.open span::before {
+        transform: rotate(45deg);
+        top: 0;
+    }
+
+    .menu-toggle.open span::after {
+        transform: rotate(-45deg);
+        top: 0;
+    }
 }

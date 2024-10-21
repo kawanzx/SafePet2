@@ -15,46 +15,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Estilos da Navbar */
-.transparent-nav {
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    padding: 15px 0;
-    transition: background-color 0.3s ease;      
-}
-
-.transparent-nav ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.transparent-nav ul li {
-    margin: 0 20px;
-}
-
-.transparent-nav ul li a {
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-    letter-spacing: 1px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.transparent-nav ul li a:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
 .user-info img {
     margin-right: 5px; 
 }

@@ -12,6 +12,54 @@ document.getElementById('logoutLink').addEventListener('click', function (event)
 
 /* Sidebar */
 // Função para exibir o conteúdo com base no ID da seção
+const sidebar = document.querySelector('.sidebar');
+
+// Função para alternar a expansão da sidebar ao clicar no cabeçalho
+function toggleSidebar() {
+    sidebar.classList.toggle('sidebar-expandida');
+
+    // Se a sidebar for recolhida, esconda todos os submenus
+    if (!sidebar.classList.contains('sidebar-expandida')) {
+        const submenus = sidebar.querySelectorAll('.submenu');
+        submenus.forEach(submenu => {
+            submenu.style.display = 'none'; // Esconde todos os submenus
+        });
+    }
+}
+
+// Adicionando o evento de clique ao cabeçalho da sidebar
+const header = document.querySelector('.sidebar-header');
+header.addEventListener('click', toggleSidebar);
+
+// Adicionando o evento de clique aos ícones na sidebar
+const icons = sidebar.querySelectorAll('nav ul li > a > span.material-symbols-outlined');
+icons.forEach(icon => {
+    icon.parentElement.addEventListener('click', function (event) {
+        // Impede que a sidebar seja recolhida ao clicar no ícone
+        event.stopPropagation();
+
+        // Expandir a sidebar se estiver recolhida
+        if (!sidebar.classList.contains('sidebar-expandida')) {
+            sidebar.classList.add('sidebar-expandida');
+        }
+    });
+});
+
+// Função para fechar a sidebar ao clicar fora dela
+document.addEventListener('click', function (event) {
+    // Verifica se o clique foi fora da sidebar e se a sidebar está expandida
+    if (!sidebar.contains(event.target) && sidebar.classList.contains('sidebar-expandida')) {
+        sidebar.classList.remove('sidebar-expandida'); // Recolhe a sidebar
+
+        // Esconde todos os submenus quando a sidebar é recolhida
+        const submenus = sidebar.querySelectorAll('.submenu');
+        submenus.forEach(submenu => {
+            submenu.style.display = 'none'; // Esconde todos os submenus
+        });
+    }
+});
+
+// Função para mostrar o conteúdo
 function showContent(sectionId, element) {
     // Oculta todas as seções de conteúdo
     var sections = document.querySelectorAll('.content-section');
@@ -21,11 +69,9 @@ function showContent(sectionId, element) {
 
     // Exibe a seção selecionada
     var activeSection = document.getElementById(sectionId);
-    activeSection.classList.add('active');
-
-    // Exibe a seção selecionada
-    var activeSection = document.getElementById(sectionId);
-    activeSection.classList.add('active');
+    if (activeSection) {
+        activeSection.classList.add('active');
+    }
 
     // Remove a classe 'active' de todos os links da sidebar
     var links = document.querySelectorAll('.sidebar a');
@@ -34,7 +80,91 @@ function showContent(sectionId, element) {
     });
 
     // Adiciona a classe 'active' ao link clicado
-    element.classList.add('active');
+    if (element) {
+        element.classList.add('active');
+    }
+
+    // Se o link clicado é parte do submenu, não recolhe a sidebar
+    var isSubmenu = element.closest('ul.submenu');
+    if (isSubmenu) {
+        var subContentId = element.dataset.subContent; // Obtém o ID do sub-conteúdo
+
+        // Oculta todos os sub-conteúdos
+        var subSections = document.querySelectorAll('#' + sectionId + ' > div');
+        subSections.forEach(function (subSection) {
+            subSection.style.display = 'none'; // Oculta todos os sub-conteúdos
+        });
+
+        // Exibe o sub-conteúdo selecionado
+        if (subContentId) {
+            var activeSubSection = document.getElementById(subContentId);
+            if (activeSubSection) {
+                activeSubSection.style.display = 'block'; // Exibe o sub-conteúdo
+            }
+        }
+        return; // Não faz nada, apenas retorna
+    }
+
+    // Após a seleção do conteúdo, recolhe a sidebar se não for um submenu
+    if (sidebar.classList.contains('sidebar-expandida')) {
+        sidebar.classList.remove('sidebar-expandida'); // Recolhe a sidebar
+    }
+}
+
+// Função para alternar a exibição do submenu
+function alternarSubmenu(event) {
+    event.preventDefault();
+    const submenu = event.currentTarget.nextElementSibling;
+
+    // Alterna entre mostrar e ocultar o submenu
+    if (submenu) {
+        if (submenu.style.display === 'block') {
+            submenu.style.display = 'none';
+        } else {
+            submenu.style.display = 'block';
+        }
+    }
+}
+
+
+// Trocar foto de perfil
+
+function previewAndUploadFoto() {
+    var input = document.getElementById('input-foto');
+    var preview = document.getElementById('preview-avatar');
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result; // Atualiza o preview da imagem
+        };
+        reader.readAsDataURL(input.files[0]);
+
+        // Envia a imagem para o servidor automaticamente
+        var formData = new FormData();
+        formData.append('nova_foto', input.files[0]);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'upload_foto.php', true);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    console.log('Foto enviada com sucesso!');
+
+                    var novoCaminho = 'uploads/fotos_tutores/' + response.nova_foto;
+                    preview.src = novoCaminho + '?' + new Date().getTime(); // Força o recarregamento da nova imagem
+                } else {
+                    console.log('Erro: ' + response.error);
+                }
+            } else {
+                console.log('Erro ao enviar a foto.');
+            }
+        };
+
+        xhr.send(formData);
+    }
 }
 
 // Apagar campos após cadastrar pet
@@ -64,6 +194,28 @@ document.getElementById('form-pet').addEventListener('submit', function (event) 
             console.error('Erro:', error);
             alert('Ocorreu um erro ao tentar cadastrar o pet.');
         });
+});
+
+
+// Editar Bio
+
+const editButton = document.querySelector('.editar-bio');
+const saveButton = document.querySelector('.salvar-bio');
+const bioText = document.querySelector('.bioText');
+const bioInput = document.querySelector('.bioInput');
+
+editButton.addEventListener('click', function () {
+    if (bioInput.style.display === 'none') {
+        bioText.style.display = 'none';
+        bioInput.style.display = 'block';
+        saveButton.style.display = 'block';
+        bioInput.value = bioText.textContent.trim();
+    } else {
+        bioText.textContent = bioInput.value.trim();
+        bioText.style.display = 'block';
+        bioInput.style.display = 'none';
+        saveButton.style.display = 'none';
+    }
 });
 
 
@@ -170,6 +322,7 @@ document.querySelectorAll('.salvar-btn').forEach(button => {
                     // Alternar os botões
                     petDiv.querySelector('.salvar-btn').style.display = 'none';
                     petDiv.querySelector('.editar-btn').style.display = 'inline-block';
+                    petDiv.querySelector('.cancelar-btn').style.display = 'none';
                 } else {
                     alert('Erro ao atualizar os dados: ' + data);
                 }
@@ -309,96 +462,65 @@ document.querySelectorAll('.fotoPetInput').forEach(function (input) {
 
 //Informações pessoais tutor
 
-document.querySelectorAll('.btn-editar-nome').forEach(button => {
-    button.addEventListener('click', function () {
-        const tutorDiv = this.closest('.informacoes-pessoais');
-
-        // Armazenar os valores atuais dos textos em atributos data nos inputs
-        tutorDiv.querySelector('.nome-tutorInput').setAttribute('data-original', tutorDiv.querySelector('.nome-tutorInput').value);
-
-
-        // Ocultar os textos e exibir os inputs
-        tutorDiv.querySelectorAll('.nome-tutorText').forEach(text => {
-            text.style.display = 'none';
-        });
-        tutorDiv.querySelectorAll('.nome-tutorInput').forEach(input => {
-            input.style.display = 'block';
-        });
-    });
-});
-
-document.querySelectorAll('.btn-editar-endereco').forEach(button => {
-    button.addEventListener('click', function () {
-        const tutorDiv = this.closest('.informacoes-pessoais');
-
-        // Armazenar os valores atuais dos textos em atributos data nos inputs
-        tutorDiv.querySelector('.enderecoInput').setAttribute('data-original', tutorDiv.querySelector('.enderecoInput').value);
+const editar = document.querySelector('.btn-editar');
+const nomeTutorText = document.querySelector('.nome-tutorText');
+const nomeTutorInput = document.querySelector('.nome-tutorInput');
+const enderecoText = document.querySelector('.enderecoText');
+const enderecoInput = document.querySelector('.enderecoInput');
+const telefoneText = document.querySelector('.telefoneText');
+const telefoneInput = document.querySelector('.telefoneInput');
+const emailText = document.querySelector('.emailText');
+const emailInput = document.querySelector('.emailInput');
+const dt_nascimentoText = document.querySelector('.dt_nascimentoText');
+const dt_nascimentoInput = document.querySelector('.dt_nascimentoInput');
 
 
-        // Ocultar os textos e exibir os inputs
-        tutorDiv.querySelectorAll('.enderecoText').forEach(text => {
-            text.style.display = 'none';
-        });
-        tutorDiv.querySelectorAll('.enderecoInput').forEach(input => {
-            input.style.display = 'block';
-        });
-    });
-});
-
-
-
-document.querySelectorAll('.btn-editar-telefone').forEach(button => {
-    button.addEventListener('click', function () {
-        const tutorDiv = this.closest('.informacoes-pessoais');
-
-        // Armazenar os valores atuais dos textos em atributos data nos inputs
-        tutorDiv.querySelector('.telefoneInput').setAttribute('data-original', tutorDiv.querySelector('.telefoneInput').value);
-
-
-        // Ocultar os textos e exibir os inputs
-        tutorDiv.querySelectorAll('.telefoneText').forEach(text => {
-            text.style.display = 'none';
-        });
-        tutorDiv.querySelectorAll('.telefoneInput').forEach(input => {
-            input.style.display = 'block';
-        });
-    });
-});
-
-document.querySelectorAll('.btn-editar-email').forEach(button => {
-    button.addEventListener('click', function () {
-        const tutorDiv = this.closest('.informacoes-pessoais');
-
-        // Armazenar os valores atuais dos textos em atributos data nos inputs
-        tutorDiv.querySelector('.emailInput').setAttribute('data-original', tutorDiv.querySelector('.emailInput').value);
-
-
-        // Ocultar os textos e exibir os inputs
-        tutorDiv.querySelectorAll('.emailText').forEach(text => {
-            text.style.display = 'none';
-        });
-        tutorDiv.querySelectorAll('.emailInput').forEach(input => {
-            input.style.display = 'block';
-        });
-    });
-});
-
-document.querySelectorAll('.btn-editar-dt_nascimento').forEach(button => {
-    button.addEventListener('click', function () {
-        const tutorDiv = this.closest('.informacoes-pessoais');
-
-        // Armazenar os valores atuais dos textos em atributos data nos inputs
-        tutorDiv.querySelector('.dt_nascimentoInput').setAttribute('data-original', tutorDiv.querySelector('.dt_nascimentoInput').value);
-
-
-        // Ocultar os textos e exibir os inputs
-        tutorDiv.querySelectorAll('.dt_nascimentoText').forEach(text => {
-            text.style.display = 'none';
-        });
-        tutorDiv.querySelectorAll('.dt_nascimentoInput').forEach(input => {
-            input.style.display = 'block';
-        });
-    });
+editar.addEventListener('click', function () {
+    if (nomeTutorInput.style.display === 'none') {
+        nomeTutorText.style.display = 'none';
+        nomeTutorInput.style.display = 'block';
+        nomeTutorInput.value = nomeTutorText.textContent.trim();
+    } else {
+        nomeTutorText.textContent = nomeTutorInput.value.trim();
+        nomeTutorText.style.display = 'block';
+        nomeTutorInput.style.display = 'none';
+    }
+    if (enderecoInput.style.display === 'none') {
+        enderecoText.style.display = 'none';
+        enderecoInput.style.display = 'block';
+        enderecoInput.value = enderecoText.textContent.trim();
+    } else {
+        enderecoText.textContent = enderecoInput.value.trim();
+        enderecoText.style.display = 'block';
+        enderecoInput.style.display = 'none';
+    }
+    if (telefoneInput.style.display === 'none') {
+        telefoneText.style.display = 'none';
+        telefoneInput.style.display = 'block';
+        telefoneInput.value = telefoneText.textContent.trim();
+    } else {
+        telefoneText.textContent = telefoneInput.value.trim();
+        telefoneText.style.display = 'block';
+        telefoneInput.style.display = 'none';
+    }
+    if (emailInput.style.display === 'none') {
+        emailText.style.display = 'none';
+        emailInput.style.display = 'block';
+        emailInput.value = emailText.textContent.trim();
+    } else {
+        emailText.textContent = emailInput.value.trim();
+        emailText.style.display = 'block';
+        emailInput.style.display = 'none';
+    }
+    if (dt_nascimentoInput.style.display === 'none') {
+        dt_nascimentoText.style.display = 'none';
+        dt_nascimentoInput.style.display = 'block';
+        dt_nascimentoInput.value = dt_nascimentoText.textContent.trim();
+    } else {
+        dt_nascimentoText.textContent = dt_nascimentoInput.value.trim();
+        dt_nascimentoText.style.display = 'block';
+        dt_nascimentoInput.style.display = 'none';
+    }
 });
 
 document.querySelectorAll('.btn-salvar').forEach(button => {
@@ -514,6 +636,28 @@ function validarSenha() {
         return false;
     }
 
-    return true; 
+    return true;
 }
+
+// Suporte
+// Função para mostrar e ocultar respostas
+function toggleAnswer(question) {
+    const answer = question.nextElementSibling; // Seleciona o elemento irmão que é a resposta
+    answer.classList.toggle('show'); // Alterna a classe 'show' na resposta
+}
+
+// Mostra a primeira seção por padrão e adiciona eventos
+document.addEventListener('DOMContentLoaded', () => {
+    showContent('conteudo-1', document.querySelector('.sidebar nav ul li a'));
+
+    // Adiciona eventos de clique para as perguntas de suporte
+    const faqQuestions = document.querySelectorAll('.questions-container .question button');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function () {
+            toggleAnswer(this); // Passa a pergunta clicada para a função
+            const icon = this.querySelector('.d-arrow');
+            icon.classList.toggle('rotate'); // Rotaciona o ícone de seta
+        });
+    });
+});
 

@@ -5,11 +5,12 @@ include("conexaobd.php");
 if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['tipo_usuario'])) {
 
     if (strlen($_POST['email']) == 0) {
-        echo "Preencha seu e-mail";
+        echo "<script>alert ('Preencha seu e-mail.'); window.location.href = 'formlogin.html'; </script>";
     } else if (strlen($_POST['senha']) == 0) {
         echo "Preencha sua senha";
+        echo "<script>alert ('Preencha sua senha.'); window.location.href = 'formlogin.html'; </script>";
     } else if (strlen($_POST['tipo_usuario']) == 0) {
-        echo "Preencha o tipo de usuário";
+        echo "<script>alert ('Preencha o tipo de usuário.'); window.location.href = 'formlogin.html'; </script>";
     } else {
         $email = ($_POST['email']);
         $senha = ($_POST['senha']);
