@@ -302,6 +302,49 @@ a {
     color: #0000FF;
 }
 
+.contato {
+    margin-top: 30px; /* Espaçamento acima da seção de contato */
+    background-color: #fff; /* Cor de fundo branca */
+    border-radius: 10px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para profundidade */
+}
+
+/* Estilo dos campos do formulário */
+.contato label {
+    font-size: 16px; /* Tamanho da fonte */
+    margin-top: 10px; /* Espaçamento acima das labels */
+    display: block; /* Para garantir que cada label fique em sua própria linha */
+}
+
+.contato input[type="text"],
+.contato input[type="email"],
+.contato textarea {
+    width: 100%; /* Largura total */
+    padding: 10px; /* Espaçamento interno */
+    margin-top: 5px; /* Espaçamento acima dos campos */
+    border: 1px solid #ccc; /* Borda leve */
+    border-radius: 5px; /* Bordas arredondadas */
+}
+
+/* Estilo do botão de envio */
+.contato button[type="submit"] {
+    margin-top: 15px; /* Espaçamento acima do botão */
+    background-color: #28a745; /* Cor de fundo verde */
+    color: #fff; /* Cor do texto */
+    border: none; /* Sem borda */
+    padding: 10px 15px; /* Espaçamento interno */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    transition: background-color 0.3s; /* Transição suave para a mudança de cor */
+}
+
+.contato button[type="submit"]:hover {
+    background-color: #218838; /* Cor de fundo ao passar o mouse */
+}
+
+
+
 /* Responsividade */
 @media (max-width: 768px) {
     .container {
