@@ -386,8 +386,25 @@ $tutor_id = $_SESSION['id'];
                                 <span>Como entrar em contato com o suporte?</span>
                                 <i class="fas fa-chevron-down d-arrow"></i>
                             </button>
-                            <p>Para suporte, utilize a seção de contato no seu perfil ou envie uma mensagem diretamente via e-mail para a equipe do SafePet em <a>suporte@safepet.com</a>, que responderá em até 48 horas.</p>
+                            <p>Para suporte, utilize a seção de contato no seu perfil ou envie uma mensagem diretamente via e-mail para a equipe do SafePet em <a href="mailto:suporte.safepet@gmail.com">suporte@safepet.com</a>, que responderá em até 48 horas.</p>
                         </div>
+                        
+                        <section class="contato">
+                            <h2>Não achou sua dúvida? Escreva abaixo</h2>
+                            <form action="https://api.staticforms.xyz/submit" method="post"><form id="contactForm" action="https://api.staticforms.xyz/submit" method="post">
+                                <label>Nome</label>
+                                <input type="text" name="name" placeholder="Digite seu nome" autocomplete="off" required>
+                                <label>Email</label>
+                                <input type="email" name="email" placeholder="Digite seu email" autocomplete="off" required>
+                                <label>Mensagem</label>
+                                <textarea name="message" cols="30" rows="10" placeholder="Digite sua mensagem" required></textarea>
+                                <button type="submit">Enviar</button>
+
+                                <input type="hidden" name="accessKey" value="69faecc1-fb39-4467-a250-5ec40ff0baaa">
+                                <input type="hidden" name="redirectTo" value="http://localhost:8000/acesso_interno/cuidador/perfil.php#">
+                            </form>
+                        </section>
+
                     </div>
                 </div>
             </div>
