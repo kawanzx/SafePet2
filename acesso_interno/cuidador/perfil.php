@@ -56,11 +56,18 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
             </div>
             <nav>
                 <ul>
-                    <li><a href="#" onclick="showContent('conteudo-1', this)"><span class="material-symbols-outlined">account_circle</span>Meu Perfil</a></li>
-                    <li><a href="#" onclick="showContent('conteudo-2', this)"><span class="material-symbols-outlined">finance</span>Ganhos</a></li>
-                    <li><a href="#" onclick="showContent('conteudo-3', this)"><span class="material-symbols-outlined">person</span>Informações Pessoais</a></li>
-                    <li><a href="#" onclick="showContent('conteudo-4', this)"><span class="material-symbols-outlined">info</span>Suporte</a></li>
-                    <li><a href="#" onclick="showContent('conteudo-5', this)"><span class="material-symbols-outlined">lock</span>Política de Privacidade</a></li>
+                    <li><a href="#" onclick="showContent('conteudo-1', this)"><span class="material-symbols-outlined">account_circle</span><span class="item-description">Meu Perfil</span></a></li>
+                    <li><a href="#" onclick="showContent('conteudo-2', this)"><span class="material-symbols-outlined">finance</span><span class="item-description">Ganhos</span></a></li>
+                    <li>
+                        <a href="#" onclick="alternarSubmenu(event)"><span class="material-symbols-outlined">person</span><span class="item-description">Conta</span></a>
+                        <ul class="submenu">
+                            <li><a href="#" onclick="showContent('conteudo-3', this)" data-sub-content="info-pessoais">Informações Pessoais</a></li>
+                            <li><a href="#" onclick="showContent('conteudo-3', this)" data-sub-content="trocar-senha">Trocar Senha</a></li>
+                            <li><a href="#" onclick="showContent('conteudo-3', this)" data-sub-content="excluir-conta">Excluir Conta</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" onclick="showContent('conteudo-4', this)"><span class="material-symbols-outlined">info</span><span class="item-description">Suporte</span></a></li>
+                    <li><a href="#" onclick="showContent('conteudo-5', this)"><span class="material-symbols-outlined">lock</span><span class="item-description">Política de Privacidade</span></a></li>
                 </ul>
             </nav>
         </aside>
@@ -69,16 +76,41 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
             <div id="conteudo-1" class="content-section active">
                 <h1>Perfil do Cuidador</h1>
                 <div class="perfil-completo">
+                    <?php
+                    $sql = "SELECT nome, bio, foto_perfil FROM cuidadores WHERE id = ?";
+                    $stmt = $mysqli->prepare($sql);
+                    $stmt->bind_param('i', $cuidador_id);
+                    $stmt->execute();
+                    $stmt->bind_result($nome, $bio, $foto_perfil);
+                    $stmt->fetch();
+                    $stmt->close();
+
+                    $foto_perfil = !empty($foto_perfil) ? 'uploads/fotos_cuidadores/' . $foto_perfil : '../../assets/profile-circle-icon.png';
+                    ?>
                     <div class="perfil-header">
-                        <img src="https://cdn-icons-png.flaticon.com/512/9706/9706583.png" alt="Foto do Cuidador" class="cuidador-avatar">
+                        <form action="upload_foto.php" method="POST" enctype="multipart/form-data">
+                            <div class="upload-avatar">
+                                <img src="<?php echo htmlspecialchars($foto_perfil) . '?' . time(); ?>" alt="Foto do cuidador" class="cuidador-avatar" id="preview-avatar" onclick="document.getElementById('input-foto').click()">
+                                <input type="file" name="nova_foto" accept="image/*" id="input-foto" style="display: none;" onchange="previewAndUploadFoto()">
+                            </div>
+                        </form>
                         <div>
-                            <h2><?php echo $_SESSION['nome']; ?></h2>
+                            <h2><?php echo htmlspecialchars($nome); ?></h2>
                             <p><span class="info-label">Avaliação:</span> ⭐⭐⭐⭐ (4.8)</p>
                         </div>
                     </div>
                     <div class="section">
-                        <h3>Bio</h3>
-                        <p>Apaixonado por animais, cuidando de pets há 5 anos. Sempre tive uma ligação forte com animais e dedico meu tempo a proporcionar o melhor cuidado possível aos pets.</p>
+                        <form action="editar-bio.php" method="POST">
+                            <h3>Bio
+                                <button type="button" class="editar-bio">
+                                    <span class="material-symbols-outlined">edit</span>
+                                </button>
+                            </h3>
+                            <p><span class="bioText"><?php echo htmlspecialchars($bio); ?></span></p>
+                            <textarea class="bioInput" name="bio" rows="5" cols="50" style="display: none"><?php echo htmlspecialchars($bio); ?></textarea>
+                            <button type="submit" class="salvar-bio" style="display: none;">Salvar</button>
+                            <input type="hidden" name="cuidador_id" value="<?php echo $cuidador_id; ?>">
+                        </form>
                     </div>
                     <div class="section">
                         <h3>Experiência</h3>
@@ -114,9 +146,90 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
             </div>
 
             <div id="conteudo-3" class="content-section">
-                <p>conteudo 3</p>
+                <?php
+                $sql = "SELECT nome, endereco, telefone, email, dt_nascimento, cpf FROM cuidadores WHERE id = ?";
+                $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param('i', $cuidador_id);
+                $stmt->execute();
+                $stmt->bind_result($nome, $endereco, $telefone, $email, $dt_nascimento, $cpf);
+                $stmt->fetch();
+                $stmt->close();
+                ?>
+                <div id="info-pessoais" class="sub-conteudo">
+                    <div class="informacoes-pessoais" cuidador-id="<?php echo $cuidador_id; ?>">
+                        <h2>Informações Pessoais <button class="btn-editar"><span class="material-symbols-outlined">edit</span></button></h2>
+                        <div class="textfield">
+                            <label for="nome-cuidador">Nome Completo:</label>
+                            <span class="nome-cuidadorText"><?php echo htmlspecialchars($nome); ?></span>
+                            <input type="text" class="nome-cuidadorInput" name="nome-cuidador" value="<?php echo htmlspecialchars($nome); ?>" style="display: none" required>
+                        </div>
+                        <div class="textfield">
+                            <span id="nomeErro" class="erro"></span>
+                            <label for="endereco">Endereço:</label>
+                            <span class="enderecoText"><?php echo htmlspecialchars($endereco); ?></span>
+                            <input type="text" class="enderecoInput" name="endereco" value="<?php echo htmlspecialchars($endereco); ?>" style="display: none" required>
+                        </div>
+                        <div class="textfield">
+                            <span id="enderecoErro" class="erro"></span>
+                            <label for="telefone">Telefone:</label>
+                            <span class="telefoneText"><?php echo htmlspecialchars($telefone); ?></span>
+                            <input type="tel" class="telefoneInput" name="telefone" value="<?php echo htmlspecialchars($telefone); ?>" style="display: none" pattern="[0-9]{10,11}" required>
+                        </div>
+                        <div class="textfield">
+                            <span id="telefoneErro" class="erro"></span>
+                            <label for="email">E-mail:</label>
+                            <span class="emailText"><?php echo htmlspecialchars($email); ?></span>
+                            <input type="email" class="emailInput" name="email" value="<?php echo htmlspecialchars($email); ?>" style="display: none" required>
+                        </div>
+                        <div class="textfield">
+                            <span id="emailErro" class="erro"></span>
+                            <label for="dt_nascimento">Data de Nascimento:</label>
+                            <span class="dt_nascimentoText"><?php echo htmlspecialchars($dt_nascimento); ?></span>
+                            <input type="date" class="dt_nascimentoInput" name="dt_nascimento" value="<?php echo htmlspecialchars($dt_nascimento); ?>" style="display: none" required>
+                        </div>
+                        <div class="textfield">
+                            <span id="dtNascimentoErro" class="erro"></span>
+                            <label for="cpf">CPF:</label>
+                            <span class="cpfText"><?php echo htmlspecialchars($cpf); ?></span>
+                        </div>
+                        <button class="btn-salvar">Salvar Alterações</button>
+                    </div>
+                </div>
+                <div id="trocar-senha" class="sub-conteudo" style="display:none;">
+                    <div class="trocar-senha">
+                        <h2>Trocar senha</h2>
+                        <form method="POST" action="trocar-senha.php" onsubmit="return validarSenha();">
+                            <div class="textfield">
+                                <label for="senha_antiga">Senha Antiga:</label>
+                                <input type="password" name="senha_antiga" required>
+                            </div>
+
+                            <div class="textfield">
+                                <label for="nova_senha">Nova Senha:</label>
+                                <input type="password" name="nova_senha" id="nova_senha" minlength="6" required>
+                            </div>
+
+                            <div class="textfield">
+                                <label for="confirmar_senha">Confirmar Nova Senha:</label>
+                                <input type="password" name="confirmar_senha" id="confirmar_senha" required>
+                            </div>
+                            <button class="btn-trocar-senha">Trocar Senha</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="excluir-conta" class="sub-conteudo" style="display:none;">
+                    <div class="excluir-conta">
+                        <h2>Excluir Conta</h2>
+                        <p>Tem certeza de que deseja excluir sua conta? Esta ação é irreversível.</p>
+                        <form action="excluir_conta.php" method="POST">
+                            <button type="submit" name="confirmar_exclusao" class="btn-excluir">Excluir Conta</button>
+                        </form>
+                        <a href="perfil.php" class="btn-cancelar">Cancelar</a>
+                    </div>
+                </div>
             </div>
-            
+
             <div id="conteudo-4" class="content-section">
                 <div class="suporte">
                     <h2>Suporte para Cuidadores</h2>
@@ -161,21 +274,22 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
                             </button>
                             <p>Para suporte, utilize a seção de contato no seu perfil ou envie uma mensagem diretamente via e-mail para a equipe do SafePet em <a>suporte@safepet.com</a>, que responderá em até 48 horas.</p>
                         </div>
-                        
+
                         <section class="contato">
                             <h2>Não achou sua dúvida? Escreva abaixo</h2>
-                            <form action="https://api.staticforms.xyz/submit" method="post"><form id="contactForm" action="https://api.staticforms.xyz/submit" method="post">
-                                <label>Nome</label>
-                                <input type="text" name="name" placeholder="Digite seu nome" autocomplete="off" required>
-                                <label>Email</label>
-                                <input type="email" name="email" placeholder="Digite seu email" autocomplete="off" required>
-                                <label>Mensagem</label>
-                                <textarea name="message" cols="30" rows="10" placeholder="Digite sua mensagem" required></textarea>
-                                <button type="submit">Enviar</button>
+                            <form action="https://api.staticforms.xyz/submit" method="post">
+                                <form id="contactForm" action="https://api.staticforms.xyz/submit" method="post">
+                                    <label>Nome</label>
+                                    <input type="text" name="name" placeholder="Digite seu nome" autocomplete="off" required>
+                                    <label>Email</label>
+                                    <input type="email" name="email" placeholder="Digite seu email" autocomplete="off" required>
+                                    <label>Mensagem</label>
+                                    <textarea name="message" cols="30" rows="10" placeholder="Digite sua mensagem" required></textarea>
+                                    <button type="submit">Enviar</button>
 
-                                <input type="hidden" name="accessKey" value="69faecc1-fb39-4467-a250-5ec40ff0baaa">
-                                <input type="hidden" name="redirectTo" value="http://localhost:8000/acesso_interno/cuidador/perfil.php#">
-                            </form>
+                                    <input type="hidden" name="accessKey" value="69faecc1-fb39-4467-a250-5ec40ff0baaa">
+                                    <input type="hidden" name="redirectTo" value="http://localhost:8000/acesso_interno/cuidador/perfil.php#">
+                                </form>
 
                         </section>
                     </div>
@@ -187,19 +301,19 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
                 <div class="politica-privacidade">
                     <h2>Política de Privacidade</h2>
                     <p>Na SafePet, respeitamos sua privacidade e estamos comprometidos em proteger suas informações pessoais. Esta política explica como coletamos, usamos e protegemos seus dados.</p>
-                    
+
                     <h4>1. Coleta de Informações</h4>
                     <p>Coletamos informações pessoais que você nos fornece ao se cadastrar, como nome, e-mail e telefone.</p>
-                    
+
                     <h4>2. Uso das Informações</h4>
                     <p>Usamos suas informações para oferecer nossos serviços, entrar em contato e melhorar nossa plataforma.</p>
-                    
+
                     <h4>3. Compartilhamento de Informações</h4>
                     <p>Não compartilhamos suas informações pessoais com terceiros, exceto quando necessário para o funcionamento dos nossos serviços.</p>
-                    
+
                     <h4>4. Segurança</h4>
                     <p>Adotamos medidas de segurança para proteger suas informações contra acesso não autorizado.</p>
-                    
+
                     <h4>5. Alterações na Política</h4>
                     <p>Podemos atualizar esta política e informaremos sobre quaisquer alterações significativas.</p>
                 </div>
@@ -254,7 +368,7 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
             }
         });
     </script>
-
+    
 </body>
 
 </html>
