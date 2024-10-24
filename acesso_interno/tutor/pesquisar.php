@@ -43,7 +43,7 @@ $result = $mysqli->query($sql);
             <?php while ($row = $result->fetch_assoc()) : ?>
                 <div class="cuidador">
                     <div class="avatar">
-                        <img src="<?php echo '../cuidador/assets/fotos_cuidadores/' . htmlspecialchars($row['foto_perfil'] ? $row['foto_perfil'] : '../../assets/profile-circle-icon.png'); ?>" alt="Foto de <?php echo htmlspecialchars($row['nome']); ?>">
+                        <img src="<?php echo '../cuidador/uploads/fotos_cuidadores/' . htmlspecialchars($row['foto_perfil'] ? $row['foto_perfil'] : '../../assets/profile-circle-icon.png'); ?>" class="cuidador-avatar" alt="Foto de <?php echo htmlspecialchars($row['nome']); ?>">
                     </div>
                     <div class="details">
                         <h3><?php echo htmlspecialchars($row['nome']); ?></h3>

@@ -34,11 +34,13 @@ body {
 }
 
 /* Estilo do avatar do cuidador */
-.avatar {
+
+.cuidador-avatar {
     width: 80px;
     height: 80px;
-    background-color: #ccc;
     border-radius: 50%;
+    border: 2px solid #007bff;
+    object-fit: cover;
     margin-right: 20px;
 }
 
