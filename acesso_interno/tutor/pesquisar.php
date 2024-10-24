@@ -49,11 +49,18 @@ $result = $mysqli->query($sql);
                         <h3><?php echo htmlspecialchars($row['nome']); ?></h3>
                         <p>Avaliação:
                             <?php
-                            $avaliacao = round($row['avaliacao_media']);
+                            $avaliacao = isset($row['avaliacao_media']) ? round($row['avaliacao_media']) : 0;
                             echo str_repeat('⭐', $avaliacao) . str_repeat('☆', 5 - $avaliacao);
                             ?>
                         </p>
-                        <p>Preço: R$ <?php echo number_format($row['preco_hora'], 2, ',', '.'); ?>/hora</p>
+                        <p>Preço:
+                            <?php
+                            if (isset($row['preco_hora'])) {
+                                echo 'R$ ' . number_format($row['preco_hora'], 2, ',', '.') . '/hora';
+                            } else {
+                                echo 'Preço não informado';
+                            }
+                            ?></p>
                         <p>Localização: <?php echo htmlspecialchars($row['cidade'] . ', ' . $row['uf']); ?></p>
                     </div>
                     <a href="perfil_cuidador.php?id=<?php echo $row['id']; ?>" class="schedule-button">Ver Perfil</a>
