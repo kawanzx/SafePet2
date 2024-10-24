@@ -5,11 +5,11 @@ include 'navbar.php';
 include '../../login/conexaobd.php';
 
 $sql = "
-    SELECT c.id, c.nome, c.preco_hora, c.cidade, c.uf, 
+    SELECT c.id, c.nome, c.preco_hora, c.cidade, c.uf, c.foto_perfil, 
            AVG(a.nota) as avaliacao_media 
     FROM cuidadores c
     LEFT JOIN avaliacoes a ON c.id = a.id_cuidador
-    GROUP BY c.id, c.nome, c.preco_hora, c.cidade, c.uf
+    GROUP BY c.id, c.nome, c.preco_hora, c.cidade, c.uf, foto_perfil
 ";
 $result = $mysqli->query($sql);
 
@@ -42,7 +42,9 @@ $result = $mysqli->query($sql);
         <?php if ($result->num_rows > 0) : ?>
             <?php while ($row = $result->fetch_assoc()) : ?>
                 <div class="cuidador">
-                    <div class="avatar"></div>
+                    <div class="avatar">
+                        <img src="<?php echo '../cuidador/assets/fotos_cuidadores/' . htmlspecialchars($row['foto_perfil'] ? $row['foto_perfil'] : '../../assets/profile-circle-icon.png'); ?>" alt="Foto de <?php echo htmlspecialchars($row['nome']); ?>">
+                    </div>
                     <div class="details">
                         <h3><?php echo htmlspecialchars($row['nome']); ?></h3>
                         <p>Avaliação:
