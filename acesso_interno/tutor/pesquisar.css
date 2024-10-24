@@ -7,13 +7,13 @@ body {
     height: 100vh;
 }
 
-.caregivers {
+.cuidadores {
     padding: 100px 20px 20px;
     /* Espaçamento superior para evitar a navbar */
     background-color: #f9f9f9;
 }
 
-.caregivers h2 {
+.cuidadores h2 {
     text-align: center;
     margin-bottom: 30px;
     font-family: 'Roboto', sans-serif;
@@ -21,7 +21,7 @@ body {
 }
 
 /* Estilo dos blocos de cuidadores */
-.caregiver {
+.cuidador {
     display: flex;
     align-items: center;
     background-color: #fff;

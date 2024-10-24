@@ -1,7 +1,17 @@
 <?php
 
-include('../../login/protect.php');
+include '../../login/protect.php';
 include 'navbar.php';
+include '../../login/conexaobd.php';
+
+$sql = "
+    SELECT c.id, c.nome, c.preco_hora, c.cidade, c.uf, 
+           AVG(a.nota) as avaliacao_media 
+    FROM cuidadores c
+    LEFT JOIN avaliacoes a ON c.id = a.id_cuidador
+    GROUP BY c.id, c.nome, c.preco_hora, c.cidade, c.uf
+";
+$result = $mysqli->query($sql);
 
 ?>
 
@@ -18,7 +28,8 @@ include 'navbar.php';
 
 <body>
     <!-- Seção de Cuidadores Disponíveis -->
-    <section class="caregivers">
+
+    <section class="cuidadores">
 
         <div id="divBusca">
             <img src="search3.png" alt="Buscar..." />
@@ -28,38 +39,28 @@ include 'navbar.php';
 
         <h2>Cuidadores Disponíveis</h2>
 
-        <div class="caregiver">
-            <div class="avatar"></div>
-            <div class="details">
-                <h3>Nome do Cuidador</h3>
-                <p>Avaliação: ⭐⭐⭐⭐☆</p>
-                <p>Preço: R$ 50,00/hora</p>
-                <p>Localização: São Paulo, SP</p>
-            </div>
-            <a href="#schedule" class="schedule-button">Agendar</a>
-        </div>
+        <?php if ($result->num_rows > 0) : ?>
+            <?php while ($row = $result->fetch_assoc()) : ?>
+                <div class="cuidador">
+                    <div class="avatar"></div>
+                    <div class="details">
+                        <h3><?php echo htmlspecialchars($row['nome']); ?></h3>
+                        <p>Avaliação:
+                            <?php
+                            $avaliacao = round($row['avaliacao_media']);
+                            echo str_repeat('⭐', $avaliacao) . str_repeat('☆', 5 - $avaliacao);
+                            ?>
+                        </p>
+                        <p>Preço: R$ <?php echo number_format($row['preco_hora'], 2, ',', '.'); ?>/hora</p>
+                        <p>Localização: <?php echo htmlspecialchars($row['cidade'] . ', ' . $row['uf']); ?></p>
+                    </div>
+                    <a href="perfil_cuidador.php?id=<?php echo $row['id']; ?>" class="schedule-button">Ver Perfil</a>
+                </div>
+            <?php endwhile; ?>
+        <?php else : ?>
+            <p>Nenhum cuidador disponível no momento.</p>
+        <?php endif; ?>
 
-        <div class="caregiver">
-            <div class="avatar"></div>
-            <div class="details">
-                <h3>Nome do Cuidador</h3>
-                <p>Avaliação: ⭐⭐⭐⭐⭐</p>
-                <p>Preço: R$ 60,00/hora</p>
-                <p>Localização: Rio de Janeiro, RJ</p>
-            </div>
-            <a href="#schedule" class="schedule-button">Agendar</a>
-        </div>
-
-        <div class="caregiver">
-            <div class="avatar"></div>
-            <div class="details">
-                <h3>Nome do Cuidador</h3>
-                <p>Avaliação: ⭐⭐⭐⭐☆</p>
-                <p>Preço: R$ 55,00/hora</p>
-                <p>Localização: Belo Horizonte, MG</p>
-            </div>
-            <a href="#schedule" class="schedule-button">Agendar</a>
-        </div>
     </section>
     <script type="text/javascript" src="script.js"></script>
 </body>

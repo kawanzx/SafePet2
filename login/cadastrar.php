@@ -7,7 +7,6 @@ if(isset($_POST['email'])){
     $nome_completo = trim($_POST['nome_completo']);
     $telefone = preg_replace('/\D/', '', $_POST['telefone']);
     $tipo_usuario = $_POST['tipo_usuario'];
-    $endereco = trim($_POST['endereco']);
     $data_nascimento = $_POST['data_nascimento'];
     $cpf = preg_replace('/\D/', '', $_POST['cpf']);
 
@@ -29,7 +28,7 @@ if(isset($_POST['email'])){
     
         $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-        $mysqli->query("INSERT INTO tutores (nome, email, senha, telefone, endereco, dt_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$endereco', '$data_nascimento', '$cpf')");
+        $mysqli->query("INSERT INTO tutores (nome, email, senha, telefone, dt_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$data_nascimento', '$cpf')");
     } elseif($tipo_usuario === 'cuidador'){
         $stmt = $mysqli->prepare("SELECT id FROM cuidadores WHERE email = ? OR cpf = ?");
 
@@ -48,7 +47,7 @@ if(isset($_POST['email'])){
     
         $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
 
-        $mysqli->query("INSERT INTO cuidadores (nome, email, senha, telefone, endereco, dt_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$endereco', '$data_nascimento', '$cpf')");
+        $mysqli->query("INSERT INTO cuidadores (nome, email, senha, telefone, dt_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$data_nascimento', '$cpf')");
     }
     
     echo "<script>alert('Cadastro bem sucedido. Realize o login para acessar sua conta');window.location.href='formlogin.html';</script>";

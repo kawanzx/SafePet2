@@ -54,7 +54,7 @@ document.addEventListener('click', function (event) {
         // Esconde todos os submenus quando a sidebar é recolhida
         const submenus = sidebar.querySelectorAll('.submenu');
         submenus.forEach(submenu => {
-            submenu.style.display = 'none'; // Esconde todos os submenus
+            submenu.style.display = 'none';
         });
     }
 });
@@ -87,27 +87,27 @@ function showContent(sectionId, element) {
     // Se o link clicado é parte do submenu, não recolhe a sidebar
     var isSubmenu = element.closest('ul.submenu');
     if (isSubmenu) {
-        var subContentId = element.dataset.subContent; // Obtém o ID do sub-conteúdo
+        var subContentId = element.dataset.subContent;
 
         // Oculta todos os sub-conteúdos
         var subSections = document.querySelectorAll('#' + sectionId + ' > div');
         subSections.forEach(function (subSection) {
-            subSection.style.display = 'none'; // Oculta todos os sub-conteúdos
+            subSection.style.display = 'none';
         });
 
         // Exibe o sub-conteúdo selecionado
         if (subContentId) {
             var activeSubSection = document.getElementById(subContentId);
             if (activeSubSection) {
-                activeSubSection.style.display = 'block'; // Exibe o sub-conteúdo
+                activeSubSection.style.display = 'block';
             }
         }
-        return; // Não faz nada, apenas retorna
+        return;
     }
 
     // Após a seleção do conteúdo, recolhe a sidebar se não for um submenu
     if (sidebar.classList.contains('sidebar-expandida')) {
-        sidebar.classList.remove('sidebar-expandida'); // Recolhe a sidebar
+        sidebar.classList.remove('sidebar-expandida');
     }
 }
 
@@ -116,7 +116,6 @@ function alternarSubmenu(event) {
     event.preventDefault();
     const submenu = event.currentTarget.nextElementSibling;
 
-    // Alterna entre mostrar e ocultar o submenu
     if (submenu) {
         if (submenu.style.display === 'block') {
             submenu.style.display = 'none';
@@ -465,8 +464,18 @@ document.querySelectorAll('.fotoPetInput').forEach(function (input) {
 const editar = document.querySelector('.btn-editar');
 const nomeTutorText = document.querySelector('.nome-tutorText');
 const nomeTutorInput = document.querySelector('.nome-tutorInput');
+const cepText = document.querySelector('.cepText');
+const cepInput = document.querySelector('.cepInput');
 const enderecoText = document.querySelector('.enderecoText');
 const enderecoInput = document.querySelector('.enderecoInput');
+const complementoText = document.querySelector('.complementoText');
+const complementoInput = document.querySelector('.complementoInput');
+const bairroText = document.querySelector('.bairroText');
+const bairroInput = document.querySelector('.bairroInput');
+const cidadeText = document.querySelector('.cidadeText');
+const cidadeInput = document.querySelector('.cidadeInput');
+const ufText = document.querySelector('.ufText');
+const ufInput = document.querySelector('.ufInput');
 const telefoneText = document.querySelector('.telefoneText');
 const telefoneInput = document.querySelector('.telefoneInput');
 const emailText = document.querySelector('.emailText');
@@ -485,6 +494,15 @@ editar.addEventListener('click', function () {
         nomeTutorText.style.display = 'block';
         nomeTutorInput.style.display = 'none';
     }
+    if (cepInput.style.display === 'none') {
+        cepText.style.display = 'none';
+        cepInput.style.display = 'block';
+        cepInput.value = cepText.textContent.trim();
+    } else {
+        cepText.textContent = cepInput.value.trim();
+        cepText.style.display = 'block';
+        cepInput.style.display = 'none';
+    }
     if (enderecoInput.style.display === 'none') {
         enderecoText.style.display = 'none';
         enderecoInput.style.display = 'block';
@@ -493,6 +511,42 @@ editar.addEventListener('click', function () {
         enderecoText.textContent = enderecoInput.value.trim();
         enderecoText.style.display = 'block';
         enderecoInput.style.display = 'none';
+    }
+    if (complementoInput.style.display === 'none') {
+        complementoText.style.display = 'none';
+        complementoInput.style.display = 'block';
+        complementoInput.value = complementoText.textContent.trim();
+    } else {
+        complementoText.textContent = complementoInput.value.trim();
+        complementoText.style.display = 'block';
+        complementoInput.style.display = 'none';
+    }
+    if (bairroInput.style.display === 'none') {
+        bairroText.style.display = 'none';
+        bairroInput.style.display = 'block';
+        bairroInput.value = bairroText.textContent.trim();
+    } else {
+        bairroText.textContent = bairroInput.value.trim();
+        bairroText.style.display = 'block';
+        bairroInput.style.display = 'none';
+    }
+    if (cidadeInput.style.display === 'none') {
+        cidadeText.style.display = 'none';
+        cidadeInput.style.display = 'block';
+        cidadeInput.value = cidadeText.textContent.trim();
+    } else {
+        cidadeText.textContent = cidadeInput.value.trim();
+        cidadeText.style.display = 'block';
+        cidadeInput.style.display = 'none';
+    }
+    if (ufInput.style.display === 'none') {
+        ufText.style.display = 'none';
+        ufInput.style.display = 'block';
+        ufInput.value = ufText.textContent.trim();
+    } else {
+        ufText.textContent = ufInput.value.trim();
+        ufText.style.display = 'block';
+        ufInput.style.display = 'none';
     }
     if (telefoneInput.style.display === 'none') {
         telefoneText.style.display = 'none';
@@ -523,13 +577,47 @@ editar.addEventListener('click', function () {
     }
 });
 
+document.querySelector('.cepInput').addEventListener('blur', function () {
+    const cep = this.value.trim();
+
+    // Verifica se o CEP tem o formato correto (somente números e 8 dígitos)
+    const cepPattern = /^[0-9]{8}$/;
+    if (cepPattern.test(cep)) {
+        // Faz a requisição para a API ViaCEP
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.erro) {
+                    // Preencher automaticamente os campos de endereço, bairro, cidade e UF
+                    document.querySelector('.enderecoInput').value = data.logradouro;
+                    document.querySelector('.bairroInput').value = data.bairro;
+                    document.querySelector('.cidadeInput').value = data.localidade;
+                    document.querySelector('.ufInput').value = data.uf;
+                } else {
+                    alert('CEP não encontrado!');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao buscar o CEP:', error);
+                alert('Erro ao buscar o CEP. Verifique sua conexão e tente novamente.');
+            });
+    } else {
+        alert('CEP inválido. Use apenas 8 dígitos numéricos.');
+    }
+});
+
 document.querySelectorAll('.btn-salvar').forEach(button => {
     button.addEventListener('click', function () {
         const tutorDiv = this.closest('.informacoes-pessoais');
 
         // Obter os valores dos inputs
         const nome = tutorDiv.querySelector('.nome-tutorInput').value.trim();
+        const cep = tutorDiv.querySelector('.cepInput').value.trim();
         const endereco = tutorDiv.querySelector('.enderecoInput').value.trim();
+        const complemento = tutorDiv.querySelector('.complementoInput').value.trim();
+        const bairro = tutorDiv.querySelector('.bairroInput').value.trim();
+        const cidade = tutorDiv.querySelector('.cidadeInput').value.trim();
+        const uf = tutorDiv.querySelector('.ufInput').value.trim();
         const telefone = tutorDiv.querySelector('.telefoneInput').value.trim();
         const email = tutorDiv.querySelector('.emailInput').value.trim();
         const dt_nascimento = tutorDiv.querySelector('.dt_nascimentoInput').value.trim();
@@ -541,33 +629,76 @@ document.querySelectorAll('.btn-salvar').forEach(button => {
 
         // Validação do nome
         if (nome === '' || nome.length < 2) {
-            tutorDiv.querySelector('#nomeErro').textContent = 'Nome deve ter pelo menos 2 caracteres.';
+            const nomeErro = tutorDiv.querySelector('#nomeErro');
+            nomeErro.textContent = 'Nome deve ter pelo menos 2 caracteres.';
+            nomeErro.style.color = 'red';
             valid = false;
         }
 
         // Validação do endereço
         if (endereco === '') {
-            tutorDiv.querySelector('#enderecoErro').textContent = 'Endereço é obrigatório.';
+            const enderecoErro = tutorDiv.querySelector('#enderecoErro');
+            enderecoErro.textContent = 'Endereço é obrigatório.';
+            enderecoErro.style.color = 'red';
+            valid = false;
+        }
+
+        // Validação do complemento (não obrigatório, mas deve ser válido caso informado)
+        if (complemento.length > 100) {
+            const complementoErro = tutorDiv.querySelector('#complementoErro');
+            complementoErro.textContent = 'Complemento muito longo.';
+            complementoErro.style.color = 'red';
+            valid = false;
+        }
+
+        // Validação do bairro
+        if (bairro === '') {
+            const bairroErro = tutorDiv.querySelector('#bairroErro');
+            bairroErro.textContent = 'Bairro é obrigatório.';
+            bairroErro.style.color = 'red';
+            valid = false;
+        }
+
+        // Validação da cidade
+        if (cidade === '') {
+            const cidadeErro = tutorDiv.querySelector('#cidadeErro');
+            cidadeErro.textContent = 'Cidade é obrigatória.';
+            cidadeErro.style.color = 'red';
+            valid = false;
+        }
+
+        // Validação do UF (deve ter 2 caracteres)
+        const ufPattern = /^[A-Z]{2}$/;
+        if (!ufPattern.test(uf)) {
+            const ufErro = tutorDiv.querySelector('#ufErro');
+            ufErro.textContent = 'UF inválido. Use 2 letras maiúsculas.';
+            ufErro.style.color = 'red';
             valid = false;
         }
 
         // Validação do telefone (10 ou 11 dígitos, sem caracteres especiais)
         const telefonePattern = /^[0-9]{10,11}$/;
         if (!telefonePattern.test(telefone)) {
-            tutorDiv.querySelector('#telefoneErro').textContent = 'Telefone inválido. Use 10 ou 11 dígitos numéricos.';
+            const telefoneErro = tutorDiv.querySelector('#telefoneErro');
+            telefoneErro.textContent = 'Telefone inválido. Use 10 ou 11 dígitos numéricos.';
+            telefoneErro.style.color = 'red';
             valid = false;
         }
 
         // Validação do e-mail
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailPattern.test(email)) {
-            tutorDiv.querySelector('#emailErro').textContent = 'E-mail inválido.';
+            const emailErro = tutorDiv.querySelector('#emailErro');
+            emailErro.textContent = 'E-mail inválido.';
+            emailErro.style.color = 'red';
             valid = false;
         }
 
         // Validação da data de nascimento (certifique-se que o campo não está vazio)
         if (dt_nascimento === '') {
-            tutorDiv.querySelector('#dtNascimentoErro').textContent = 'Data de nascimento é obrigatória.';
+            const dtNascimentoErro = tutorDiv.querySelector('#dtNascimentoErro');
+            dtNascimentoErro.textContent = 'Data de nascimento é obrigatória.';
+            dtNascimentoErro.style.color = 'red';
             valid = false;
         }
 
@@ -577,7 +708,12 @@ document.querySelectorAll('.btn-salvar').forEach(button => {
             const formData = new FormData();
             formData.append('tutorId', tutorId);
             formData.append('nome-tutor', nome);
+            formData.append('cep', cep);
             formData.append('endereco', endereco);
+            formData.append('complemento', complemento);
+            formData.append('bairro', bairro);
+            formData.append('cidade', cidade);
+            formData.append('uf', uf);
             formData.append('telefone', telefone);
             formData.append('email', email);
             formData.append('dt_nascimento', dt_nascimento);
@@ -592,16 +728,21 @@ document.querySelectorAll('.btn-salvar').forEach(button => {
                     if (data.includes("sucesso")) {
                         // Atualizar os textos com os novos valores
                         tutorDiv.querySelector('.nome-tutorText').textContent = nome;
+                        tutorDiv.querySelector('.cepText').textContent = cep;
                         tutorDiv.querySelector('.enderecoText').textContent = endereco;
+                        tutorDiv.querySelector('.complementoText').textContent = complemento;
+                        tutorDiv.querySelector('.bairroText').textContent = bairro;
+                        tutorDiv.querySelector('.cidadeText').textContent = cidade;
+                        tutorDiv.querySelector('.ufText').textContent = uf;
                         tutorDiv.querySelector('.telefoneText').textContent = telefone;
                         tutorDiv.querySelector('.emailText').textContent = email;
                         tutorDiv.querySelector('.dt_nascimentoText').textContent = dt_nascimento;
 
                         // Ocultar os inputs e exibir os textos
-                        tutorDiv.querySelectorAll('.nome-tutorText, .enderecoText, .telefoneText, .emailText, .dt_nascimentoText').forEach(text => {
+                        tutorDiv.querySelectorAll('.nome-tutorText, .cepText, .enderecoText, .complementoText, .bairroText, .cidadeText, .ufText, .telefoneText, .emailText, .dt_nascimentoText').forEach(text => {
                             text.style.display = 'inline';
                         });
-                        tutorDiv.querySelectorAll('.nome-tutorInput, .enderecoInput, .telefoneInput, .emailInput, .dt_nascimentoInput').forEach(input => {
+                        tutorDiv.querySelectorAll('.nome-tutorInput, .cepInput, .enderecoInput, .complementoInput, .bairroInput, .cidadeInput, .ufInput, .telefoneInput, .emailInput, .dt_nascimentoInput').forEach(input => {
                             input.style.display = 'none';
                         });
                         alert('Dados atualizados com sucesso!');
@@ -614,6 +755,36 @@ document.querySelectorAll('.btn-salvar').forEach(button => {
                     alert('Erro na comunicação com o servidor.');
                 });
         }
+    });
+});
+
+// Verifica se tem um endereço cadastrado
+
+document.addEventListener('DOMContentLoaded', function () {
+    const endereco = document.querySelector('.cepInput').value.trim();
+   
+    // Verifica se o endereço já está cadastrado
+    if (endereco === '') {
+        // Exibe a mensagem pedindo para cadastrar o endereço
+        document.querySelector('.endereco').style.display = 'none';
+        document.getElementById('mensagemEndereco').style.display = 'block';
+    }
+
+    // Ao clicar em "Cadastrar", exibe o formulário de cadastro de endereço
+    document.getElementById('cadastrarEnderecoBtn').addEventListener('click', function (event) {
+        event.preventDefault();
+        document.querySelector('.endereco').style.display = 'block';
+
+        const inputs = document.querySelectorAll('.nome-tutorInput, .cepInput, .enderecoInput, .complementoInput, .bairroInput, .cidadeInput, .ufInput, .telefoneInput, .emailInput, .dt_nascimentoInput');
+        inputs.forEach(input => {
+            input.style.display = 'block'; // Exibe o input
+        });
+
+        const textos = document.querySelectorAll('.nome-tutorText, .cepText, .enderecoText, .complementoText, .bairroText, .cidadeText, .ufText, .telefoneText, .emailText, .dt_nascimentoText');
+        textos.forEach(text => {
+            text.style.display = 'none'; // Oculta o texto
+        });
+        document.getElementById('mensagemEndereco').style.display = 'none';
     });
 });
 
