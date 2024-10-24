@@ -147,50 +147,89 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
 
             <div id="conteudo-3" class="content-section">
                 <?php
-                $sql = "SELECT nome, endereco, telefone, email, dt_nascimento, cpf FROM cuidadores WHERE id = ?";
+                $sql = "SELECT nome, cep, endereco, complemento, bairro, cidade, uf, telefone, email, dt_nascimento, cpf FROM cuidadores WHERE id = ?";
                 $stmt = $mysqli->prepare($sql);
                 $stmt->bind_param('i', $cuidador_id);
                 $stmt->execute();
-                $stmt->bind_result($nome, $endereco, $telefone, $email, $dt_nascimento, $cpf);
+                $stmt->bind_result($nome, $cep, $endereco, $complemento, $bairro, $cidade, $uf, $telefone, $email, $dt_nascimento, $cpf);
                 $stmt->fetch();
                 $stmt->close();
                 ?>
                 <div id="info-pessoais" class="sub-conteudo">
                     <div class="informacoes-pessoais" cuidador-id="<?php echo $cuidador_id; ?>">
                         <h2>Informações Pessoais <button class="btn-editar"><span class="material-symbols-outlined">edit</span></button></h2>
-                        <div class="textfield">
-                            <label for="nome-cuidador">Nome Completo:</label>
-                            <span class="nome-cuidadorText"><?php echo htmlspecialchars($nome); ?></span>
-                            <input type="text" class="nome-cuidadorInput" name="nome-cuidador" value="<?php echo htmlspecialchars($nome); ?>" style="display: none" required>
+                        <div class="principais-informacoes">
+                            <div class="textfield">
+                                <span id="nomeErro" class="erro"></span>
+                                <label for="nome-cuidador">Nome Completo:</label>
+                                <span class="nome-cuidadorText"><?php echo htmlspecialchars($nome); ?></span>
+                                <input type="text" class="nome-cuidadorInput" name="nome-cuidador" value="<?php echo htmlspecialchars($nome); ?>" style="display: none" required>
+                            </div>
+                            <div class="textfield">
+                                <span id="telefoneErro" class="erro"></span>
+                                <label for="telefone">Telefone:</label>
+                                <span class="telefoneText"><?php echo htmlspecialchars($telefone); ?></span>
+                                <input type="tel" class="telefoneInput" name="telefone" value="<?php echo htmlspecialchars($telefone); ?>" style="display: none" pattern="[0-9]{10,11}" required>
+                            </div>
+                            <div class="textfield">
+                                <span id="emailErro" class="erro"></span>
+                                <label for="email">E-mail:</label>
+                                <span class="emailText"><?php echo htmlspecialchars($email); ?></span>
+                                <input type="email" class="emailInput" name="email" value="<?php echo htmlspecialchars($email); ?>" style="display: none" required>
+                            </div>
+                            <div class="textfield">
+                                <span id="dtNascimentoErro" class="erro"></span>
+                                <label for="dt_nascimento">Data de Nascimento:</label>
+                                <span class="dt_nascimentoText"><?php echo htmlspecialchars($dt_nascimento); ?></span>
+                                <input type="date" class="dt_nascimentoInput" name="dt_nascimento" value="<?php echo htmlspecialchars($dt_nascimento); ?>" style="display: none" required>
+                            </div>
+                            <div class="textfield">
+                                <span id="cpfErro" class="erro"></span>
+                                <label for="cpf">CPF:</label>
+                                <span class="cpfText"><?php echo htmlspecialchars($cpf); ?></span>
+                            </div>
                         </div>
-                        <div class="textfield">
-                            <span id="nomeErro" class="erro"></span>
-                            <label for="endereco">Endereço:</label>
-                            <span class="enderecoText"><?php echo htmlspecialchars($endereco); ?></span>
-                            <input type="text" class="enderecoInput" name="endereco" value="<?php echo htmlspecialchars($endereco); ?>" style="display: none" required>
+                        <h3>Endereço</h3>
+                        <div id="mensagemEndereco" style="display: none;">
+                            <p>Você ainda não cadastrou um endereço. <a href="#" id="cadastrarEnderecoBtn">Clique aqui para cadastrar.</a></p>
                         </div>
-                        <div class="textfield">
-                            <span id="enderecoErro" class="erro"></span>
-                            <label for="telefone">Telefone:</label>
-                            <span class="telefoneText"><?php echo htmlspecialchars($telefone); ?></span>
-                            <input type="tel" class="telefoneInput" name="telefone" value="<?php echo htmlspecialchars($telefone); ?>" style="display: none" pattern="[0-9]{10,11}" required>
-                        </div>
-                        <div class="textfield">
-                            <span id="telefoneErro" class="erro"></span>
-                            <label for="email">E-mail:</label>
-                            <span class="emailText"><?php echo htmlspecialchars($email); ?></span>
-                            <input type="email" class="emailInput" name="email" value="<?php echo htmlspecialchars($email); ?>" style="display: none" required>
-                        </div>
-                        <div class="textfield">
-                            <span id="emailErro" class="erro"></span>
-                            <label for="dt_nascimento">Data de Nascimento:</label>
-                            <span class="dt_nascimentoText"><?php echo htmlspecialchars($dt_nascimento); ?></span>
-                            <input type="date" class="dt_nascimentoInput" name="dt_nascimento" value="<?php echo htmlspecialchars($dt_nascimento); ?>" style="display: none" required>
-                        </div>
-                        <div class="textfield">
-                            <span id="dtNascimentoErro" class="erro"></span>
-                            <label for="cpf">CPF:</label>
-                            <span class="cpfText"><?php echo htmlspecialchars($cpf); ?></span>
+                        <div class="endereco">
+                            <div class="textfield">
+                                <span id="cepErro" class="erro"></span>
+                                <label for="cep">CEP:</label>
+                                <span class="cepText"><?php echo htmlspecialchars($cep); ?></span>
+                                <input type="text" class="cepInput" name="cep" value="<?php echo htmlspecialchars($cep); ?>" style="display: none" required>
+                            </div>
+                            <div class="textfield">
+                                <span id="enderecoErro" class="erro"></span>
+                                <label for="endereco">Endereço:</label>
+                                <span class="enderecoText"><?php echo htmlspecialchars($endereco); ?></span>
+                                <input type="text" class="enderecoInput" name="endereco" value="<?php echo htmlspecialchars($endereco); ?>" style="display: none" required>
+                            </div>
+                            <div class="textfield">
+                                <span id="complementoErro" class="erro"></span>
+                                <label for="complemento">Complemento (opcional):</label>
+                                <span class="complementoText"><?php echo htmlspecialchars($complemento); ?></span>
+                                <input type="text" class="complementoInput" name="complemento" value="<?php echo htmlspecialchars($complemento); ?>" style="display: none" required>
+                            </div>
+                            <div class="textfield">
+                                <span id="bairroErro" class="erro"></span>
+                                <label for="bairro">Bairro:</label>
+                                <span class="bairroText"><?php echo htmlspecialchars($bairro); ?></span>
+                                <input type="text" class="bairroInput" name="bairro" value="<?php echo htmlspecialchars($bairro); ?>" style="display: none" required>
+                            </div>
+                            <div class="textfield">
+                                <span id="cidadeErro" class="erro"></span>
+                                <label for="cidade">Cidade:</label>
+                                <span class="cidadeText"><?php echo htmlspecialchars($cidade); ?></span>
+                                <input type="text" class="cidadeInput" name="cidade" value="<?php echo htmlspecialchars($cidade); ?>" style="display: none" required>
+                            </div>
+                            <div class="textfield">
+                                <span id="ufErro" class="erro"></span>
+                                <label for="uf">UF:</label>
+                                <span class="ufText"><?php echo htmlspecialchars($uf); ?></span>
+                                <input type="text" class="ufInput" name="uf" value="<?php echo htmlspecialchars($uf); ?>" style="display: none" required>
+                            </div>
                         </div>
                         <button class="btn-salvar">Salvar Alterações</button>
                     </div>
@@ -272,7 +311,7 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
                                 <span>Como entrar em contato com o suporte?</span>
                                 <i class="fas fa-chevron-down d-arrow"></i>
                             </button>
-                            <p>Para suporte, utilize a seção de contato no seu perfil ou envie uma mensagem diretamente via e-mail para a equipe do SafePet em <a>suporte@safepet.com</a>, que responderá em até 48 horas.</p>
+                            <p>Para suporte, utilize a seção de contato no seu perfil ou envie uma mensagem diretamente via e-mail para a equipe do SafePet em <a href="mailto:suporte.safepet@gmail.com">suporte.safepet@gmail.com</a>, que responderá em até 48 horas.</p>
                         </div>
 
                         <section class="contato">
@@ -290,7 +329,6 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
                                     <input type="hidden" name="accessKey" value="69faecc1-fb39-4467-a250-5ec40ff0baaa">
                                     <input type="hidden" name="redirectTo" value="http://localhost:8000/acesso_interno/cuidador/perfil.php#">
                                 </form>
-
                         </section>
                     </div>
                 </div>
@@ -368,7 +406,7 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
             }
         });
     </script>
-    
+
 </body>
 
 </html>
