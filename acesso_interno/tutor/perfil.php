@@ -82,7 +82,16 @@ $tutor_id = $_SESSION['id'];
                                     <span class="material-symbols-outlined">edit</span>
                                 </button>
                             </h3>
-                            <p><span class="bioText"><?php echo htmlspecialchars($bio); ?></span></p>
+                            <p><span class="bioText">
+                                    <?php
+                                        if(isset($bio)){
+                                            echo htmlspecialchars($bio); 
+                                        } else {
+                                            echo '';
+                                        } 
+                                    ?> 
+                                </span>
+                            </p>
                             <textarea class="bioInput" name="bio" rows="5" cols="50" style="display: none"><?php echo htmlspecialchars($bio); ?></textarea>
                             <button type="submit" class="salvar-bio" style="display: none;">Salvar</button>
                             <input type="hidden" name="tutor_id" value="<?php echo $tutor_id; ?>">

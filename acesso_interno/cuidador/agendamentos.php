@@ -25,6 +25,7 @@ include 'navbar.php';
             padding: 15px;
             position: fixed;
             height: 100%;
+            margin-top: 61px;
         }
 
         .sidebar h2 {

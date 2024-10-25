@@ -42,7 +42,7 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['tipo_usuar
                 } else if ($tipo_usuario === 'cuidador') {
 
                     $_SESSION['tipo_usuario'] = 'cuidador';
-                    header("Location: ../acesso_interno/cuidador/pesquisar.php");
+                    header("Location: ../acesso_interno/cuidador/agendamentos.php");
                 }
             } else {
                 echo "<script>alert ('Senha incorreta. Verifique se o tipo de usuário informado corresponde ao cadastrado.'); window.location.href = 'formlogin.html'; </script>";

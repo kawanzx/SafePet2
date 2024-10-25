@@ -106,7 +106,17 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
                                     <span class="material-symbols-outlined">edit</span>
                                 </button>
                             </h3>
-                            <p><span class="bioText"><?php echo htmlspecialchars($bio); ?></span></p>
+                            <p>
+                                <span class="bioText">
+                                    <?php
+                                    if (isset($bio)) {
+                                        echo htmlspecialchars($bio);
+                                    } else {
+                                        echo '';
+                                    }
+                                    ?>
+                                </span>
+                            </p>
                             <textarea class="bioInput" name="bio" rows="5" cols="50" style="display: none"><?php echo htmlspecialchars($bio); ?></textarea>
                             <button type="submit" class="salvar-bio" style="display: none;">Salvar</button>
                             <input type="hidden" name="cuidador_id" value="<?php echo $cuidador_id; ?>">
@@ -193,42 +203,42 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
                         <div id="mensagemEndereco" style="display: none;">
                             <p>Você ainda não cadastrou um endereço. <a href="#" id="cadastrarEnderecoBtn">Clique aqui para cadastrar.</a></p>
                         </div>
-                        <div class="endereco">
+                        <div class="endereco" style="display: none;"> <!-- Começa oculta -->
                             <div class="textfield">
                                 <span id="cepErro" class="erro"></span>
                                 <label for="cep">CEP:</label>
-                                <span class="cepText"><?php echo htmlspecialchars($cep); ?></span>
-                                <input type="text" class="cepInput" name="cep" value="<?php echo htmlspecialchars($cep); ?>" style="display: none" required>
+                                <span class="cepText"><?php echo htmlspecialchars($cep ?? ''); ?></span>
+                                <input type="text" class="cepInput" name="cep" value="<?php echo htmlspecialchars($cep ?? ''); ?>" required>
                             </div>
                             <div class="textfield">
                                 <span id="enderecoErro" class="erro"></span>
                                 <label for="endereco">Endereço:</label>
-                                <span class="enderecoText"><?php echo htmlspecialchars($endereco); ?></span>
-                                <input type="text" class="enderecoInput" name="endereco" value="<?php echo htmlspecialchars($endereco); ?>" style="display: none" required>
+                                <span class="enderecoText"><?php echo htmlspecialchars($endereco ?? ''); ?></span>
+                                <input type="text" class="enderecoInput" name="endereco" value="<?php echo htmlspecialchars($endereco ?? ''); ?>" required>
                             </div>
                             <div class="textfield">
                                 <span id="complementoErro" class="erro"></span>
                                 <label for="complemento">Complemento (opcional):</label>
-                                <span class="complementoText"><?php echo htmlspecialchars($complemento); ?></span>
-                                <input type="text" class="complementoInput" name="complemento" value="<?php echo htmlspecialchars($complemento); ?>" style="display: none" required>
+                                <span class="complementoText"><?php echo htmlspecialchars($complemento ?? ''); ?></span>
+                                <input type="text" class="complementoInput" name="complemento" value="<?php echo htmlspecialchars($complemento ?? ''); ?>">
                             </div>
                             <div class="textfield">
                                 <span id="bairroErro" class="erro"></span>
                                 <label for="bairro">Bairro:</label>
-                                <span class="bairroText"><?php echo htmlspecialchars($bairro); ?></span>
-                                <input type="text" class="bairroInput" name="bairro" value="<?php echo htmlspecialchars($bairro); ?>" style="display: none" required>
+                                <span class="bairroText"><?php echo htmlspecialchars($bairro ?? ''); ?></span>
+                                <input type="text" class="bairroInput" name="bairro" value="<?php echo htmlspecialchars($bairro ?? ''); ?>" required>
                             </div>
                             <div class="textfield">
                                 <span id="cidadeErro" class="erro"></span>
                                 <label for="cidade">Cidade:</label>
-                                <span class="cidadeText"><?php echo htmlspecialchars($cidade); ?></span>
-                                <input type="text" class="cidadeInput" name="cidade" value="<?php echo htmlspecialchars($cidade); ?>" style="display: none" required>
+                                <span class="cidadeText"><?php echo htmlspecialchars($cidade ?? ''); ?></span>
+                                <input type="text" class="cidadeInput" name="cidade" value="<?php echo htmlspecialchars($cidade ?? ''); ?>" required>
                             </div>
                             <div class="textfield">
                                 <span id="ufErro" class="erro"></span>
                                 <label for="uf">UF:</label>
-                                <span class="ufText"><?php echo htmlspecialchars($uf); ?></span>
-                                <input type="text" class="ufInput" name="uf" value="<?php echo htmlspecialchars($uf); ?>" style="display: none" required>
+                                <span class="ufText"><?php echo htmlspecialchars($uf ?? ''); ?></span>
+                                <input type="text" class="ufInput" name="uf" value="<?php echo htmlspecialchars($uf ?? ''); ?>" required>
                             </div>
                         </div>
                         <button class="btn-salvar">Salvar Alterações</button>
@@ -406,7 +416,6 @@ $totalGanhosFormatado = number_format($totalGanhos, 2, ',', '.'); // Formata o t
             }
         });
     </script>
-
 </body>
 
 </html>
