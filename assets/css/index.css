@@ -1,0 +1,335 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+/* Configuração da página */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+    overflow-x: hidden;
+}
+
+
+/* Navbar existente */
+.nav-padrao {
+    background: rgb(68, 65, 65);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    padding: 23px 0;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.nav-padrao ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-padrao ul li {
+    margin: 0 30px;
+    position: relative;
+}
+
+.nav-padrao ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-padrao ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-padrao ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #ffc107;
+    transition: width 0.3s ease;
+}
+
+.nav-padrao ul li a:hover::after {
+    width: 100%;
+}
+
+.nav-padrao ul li a.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.nav-padrao ul li a.active::after {
+    width: 100%;
+}
+.user-info img {
+    margin-right: 5px; 
+}
+
+/* Hero Section */
+.hero {
+    background: url('../../img/fundo\ site.jpg') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+    align-items: center;
+    flex-direction: column;
+    text-align: left; /* Ajusta o texto para a esquerda */
+    color: #fff;
+    padding: 0 20px;
+    padding-left: 5%; /* Dá espaço da borda esquerda */
+    padding-right: 35%; /* Deixa o lado direito livre para o personagem */
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+    margin-top: 56px; /* Ajusta para que a hero não fique coberta pela navbar */
+}
+
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 25px;
+    margin-top: 30px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 50px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.cta-button {
+    background-color: #ff6b6b;
+    color: #fff;
+    padding: 15px 30px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.cta-button:hover {
+    background-color: #ff4b4b;
+}
+
+/* Serviços */
+.services-section {
+    padding: 100px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.services-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    color: #333;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    max-width: 300px;
+    min-height: 250px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card h3 {
+    color: #ff6b6b;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Sessão Destaques */
+.highlights {
+    padding: 100px 20px;
+    background-color: #fff;
+    text-align: center;
+
+}
+
+.highlights h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    color: #333;
+}
+
+.highlight-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.highlight {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    max-width: 300px;
+    min-height: 200px;
+}
+
+.highlight h3 {
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+.highlight p {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Sobre */
+.about-section {
+    padding: 100px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+}
+
+.about-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+.about-section p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+/* Testemunhos */
+.testimonials {
+    padding: 100px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.testimonials h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+.testimonial-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.testimonial {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    max-width: 300px;
+    min-height: 150px;
+}
+
+.testimonial p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.testimonial p:last-child {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.footer .newsletter input {
+    padding: 10px;
+    border-radius: 30px;
+    border: none;
+    width: 60%;
+    margin-right: 10px;
+}
+
+.footer .newsletter button {
+    padding: 10px 20px;
+    background-color: #ff6b6b;
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.footer .newsletter button:hover {
+    background-color: #ff4b4b;
+}
+
+.footer .social-media a {
+    color: #ff6b6b;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer .social-media a:hover {
+    color: #ff4b4b;
+}
+
+.footer p {
+    margin-top: 20px;
+}
+
+.p-Highlight
+{
+    padding-bottom: 60px;
+}

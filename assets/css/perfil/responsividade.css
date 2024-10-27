@@ -1,0 +1,302 @@
+@media (max-width: 820px) {
+    .sidebar {
+        width: 80px;
+        padding: 10px 10px;
+        margin-top: 60px;
+        transition: width 0.3s ease;
+    }
+
+    .sidebar-expandida {
+        width: 200px; 
+    }
+
+    .sidebar-header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sidebar-header img {
+        width: 30px;
+    }
+
+    .sidebar-header h2 {
+        display: none;
+    }
+
+    .sidebar .item-description{
+        width: 0px;
+        margin-left: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 1rem;
+        transition: width 0.3s ease;
+    }
+
+    .sidebar ul li a {
+        padding: 10px;
+        justify-content: center;
+        gap: 0;
+    }
+
+    .sidebar ul li a span {
+        font-size: 24px;
+    }
+
+    .sidebar ul li a span:nth-child(2) {
+        display: none;
+    }
+
+    .sidebar.sidebar-expandida {
+        width: 250px;
+    }
+
+    .sidebar.sidebar-expandida .item-description {
+        width: auto; /* Faz o texto da descrição ser exibido */
+    }
+
+    .sidebar.sidebar-expandida ul li a {
+        justify-content: flex-start;
+    }
+
+    /* Mostrar o texto quando a sidebar estiver expandida */
+    .sidebar.sidebar-expandida ul li a span:nth-child(2) {
+        display: inline-block;
+        /* Mostra o texto ao expandir */
+    }
+
+    .sidebar.sidebar-expandida .submenu {
+        display: block;
+    }
+
+    .conteudo {
+        margin: 70px 10px 0 70px;
+    }
+
+    /* Meu Perfil */
+
+    .meu-perfil .perfil-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .tutor-avatar {
+        margin-bottom: 10px;
+    }
+
+    .pets-container {
+        flex-direction: column;
+    }
+
+    .pet {
+        flex: 1 1 100%;
+        /* Cada pet ocupa 100% da largura */
+    }
+
+    /* Conta */
+
+    .informacoes-pessoais,
+    .trocar-senha,
+    .excluir-conta {
+        padding: 15px;
+        margin-top: 15px;
+        border-radius: 8px;
+    }
+
+    .textfield {
+        flex-direction: column; /* Colocar os campos de entrada e labels em coluna */
+        align-items: flex-start;
+        margin: 8px 0;
+    }
+
+    .textfield>input {
+        width: 100%; /* Fazer os inputs ocuparem toda a largura */
+        margin-left: 0;
+        font-size: 12pt;
+    }
+
+    .textfield>label {
+        margin-bottom: 5px; /* Espaço entre o label e o campo */
+        font-size: 14px;
+    }
+
+    .btn-salvar,
+    .btn-trocar-senha,
+    .btn-excluir,
+    .btn-cancelar {
+        padding: 12px;
+        font-size: 14px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar{
+        width: 60px;
+    }
+    .sidebar ul li a {
+        padding: 8px;
+    }
+
+    .sidebar ul li a span {
+        font-size: 20px;
+    }
+
+    .conteudo {
+        margin: 60px 0 0 60px;
+    }
+
+    .meu-perfil {
+        padding: 20px;
+    }
+
+    .perfil-header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tutor-avatar {
+        margin-bottom: 0;
+        width: 90px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        margin-top: 0;
+        font-size: 1.2em;
+    }
+
+    .pet-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pet-header img {
+        width: 90px;
+        height: 90px;
+     }
+
+    .nomePet-perfil {
+        font-size: 1em;
+    }
+
+    .bioText,
+    .bioInput {
+        font-size: 0.9em;
+    }
+
+    .editar-bio,
+    .salvar-bio {
+        font-size: 0.8em;
+    }
+
+    .pet-header .editar-btn,
+    .pet-header .excluir-btn,
+    .pet-header .salvar-btn,
+    .pet-header .cancelar-btn {
+        font-size: 0.8em;
+        padding: 7px;
+        margin-left: 0;
+        margin: 3px;
+    }
+
+    .nomePetInput,
+    .especieInput,
+    .racaInput,
+    .idadeInput,
+    .sexoInput,
+    .pesoInput,
+    .castradoInput,
+    .descricaoInput {
+        padding: 4px;
+        font-size: 0.8rem;
+        margin-left: 0;
+    }
+
+    .cadastrar-pet {
+        padding: 20px;
+        
+    }
+    
+    .cadastrar-pet form {
+        grid-template-columns: 2.5fr 1.8fr 1fr;
+        gap: 10px;
+    }
+    
+    .cadastrar-pet input,
+    .cadastrar-pet select,
+    .cadastrar-pet textarea {
+        width: 100%;
+        margin: 7px 0 5px;
+    }
+
+    /* Conta */
+
+    .informacoes-pessoais,
+    .trocar-senha,
+    .excluir-conta {
+        padding: 10px;
+        margin: 0;
+        border-radius: 5px;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    .textfield {
+        margin: 5px 0;
+    }
+
+    .textfield>input {
+        font-size: 12pt;
+        padding: 10px;
+    }
+
+    .textfield > label {
+        font-size: 12px; 
+    }
+
+    .btn-editar {
+        margin-left: 0; /* Remover o espaçamento em telas menores */
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .btn-salvar,
+    .btn-trocar-senha,
+    .btn-excluir,
+    .btn-cancelar {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .excluir-conta {
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    p.show{
+        font-size: 12pt;
+    }
+
+    .question button{
+        font-size: 16pt;
+    }
+
+    .sub-conteudo{
+        width: 100vw;
+    }
+
+    .suporte{
+        padding: 15px;
+    }
+}

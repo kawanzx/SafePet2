@@ -1,0 +1,156 @@
+/* Navbar existente */
+.transparent-nav {
+    background: rgb(68, 65, 65);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    padding: 23px 0;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.transparent-nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transparent-nav ul li {
+    margin: 0 30px;
+    position: relative;
+}
+
+.transparent-nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.transparent-nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.transparent-nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #ffc107;
+    transition: width 0.3s ease;
+}
+
+.transparent-nav ul li a:hover::after {
+    width: 100%;
+}
+
+.transparent-nav ul li a.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.transparent-nav ul li a.active::after {
+    width: 100%;
+}
+
+/* Menu Toggle (Hambúrguer) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 15;
+}
+
+.menu-toggle span {
+    display: block;
+    position: relative; /* Alinha o span no fluxo normal */
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    transition: all 0.3s ease;
+    margin: 5px 0; /* Espaçamento entre as linhas */
+}
+
+.menu-toggle span::before,
+.menu-toggle span::after {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    transition: all 0.3s ease;
+    content: '';
+    position: absolute;
+    left: 0;
+}
+
+.menu-toggle span::before {
+    top: -8px;
+}
+
+.menu-toggle span::after {
+    top: 8px;
+}
+
+@media (max-width: 768px) {
+    .transparent-nav ul {
+        flex-direction: column;
+        display: none;
+        width: 100%;
+        background-color: rgb(68, 65, 65);
+        position: absolute;
+        top: 60px;
+        left: 0;
+        padding: 20px;
+    }
+
+    .transparent-nav ul.show {
+        display: flex;
+    }
+
+    .transparent-nav ul li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .menu-toggle {
+        display: block;
+        position: relative;
+        z-index: 15;
+    }
+
+    /* Menu Toggle Animation (Transforma em X ao abrir) */
+    .menu-toggle.open span {
+        background: transparent;
+    }
+
+    .menu-toggle.open span::before {
+        transform: rotate(45deg);
+        top: 0;
+    }
+
+    .menu-toggle.open span::after {
+        transform: rotate(-45deg);
+        top: 0;
+    }
+}

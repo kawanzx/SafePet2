@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esqueci a Senha</title>
+    <link rel="stylesheet" href="../assets/css/auth/login.css">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div class="main">
+        <div class="esquerda">
+            <h1>Recupere sua conta</h1>
+            <img src="../img/cachorro.svg" class="imagem-esquerda" alt="Cachorro">
+        </div>
+        <div class="direita">
+            <div class="card-login">
+                <div class="container">
+                    <a href="login.html"><img src="../img/seta-voltar.svg"></a>
+                    <h1>Insira seu E-mail</h1>
+                </div>
+                <form action="enviar-recuperacao.php" method="post">
+                    <div class="textfield">
+                        <label for="tipo_usuario">Tipo de usuário: </label>
+                        <select name="tipo_usuario" required>
+                            <option value="tutor">Tutor</option>
+                            <option value="cuidador">Cuidador</option>
+                        </select> <br>
+                    </div>
+                    <div class="textfield">
+                        <label for="email">E-mail: </label>
+                        <input type="email" name="email" placeholder="E-mail" required> <br>
+                    </div>
+                    <button type="submit" class="btn-login">Enviar Link de <br> Redefinição</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

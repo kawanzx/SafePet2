@@ -1,0 +1,48 @@
+     body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #007bff; /* Azul */
+            color: white;
+            padding: 15px;
+            position: fixed;
+            height: 100%;
+            margin-top: 61px;
+        }
+
+        .sidebar h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .content {
+            margin-left: 220px; /* Espaço para a sidebar */
+            padding: 20px;
+            padding-top: 60px; /* Espaço para a navbar */
+            flex-grow: 1;
+        }
+
+        .section {
+            display: none; /* Esconder todas seções inicialmente */
+        }
+
+        .section.active {
+            display: block; /* Exibir apenas a seção ativa */
+        }

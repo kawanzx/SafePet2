@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafePet</title>
+    <script src="../assets/js/auth/auth.js" defer></script>
+    <link rel="stylesheet" href="../assets/css/auth/register.css">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div class="main">
+        <div class="esquerda">
+            <h1>Cadastro SafePet</h1>
+            <img src="../img/cachorro-2.svg" class="imagem-esquerda" alt="Cachorro">
+        </div>
+        <div class="direita">
+            <div class="card-login">
+                <div class="container">
+                    <a href="../index.php"><img src="../img/seta-voltar.svg"></a>
+                    <h1>Cadastro</h1>
+                </div>
+                <form action="register.php" method="post" onsubmit="return validarFormulario()">
+                    <div class="form-content">
+                        <div class="column">
+                            <div class="textfield">
+                                <label for="nome_completo">Nome completo: </label>
+                                <input type="text" name="nome_completo" placeholder="Nome" required>
+                            </div>
+                            <div class="textfield">
+                                <label for="senha">Senha: </label>
+                                <input type="password" name="senha" placeholder="Senha" required>
+                            </div>
+                            <div class="textfield">
+                                <label for="email">E-mail: </label>
+                                <input type="email" name="email" placeholder="E-mail" required>
+                            </div>
+                            <div class="textfield">
+                                <label for="telefone">Telefone: </label>
+                                <input type="tel" name="telefone" placeholder="Telefone" required>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="textfield">
+                                <label for="tipo_usuario">Tipo do usuário: </label>
+                                <select name="tipo_usuario" required>
+                                    <option value="tutor">Tutor</option>
+                                    <option value="cuidador">Cuidador</option>
+                                </select>
+                            </div>
+                            <div class="textfield">
+                                <label for="confirmar_senha">Confirmar Senha: </label>
+                                <input type="password" name="confirmar_senha" placeholder="Confirmar Senha" required>
+                            </div>
+                            <div class="textfield">
+                                <label for="data_nascimento">Data de nascimento: </label>
+                                <input type="date" name="data_nascimento" required>
+                            </div>
+                            <div class="textfield">
+                                <label for="cpf">CPF: </label>
+                                <input type="text" name="cpf" placeholder="CPF" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-cadastrar">Cadastrar-se</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
