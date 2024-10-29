@@ -2,10 +2,9 @@
 include __DIR__ . '/../../auth/protect.php';
 ?>
 <div id="conteudo-4" class="content-section">
-    <div class="suporte">
-        <h2>Suporte para Tutores</h2>
-
+    <div class="section">
         <div class="questions-container">
+            <h3>Suporte para Tutores</h3>
             <div class="question">
                 <button>
                     <span>Como encontrar um cuidador?</span>
@@ -45,23 +44,22 @@ include __DIR__ . '/../../auth/protect.php';
                 </button>
                 <p>Para suporte, utilize a seção de contato no seu perfil ou envie uma mensagem diretamente via e-mail para a equipe do SafePet em <a href="mailto:suporte.safepet@gmail.com">suporte.safepet@gmail.com</a>, que responderá em até 48 horas.</p>
             </div>
-
-            <section class="contato">
-                <h2>Não achou sua dúvida? Escreva abaixo</h2>
-                <form action="https://api.staticforms.xyz/submit" method="post" id="contactForm">
-                    <label>Nome</label>
-                    <input type="text" name="name" placeholder="Digite seu nome" autocomplete="off" required>
-                    <label>Email</label>
-                    <input type="email" name="email" placeholder="Digite seu email" autocomplete="off" required>
-                    <label>Mensagem</label>
-                    <textarea name="message" cols="30" rows="10" placeholder="Digite sua mensagem" required></textarea>
-                    <button type="submit">Enviar</button>
-
-                    <input type="hidden" name="accessKey" value="69faecc1-fb39-4467-a250-5ec40ff0baaa">
-                    <input type="hidden" name="redirectTo" value="http://localhost:8000/acesso_interno/tutor/perfil.php#">
-                </form>
-            </section>
-            <script src="/views/tutor/main.js" type="module"></script>
         </div>
+        <section class="contato">
+            <h3>Não achou sua dúvida? Escreva abaixo</h3>
+            <form action="https://api.staticforms.xyz/submit" method="post" id="contactForm">
+                <label>Nome</label>
+                <input type="text" name="name" placeholder="Digite seu nome" autocomplete="off" required>
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Digite seu email" autocomplete="off" required>
+                <label>Mensagem</label>
+                <textarea name="message" cols="30" rows="10" placeholder="Digite sua mensagem" required></textarea>
+                <button type="submit">Enviar</button>
+
+                <input type="hidden" name="accessKey" value="69faecc1-fb39-4467-a250-5ec40ff0baaa">
+                <input type="hidden" name="redirectTo" value="http://localhost:8000/acesso_interno/tutor/perfil.php#">
+            </form>
+        </section>
     </div>
+    <script src="/views/tutor/main.js" type="module"></script>
 </div>

@@ -1,7 +1,6 @@
 /* Menu Lateral (Sidebar) */
 .sidebar {
-    background-color: #007bff;
-    color: white;
+    background-color: #457B9D;
     padding: 25px 20px;
     display: flex;
     flex-direction: column;
@@ -16,7 +15,7 @@
 .sidebar-header {
     display: flex;
     align-items: center;
-    margin: 0 20px 20px;
+    margin: 0 20px 5px;
     cursor: pointer;
 }
 
@@ -27,7 +26,7 @@
 
 .sidebar-header h2 {
     margin-left: 23px;
-    color: white;
+    color: #333333;
     overflow: hidden;
 }
 
@@ -42,7 +41,7 @@
 }
 
 .sidebar ul li a {
-    color: white;
+    color: #B7E4C7;
     text-decoration: none;
     font-weight: 800;
     padding: 15px 30px;

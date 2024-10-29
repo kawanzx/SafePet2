@@ -1,18 +1,27 @@
-.informacoes-pessoais,
+.principais-informacoes,
 .trocar-senha,
-.excluir-conta {
-    background-color: white;
-    padding: 20px;
+.excluir,
+.endereco {
+    background-color: #f6fcf4;
+    padding: 30px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    margin-top: 20px;
-    width: 100%; /* Garante que a largura seja responsiva */
-    max-width: 800px; /* Limita a largura máxima */
     margin: 0 auto;
+    margin-bottom: 20px;
+    width: 100%; /* Garante que a largura seja responsiva */
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 1000px;
+}
+
+.principais-informacoes:hover,
+.endereco:hover,
+.trocar-senha:hover,
+.excluir:hover {
+    transform: scale(1.02); 
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .textfield {
@@ -20,6 +29,7 @@
     display: flex;
     align-items: center;
     margin: 10px 0;
+    color: #3e3e3f;
 }
 
 .btn-editar {
@@ -27,40 +37,41 @@
     border: none;
     cursor: pointer;
     margin-left: 10px;
+    color: #1D3557;
 }
 
 .textfield > input {
     border: none;
     border-radius: 10px;
     padding: 6px;
-    background: #d5dada;
+    background: #b5d6d6;
+    color: #3e3e3f;
     font-size: 12pt;
     outline: none;
-    box-sizing: border-box;
     margin-left: 10px;
     width: 100%; 
     max-width: 100%;
 }
 
 .textfield > label {
-    color: #000;
+    color: #3e3e3f;
     margin-right: 3px;
 }
 
 .btn-salvar,
 .btn-trocar-senha {
-    background-color: #007bff;
+    background-color: #E76F51;
     color: white;
     border: none;
     cursor: pointer;
     padding: 15px;
     margin-top: 20px;
-    width: 100%; /* Botões ocupam toda a largura */
+    width: 100%; 
 }
 
 .btn-salvar:hover,
 .btn-trocar-senha:hover {
-    background: rgba(0, 0, 0, 0.6);
+    background: #ee5028;
 }
 
 /* Estilos específicos para excluir conta */
@@ -68,15 +79,16 @@
     text-align: center;
 }
 
-.excluir-conta p {
+.excluir p {
     font-size: 16px;
     margin: 20px 0;
+    color: #3e3e3f;
 }
 
 .btn-excluir {
-    background-color: #ff4b5c;
+    background-color: #E76F51;
     color: white;
-    padding: 10px 20px;
+    padding: 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -84,20 +96,21 @@
 }
 
 .btn-excluir:hover {
-    background-color: #e43d50;
+    background-color: #ee5028;
 }
 
 .btn-cancelar {
-    margin-top: 10px;
+    margin-top: 15px;
     display: inline-block;
-    color: #333;
+    color: #3e3e3f;
     text-decoration: none;
-    border: 1px solid #333;
-    padding: 8px 16px;
+    border: 1px solid #3e3e3f;
+    padding: 10px;
     border-radius: 5px;
+    text-align: center;
 }
 
 .btn-cancelar:hover {
-    background-color: #333;
+    background-color: #3e3e3f;
     color: white;
 }

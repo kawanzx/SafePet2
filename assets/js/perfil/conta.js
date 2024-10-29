@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.btn-salvar').forEach(button => {
         button.addEventListener('click', function () {
-            const tutorDiv = this.closest('.informacoes-pessoais');
+            const tutorDiv = this.closest('.section');
 
             // Obter os valores dos inputs
             const nome = tutorDiv.querySelector('.nome-tutorInput').value.trim();

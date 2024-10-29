@@ -3,13 +3,13 @@
 
 
 * {
-    box-sizing: border-box; /* Aplica em todos os elementos */
+    box-sizing: border-box;
 }
 
 /* Perfil */
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f9f9f9;
+    background: #f6fcf4;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -21,7 +21,7 @@ body {
 }
 
 .conteudo {
-    padding: 0 10px;
+    padding: 0 20px;
     width: 100vw;
     margin: 90px 0 0 230px;
 }

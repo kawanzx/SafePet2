@@ -5,6 +5,9 @@ require '../db.php';
 $senha_antiga = $_POST['senha_antiga'];
 $nova_senha = $_POST['nova_senha'];
 $confirmar_senha = $_POST['confirmar_senha'];
+$user_id = $_SESSION['id'];
+$tipo_usuario = $_SESSION['tipo_usuario'];
+$tabela = ($tipo_usuario === 'tutor') ? 'tutores' : 'cuidadores';
 
 $redirectUrl = ($tipo_usuario === 'tutor') ? '../../views/tutor/perfil.php' : '../../views/cuidador/perfil.php';
 
@@ -17,10 +20,6 @@ if ($nova_senha !== $confirmar_senha) {
     echo "<script>alert('As senhas não coincidem!'); window.location.href = '$redirectUrl';</script>";
     exit();
 }
-
-$user_id = $_SESSION['id'];
-$tipo_usuario = $_SESSION['tipo_usuario'];
-$tabela = ($tipo_usuario === 'tutor') ? 'tutores' : 'cuidadores';
 
 $sql = "SELECT senha FROM $tabela WHERE id = ?";
 $stmt = $mysqli->prepare($sql);

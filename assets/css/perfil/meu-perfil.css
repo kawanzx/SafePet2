@@ -1,16 +1,15 @@
-/* Meu Perfil */
+h1{
+    font-weight: 800;
+    color:#1D3557;
+}
 
 .meu-perfil {
-    background-color: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
 }
 
 .meu-perfil .perfil-header {
-    display: flex;
+    display: flex;   
     align-items: center;
 }
 
@@ -30,25 +29,26 @@
 }
 
 .tutor-avatar , .cuidador-avatar {
-    width: 120px;
+    width: 140px;
     height: auto;
     border-radius: 50%;
-    border: 3px solid #007bff;
+    border: 3px solid #457B9D;
     object-fit: cover;
     margin-right: 20px;
     cursor: pointer;
 }
 
-.perfil-header h2 {
-    font-size: 2rem;
-    color: #333;
-    margin-left: 10px;
+.perfil-header h2 , .nomePet-perfil {
+    font-size: 1.6rem;
+    color: #1D3557;
+    margin: 0 0 5px 12px;
+    font-weight: 700;
 }
 
 .meu-perfil p {
     font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 10px;
+    color: #3e3e3f;
+    margin: 0;
 }
 
 .meu-perfil .info-label {
@@ -62,15 +62,55 @@
     color: #ffc107;
 }
 
-/* Estilos para as seções adicionais */
-.meu-perfil .section {
-    margin-top: 20px;
+form{
+    margin: 0;
 }
 
-.meu-perfil .section h3 {
+/* Estilos para as seções adicionais */
+.meu-perfil .section {
+    margin-top: 15px;
+}
+
+.experiencia, .disponibilidade{
+    background-color: #f6fcf4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(50% - 20px);
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 40px;
+}
+
+.experiencia:hover, .disponibilidade:hover{
+    transform: scale(1.02); 
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.section-pets{
+    margin-top: 60px;
+}
+
+.section{
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    background-color: #A8DADC;
+}
+
+.section h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color:#1D3557;
+    margin-top: 0;
+    font-weight: 800;
+    text-align: center;
+}
+
+.bio h3{
     font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #007bff;
+    padding-top: 40px;
+    text-align:justify;
 }
 
 .editar-bio {
@@ -78,7 +118,7 @@
     border: none;
     cursor: pointer;
     margin-left: 10px;
-    color: #007bff;
+    color:#1D3557;
 }
 
 .bioInput {
@@ -86,7 +126,7 @@
     border: none;
     border-radius: 10px;
     padding: 10px;
-    background: #d5dada;
+    background: #f6fcf4;
     font-size: 12pt;
     outline: none;
     box-sizing: border-box;
@@ -95,11 +135,15 @@
 }
 
 .salvar-bio {
-    background: #007bff;
+    background: #E76F51;
     color: white;
     border-radius: 5px;
     border: none;
     cursor: pointer;
     padding: 10px;
     margin-top: 10px;
+}
+
+.salvar-bio:hover{
+    background-color: #ee5028;
 }
