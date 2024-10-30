@@ -16,7 +16,7 @@ include __DIR__ . '/../../auth/protect.php';
                             <header class='pet-header'>
                                 <span class="fotoPet">
                                     <?php if (!empty($row['foto'])) { ?>
-                                        <img id="preview-<?php echo htmlspecialchars($row['id']); ?>" src="<?php echo htmlspecialchars('/assets/uploads/fotos-pets/' . $row['foto']); ?>" alt='Foto do pet' class="fotoPetImg">
+                                        <img id="preview-<?php echo htmlspecialchars($row['id']); ?>" src="<?php echo htmlspecialchars($row['foto']); ?>" alt='Foto do pet' class="fotoPetImg">
                                     <?php } else { ?>
                                         <img id="preview-<?php echo htmlspecialchars($row['id']); ?>" src="/assets/uploads/fotos-pets/default-image.png" alt='Foto padrão para pets' class="fotoPetImg">
                                     <?php } ?>

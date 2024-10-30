@@ -3,10 +3,18 @@ document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('logoutLink').addEventListener('click', function (event) {
     event.preventDefault();
 
-    var confirmation = window.confirm("Você realmente deseja sair?");
-    if (confirmation) {
-        window.location.href = "/auth/logout.php";
-    }
+    Swal.fire({
+        title: "Tem certeza?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sair"
+      }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "/auth/logout.php";
+        }
+      });
 });
 
 });

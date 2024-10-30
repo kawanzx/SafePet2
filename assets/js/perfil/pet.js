@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formData.append('pet_id', petId); // Anexa o ID do pet
 
                 // Enviar a imagem para o servidor via AJAX
-                fetch('atualizar_foto.php', {
+                fetch('/includes/perfil/atualizar_foto.php', {
                     method: 'POST',
                     body: formData
                 })

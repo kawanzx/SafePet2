@@ -40,7 +40,7 @@ include __DIR__ . '/../../auth/protect.php';
                             <div class='pet'>
                                 <div class='pet-header'>
                                     <?php if (!empty($row['foto'])): ?>
-                                        <img src="<?php echo htmlspecialchars('/assets/uploads/fotos-pets/' . $row['foto']); ?>" alt="Foto do pet">
+                                        <img src="<?php echo htmlspecialchars($row['foto']); ?>" alt="Foto do pet">
                                     <?php else: ?>
                                         <img src="/assets/uploads/fotos-pets/default-image.png" alt="Foto padrão para pets">
                                     <?php endif; ?>

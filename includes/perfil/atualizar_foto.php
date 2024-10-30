@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $foto = $_FILES['foto']['name'];
 
         // Diretório onde a imagem será armazenada
-        $target_dir = "/assets/uploads/fotos-tutores/";
+        $target_dir = "../../assets/uploads/fotos-pets/";
         $target_file = $target_dir . basename($foto);
 
         // Validação do arquivo de imagem
