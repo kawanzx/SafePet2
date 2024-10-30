@@ -31,8 +31,17 @@ include __DIR__ . '/../../auth/protect.php';
                 </form>
             </div>
             <div class="experiencia">
-                <h3>Experiência</h3>
-                <p>Especialista em raças de pequeno porte e animais idosos. Tenho experiência com passeios, alimentação e cuidados gerais, além de lidar com pets que possuem necessidades especiais.</p>
+                <form action="/includes/perfil/experiencia.php" method="POST">
+                    <h3>Experiência
+                        <button type="button" class="editar-experiencia">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                    </h3>
+                    <p><span class="experienciaText"><?php echo $cuidador['experiencia'];?></span>
+                    </p>
+                    <textarea class="experienciaInput" name="experiencia" rows="5" cols="37" style="display: none"><?php echo $cuidador['experiencia']; ?></textarea>
+                    <button type="submit" class="salvar-experiencia" style="display: none;">Salvar</button>
+                </form>
             </div>
             <div class="disponibilidade">
                 <h3>Disponibilidade</h3>

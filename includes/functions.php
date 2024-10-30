@@ -26,11 +26,11 @@ function getTutorProfile($mysqli, $tutor_id)
 
 function getCuidadorProfile($mysqli, $cuidador_id)
 {
-    $sql = "SELECT nome, bio, foto_perfil FROM cuidadores WHERE id = ?";
+    $sql = "SELECT nome, bio, foto_perfil, experiencia FROM cuidadores WHERE id = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param('i', $cuidador_id);
     $stmt->execute();
-    $stmt->bind_result($nome, $bio, $foto_perfil);
+    $stmt->bind_result($nome, $bio, $foto_perfil, $experiencia);
     $stmt->fetch();
     $stmt->close();
 
@@ -40,10 +40,17 @@ function getCuidadorProfile($mysqli, $cuidador_id)
         $bio = '';
     };
 
+    if ($experiencia != '' || $experiencia != null) {
+        $experiencia;
+    } else {
+        $experiencia = 'Ainda não há experiências';
+    };
+
     return [
         'nome' => htmlspecialchars($nome),
         'bio' => htmlspecialchars($bio),
-        'foto_perfil' => !empty($foto_perfil) ? '/assets/uploads/fotos-cuidadores/' . $foto_perfil : '/img/profile-circle-icon.png'
+        'foto_perfil' => !empty($foto_perfil) ? '/assets/uploads/fotos-cuidadores/' . $foto_perfil : '/img/profile-circle-icon.png',
+        'experiencia' => htmlspecialchars($experiencia)
     ];
 }
 
