@@ -113,12 +113,25 @@ form{
     text-align:justify;
 }
 
-.editar-bio {
+.editar-bio , .editar-experiencia{
     background: none;
     border: none;
     cursor: pointer;
     margin-left: 10px;
     color:#1D3557;
+}
+
+.experienciaInput{
+    background: #64b34a;
+    width: auto;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 12pt;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 1.1rem;
+    color: #555;
 }
 
 .bioInput {
@@ -134,7 +147,7 @@ form{
     color: #555;
 }
 
-.salvar-bio {
+.salvar-bio , .salvar-experiencia{
     background: #E76F51;
     color: white;
     border-radius: 5px;
@@ -144,6 +157,6 @@ form{
     margin-top: 10px;
 }
 
-.salvar-bio:hover{
+.salvar-bio:hover , .salvar-experiencia:hover{
     background-color: #ee5028;
 }
