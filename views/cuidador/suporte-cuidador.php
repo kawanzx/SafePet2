@@ -1,3 +1,6 @@
+<?php
+include __DIR__ . '/../../auth/protect.php';
+?>
 <div id="conteudo-4" class="content-section">
     <div class="section">
         <div class="questions-container">
@@ -55,7 +58,7 @@
                     <button type="submit">Enviar</button>
 
                     <input type="hidden" name="accessKey" value="69faecc1-fb39-4467-a250-5ec40ff0baaa">
-                    <input type="hidden" name="redirectTo" value="http://localhost:8000/acesso_interno/cuidador/perfil.php#">
+                    <input type="hidden" name="redirectTo" value="http://localhost:8000/views/cuidador/perfil.php#">
                 </form>
         </section>
     </div>

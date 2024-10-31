@@ -265,6 +265,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(data => {
                         console.log('Resposta do servidor:', data);
                         if (data.includes("sucesso")) {
+                            Swal.fire({
+                                icon: "success",
+                                text: "Dados atualizados com sucesso!",
+                            });
                             // Atualizar os textos com os novos valores
                             tutorDiv.querySelector('.nome-tutorText').textContent = nome;
                             tutorDiv.querySelector('.cepText').textContent = cep;
@@ -284,14 +288,20 @@ document.addEventListener('DOMContentLoaded', () => {
                             tutorDiv.querySelectorAll('.nome-tutorInput, .cepInput, .enderecoInput, .complementoInput, .bairroInput, .cidadeInput, .ufInput, .telefoneInput, .emailInput, .dt_nascimentoInput').forEach(input => {
                                 input.style.display = 'none';
                             });
-                            alert('Dados atualizados com sucesso!');
                         } else {
-                            alert('Erro ao atualizar os dados: ' + data);
+                            Swal.fire({
+                                icon: "error",
+                                title: "Erro ao atualizar os dados!",
+                                text: data,
+                            });
                         }
                     })
                     .catch(error => {
                         console.error('Erro na requisição:', error);
-                        alert('Erro na comunicação com o servidor.');
+                        Swal.fire({
+                            icon: "error",
+                            title: "Erro na comunicação com o servidor.",
+                        });
                     });
             }
         });
@@ -299,28 +309,86 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Trocar senha
 
-    window.validarSenha = function() {
+    window.validarSenha = function () {
+        var senhaAntiga = document.getElementById("senha_antiga").value;
         var novaSenha = document.getElementById("nova_senha").value;
         var confirmarSenha = document.getElementById("confirmar_senha").value;
 
-        // Expressão regular para verificar a senha
         var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
 
         if (!regex.test(novaSenha)) {
-            alert("A senha deve conter pelo menos 6 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.");
+            Swal.fire({
+                icon: "error",
+                title: "Erro!",
+                text: "A senha deve conter pelo menos 6 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.",
+            });
             return false;
         }
 
         if (novaSenha !== confirmarSenha) {
-            alert("As senhas não coincidem.");
+            Swal.fire({
+                icon: "error",
+                title: "As senhas não coincidem.",
+            });
             return false;
         }
 
-        return true;
-    }
+        fetch('/includes/perfil/trocar-senha.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                senha_antiga: senhaAntiga,
+                nova_senha: novaSenha,
+                confirmar_senha: confirmarSenha
+            })
+        })
+            .then(response => {
+                // Verifique a resposta e leia o corpo uma única vez
+                if (!response.ok) {
+                    throw new Error('Erro na rede: ' + response.statusText);
+                }
+                return response.json(); // Leia o corpo da resposta
+            })
+            .then(data => {
+                Swal.fire({
+                    icon: data.sucesso ? "success" : "error",
+                    title: data.sucesso ? "Sucesso!" : "Erro!",
+                    text: data.mensagem,
+                });
+                return data.sucesso;
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Erro!",
+                    text: "Ocorreu um problema ao tentar alterar a senha.",
+                });
+            });
+    };
 
-    window.confirmExclusao = function() {
-        return confirm("Você tem certeza que deseja excluir sua conta? Esta ação é irreversível.");
+    window.confirmExclusao = function (event) {
+        event.preventDefault();
+
+        Swal.fire({
+            title: "Você tem certeza que deseja excluir sua conta?",
+            text: "Não será possível reverter essa ação!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, excluir conta",
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.getElementById('formExcluirConta');
+                if (form) {
+                    form.submit(); 
+                }
+            }
+        });
     }
 
 });
@@ -328,14 +396,14 @@ document.addEventListener('DOMContentLoaded', () => {
 // Verifica se tem um endereço cadastrado
 
 document.addEventListener('DOMContentLoaded', function () {
-        
+
     const cepInput = document.querySelector('.cepInput');
     const cep = cepInput ? cepInput.value.trim() : '';
 
     if (cep === '' || cep === null) {
         document.querySelector('.endereco').style.display = 'none';
         document.getElementById('mensagemEndereco').style.display = 'block';
-    } 
+    }
 
     // Ao clicar em "Cadastrar", exibe o formulário de cadastro de endereço
     document.getElementById('cadastrarEnderecoBtn').addEventListener('click', function (event) {

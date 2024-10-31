@@ -6,17 +6,17 @@ include __DIR__ . '/../../auth/protect.php';
         <div class="section">
             <h3>Meus Pets</h3>
             <?php
-            $result = getPets($mysqli, $tutor_id);
+            $pets = getPets($mysqli, $tutor_id);
             ?>
 
-            <div class="pets-container">
-                <?php if ($result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="pets-container" id="pets-container">
+                <?php if ($pets->num_rows > 0): ?>
+                    <?php while ($row = $pets->fetch_assoc()): ?>
                         <article class='pet' data-pet-id="<?php echo htmlspecialchars($row['id']); ?>">
                             <header class='pet-header'>
                                 <span class="fotoPet">
                                     <?php if (!empty($row['foto'])) { ?>
-                                        <img id="preview-<?php echo htmlspecialchars($row['id']); ?>" src="<?php echo htmlspecialchars($row['foto']); ?>" alt='Foto do pet' class="fotoPetImg">
+                                        <img id="preview-<?php echo htmlspecialchars($row['id']); ?>" src="<?php echo '/assets/uploads/fotos-pets/' . ($row['foto']); ?>" alt='Foto do pet' class="fotoPetImg">
                                     <?php } else { ?>
                                         <img id="preview-<?php echo htmlspecialchars($row['id']); ?>" src="/assets/uploads/fotos-pets/default-image.png" alt='Foto padrão para pets' class="fotoPetImg">
                                     <?php } ?>
@@ -27,10 +27,10 @@ include __DIR__ . '/../../auth/protect.php';
                                     <span class="nomePetText"><?php echo htmlspecialchars($row['nome']); ?></span>
                                     <input type="text" class="nomePetInput" value="<?php echo htmlspecialchars($row['nome']); ?>" style="display: none;">
                                 </h2>
-                                    <button class="editar-btn">Editar</button>
-                                    <button class="excluir-btn">Excluir</button>
-                                    <button class="salvar-btn" style="display: none;">Salvar</button>
-                                    <button class="cancelar-btn" style="display: none;">Cancelar</button>
+                                <button class="editar-btn">Editar</button>
+                                <button class="excluir-btn">Excluir</button>
+                                <button class="salvar-btn" style="display: none;">Salvar</button>
+                                <button class="cancelar-btn" style="display: none;">Cancelar</button>
                             </header>
                             <hr>
                             <div class="pet-info">
@@ -84,7 +84,7 @@ include __DIR__ . '/../../auth/protect.php';
             <div class="section">
                 <h3>Cadastrar Pet</h3>
                 <div class="cadastrar-pet">
-                    <form id="form-pet" action="/includes/perfil/cadastro-pet.php" method="POST" enctype="multipart/form-data">
+                    <form id="form-pet" method="POST" enctype="multipart/form-data">
                         <input type="hidden" id="petId" name="petId">
                         <div class="coluna">
                             <label for="nome-pet">Nome do Pet:</label>
@@ -122,7 +122,8 @@ include __DIR__ . '/../../auth/protect.php';
                         <div id="preview-container">
                             <img id="preview" src="" alt="Pré-visualização da foto do pet" style="display:none; width: 200px; height: auto;">
                         </div>
-                        <input type="submit" value="Cadastrar Pet" id="cad-pet">
+                        <!-- <input type="submit" value="Cadastrar Pet" id="cad-pet"> -->
+                        <button class="cad-pet" id="cad-pet">Cadastrar Pet</button>
                     </form>
                 </div>
             </div>

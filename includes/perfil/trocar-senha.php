@@ -1,23 +1,38 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require '../db.php';
 
-$senha_antiga = $_POST['senha_antiga'];
-$nova_senha = $_POST['nova_senha'];
-$confirmar_senha = $_POST['confirmar_senha'];
-$user_id = $_SESSION['id'];
-$tipo_usuario = $_SESSION['tipo_usuario'];
+$data = json_decode(file_get_contents("php://input"), true);
+
+$senha_antiga = $data['senha_antiga'] ?? null;
+$nova_senha = $data['nova_senha'] ?? null;
+$confirmar_senha = $data['confirmar_senha'] ?? null;
+$user_id = $_SESSION['id'] ?? null; 
+$tipo_usuario = $_SESSION['tipo_usuario'] ?? null; 
+
+if (!$user_id || !$tipo_usuario) {
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Usuário não autenticado.']);
+    exit();
+}
+
 $tabela = ($tipo_usuario === 'tutor') ? 'tutores' : 'cuidadores';
 
-$redirectUrl = ($tipo_usuario === 'tutor') ? '../../views/tutor/perfil.php' : '../../views/cuidador/perfil.php';
+if (is_null($senha_antiga) || is_null($nova_senha) || is_null($confirmar_senha)) {
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Dados de senha inválidos.']);
+    exit();
+}
 
 if (strlen($nova_senha) < 6) {
-    echo "<script>alert('A nova senha deve ter pelo menos 6 caracteres.'); window.history.back();</script>";
+    echo json_encode(['sucesso' => false, 'mensagem' => 'A nova senha deve ter pelo menos 6 caracteres.']);
     exit();
 }
 
 if ($nova_senha !== $confirmar_senha) {
-    echo "<script>alert('As senhas não coincidem!'); window.location.href = '$redirectUrl';</script>";
+    echo json_encode(['sucesso' => false, 'mensagem' => 'As senhas não coincidem!']);
     exit();
 }
 
@@ -25,23 +40,25 @@ $sql = "SELECT senha FROM $tabela WHERE id = ?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
-$resultado = $stmt->get_result();
-$usuario = $resultado->fetch_assoc();
+$stmt->bind_result($senhaHash);
+$stmt->fetch();
+$stmt->close();
 
-if (!password_verify($senha_antiga, $usuario['senha'])) {   
-    echo "<script>alert('Senha antiga incorreta!'); window.location.href = '$redirectUrl';</script>";
+if (!password_verify($senha_antiga, $senhaHash)) {
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Senha antiga incorreta.']);
     exit();
 }
 
 $nova_senha_hash = password_hash($nova_senha, PASSWORD_DEFAULT);
-
-
 $sql = "UPDATE $tabela SET senha = ? WHERE id = ?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param('si', $nova_senha_hash, $user_id);
 
 if ($stmt->execute()) {
-    echo "<script>alert('Senha alterada com sucesso!'); window.location.href = '$redirectUrl';</script>";
+    echo json_encode(['sucesso' => true, 'mensagem' => 'Senha alterada com sucesso!']);
 } else {
-    echo "<script>alert('Erro ao alterar senha.'); window.location.href = 'trocar-senha.php';</script>";
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Erro ao alterar a senha.']);
 }
+
+$stmt->close();
+exit();

@@ -6,7 +6,6 @@ include_once '../db.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pet_id = $_POST['petId'];
 
-    // Certifique-se de que o tutor está tentando excluir seu próprio pet
     $tutor_id = $_SESSION['id'];
 
     // Deletar o pet

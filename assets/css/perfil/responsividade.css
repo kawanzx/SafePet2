@@ -122,8 +122,7 @@
 
     .btn-salvar,
     .btn-trocar-senha,
-    .btn-excluir,
-    .btn-cancelar {
+    .btn-excluir{
         padding: 12px;
         font-size: 14px;
         width: 100%;
@@ -269,8 +268,7 @@
 
     .btn-salvar,
     .btn-trocar-senha,
-    .btn-excluir,
-    .btn-cancelar {
+    .btn-excluir {
         padding: 10px;
         font-size: 12px;
     }

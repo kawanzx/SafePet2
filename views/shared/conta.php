@@ -96,10 +96,10 @@
         <div class="section">
             <div class="trocar-senha">
                 <h3>Trocar senha</h3>
-                <form method="POST" action="/includes/perfil/trocar-senha.php" onsubmit="return validarSenha();">
+                <form method="POST" action="/includes/perfil/trocar-senha.php">
                     <div class="textfield">
                         <label for="senha_antiga">Senha Antiga:</label>
-                        <input type="password" name="senha_antiga" required>
+                        <input type="password" name="senha_antiga" id="senha_antiga" required>
                     </div>
                     <div class="textfield">
                         <label for="nova_senha">Nova Senha:</label>
@@ -109,7 +109,7 @@
                         <label for="confirmar_senha">Confirmar Nova Senha:</label>
                         <input type="password" name="confirmar_senha" id="confirmar_senha" required>
                     </div>
-                    <button class="btn-trocar-senha">Trocar Senha</button>
+                    <button class="btn-trocar-senha" type="button" onclick="validarSenha()">Trocar Senha</button>
                 </form>
             </div>
         </div>
@@ -119,10 +119,10 @@
             <div class="excluir">
                 <h3>Excluir Conta</h3>
                 <p>Tem certeza de que deseja excluir sua conta? Esta ação é irreversível.</p>
-                <form action="/includes/perfil/excluir_conta.php" method="POST" onsubmit="return confirmExclusao();">
-                    <button type="submit" name="confirmar_exclusao" class="btn-excluir">Excluir Conta</button>
+                <form id="formExcluirConta" action="/includes/perfil/excluir_conta.php" method="POST">
+                    <input type="hidden" name="confirmar_exclusao" value="1">
+                    <button type="submit" class="btn-excluir" onclick="confirmExclusao(event);">Excluir Conta</button>
                 </form>
-                <a href="/views/tutor/perfil.php" class="btn-cancelar">Cancelar</a>
             </div>
         </div>
     </div>

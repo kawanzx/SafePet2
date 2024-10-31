@@ -25,13 +25,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (xhr.status === 200) {
                     var response = JSON.parse(xhr.responseText);
                     if (response.success) {
-                        console.log('Foto enviada com sucesso!');
+                        Swal.fire({
+                            icon: "success",
+                            title: "Sucesso!",
+                            text: "Foto alterada.",
+                        });
                         preview.src = uploadPath + response.nova_foto + '?' + new Date().getTime();
                     } else {
-                        console.log('Erro: ' + response.error);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Erro!",
+                            text: response.error,
+                        }).then(() => {
+                            location.reload();
+                        });
                     }
                 } else {
-                    console.log('Erro ao enviar a foto.');
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: 'Erro ao enviar a foto.',
+                    })
                 }
             };
 

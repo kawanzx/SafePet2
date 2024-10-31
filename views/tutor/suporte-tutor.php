@@ -57,7 +57,7 @@ include __DIR__ . '/../../auth/protect.php';
                 <button type="submit">Enviar</button>
 
                 <input type="hidden" name="accessKey" value="69faecc1-fb39-4467-a250-5ec40ff0baaa">
-                <input type="hidden" name="redirectTo" value="http://localhost:8000/acesso_interno/tutor/perfil.php#">
+                <input type="hidden" name="redirectTo" value="http://localhost:8000/views/tutor/perfil.php#">
             </form>
         </section>
     </div>

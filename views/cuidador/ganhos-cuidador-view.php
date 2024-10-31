@@ -1,3 +1,6 @@
+<?php
+include __DIR__ . '/../../auth/protect.php';
+?>
 <div id="conteudo-2" class="content-section">
     <h2>Meus Ganhos</h2>
     <div class="ganhos-container">

@@ -10,7 +10,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
     margin-bottom: 20px;
-    width: 100%; /* Garante que a largura seja responsiva */
+    width: 100%; 
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     max-width: 1000px;
@@ -22,6 +22,14 @@
 .excluir:hover {
     transform: scale(1.02); 
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sub-conteudo .section{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .textfield {
@@ -59,8 +67,10 @@
 }
 
 .btn-salvar,
-.btn-trocar-senha {
+.btn-trocar-senha,
+.cad-pet{
     background-color: #E76F51;
+    border-radius: 5px;
     color: white;
     border: none;
     cursor: pointer;
@@ -74,7 +84,6 @@
     background: #ee5028;
 }
 
-/* Estilos específicos para excluir conta */
 .excluir-conta {
     text-align: center;
 }
@@ -93,24 +102,45 @@
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
+    margin-top: 15px;
 }
 
 .btn-excluir:hover {
     background-color: #ee5028;
 }
 
-.btn-cancelar {
-    margin-top: 15px;
-    display: inline-block;
-    color: #3e3e3f;
-    text-decoration: none;
-    border: 1px solid #3e3e3f;
-    padding: 10px;
-    border-radius: 5px;
+
+/* Conta excluída */
+
+.excluir-conta {
+    max-width: 500px;
+    margin: auto;
     text-align: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.btn-cancelar:hover {
-    background-color: #3e3e3f;
-    color: white;
+.excluir-conta h2 {
+    color: #d9534f;
+}
+
+.btn-voltar {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-voltar:hover {
+    background-color: #0056b3;
+}
+
+.conta-excluida p, a{
+    text-align: center;
 }

@@ -1,4 +1,8 @@
 <?php
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -14,42 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $peso = $_POST['peso'];
         $castrado = $_POST['castrado'];
         $descricao = $_POST['descricao'];
-        $foto_atual = $_POST['foto_atual'];
 
-        // Verificar se foi enviada uma nova foto
-        if (!empty($_FILES['foto']['name'])) {
-            $foto_nome = basename($_FILES['foto']['name']);
-            $foto_extensao = strtolower(pathinfo($foto_nome, PATHINFO_EXTENSION));
-            $foto_permitidas = ['jpg', 'jpeg', 'png', 'gif'];
-
-            if (in_array($foto_extensao, $foto_permitidas)) {
-                $foto_caminho = '/assets/uploads/fotos-pets/' . $foto_nome;
-
-                // Verificar se o upload foi bem-sucedido
-                if (move_uploaded_file($_FILES['foto']['tmp_name'], $foto_caminho)) {
-                    $foto = $foto_caminho; // Definir o caminho da nova foto
-                } else {
-                    echo "Erro ao fazer upload da foto.";
-                    exit;
-                }
-            } else {
-                echo "Formato de arquivo inválido. Permitidos: jpg, jpeg, png, gif.";
-                exit;
-            }
-        }else {
-            // Manter a foto antiga
-            $foto = $foto_atual;
-        }
-
-        $sql = "UPDATE pets SET nome = ?, raca = ?, especie = ?, idade = ?, sexo = ?, peso = ?, castrado = ?, descricao = ?, foto = ? WHERE id = ?";
+        $sql = "UPDATE pets SET nome = ?, raca = ?, especie = ?, idade = ?, sexo = ?, peso = ?, castrado = ?, descricao = ? WHERE id = ?";
         if ($stmt = $mysqli->prepare($sql)) {
-            $stmt->bind_param("sssisdsssi", $nome, $raca, $especie, $idade, $sexo, $peso, $castrado, $descricao, $foto, $petId);
+            $stmt->bind_param("sssisdssi", $nome, $raca, $especie, $idade, $sexo, $peso, $castrado, $descricao,$petId);
 
             if ($stmt->execute()) {
                 if ($stmt->affected_rows > 0) {
                     echo "sucesso";
                 } else {
-                    echo "Nenhuma alteração foi realizada no banco de dados.";
+                    echo " Nenhuma alteração foi realizada.";
                 }
             } else {
                 echo "Erro ao executar a atualização: " . $stmt->error;

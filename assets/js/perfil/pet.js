@@ -43,8 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const peso = petDiv.querySelector('.pesoInput').value;
             const castrado = petDiv.querySelector('.castradoInput').value;
             const descricao = petDiv.querySelector('.descricaoInput').value;
-            const fotoInput = petDiv.querySelector('input[type="file"]');
-            const fotoAtual = petDiv.querySelector('.fotoPetAtual').value;
 
             // Enviar os dados via AJAX
             const formData = new FormData();
@@ -58,13 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('castrado', castrado);
             formData.append('descricao', descricao);
 
-            if (fotoInput && fotoInput.files.length > 0) {
-                formData.append('foto', fotoInput.files[0]);
-            } else {
-                // Se não houver uma nova foto, adicione o valor da foto atual (se existir)
-                formData.append('foto_atual', fotoAtual);
-            }
-
             fetch('/includes/perfil/editar-pet.php', {
                 method: 'POST',
                 body: formData
@@ -73,6 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(data => {
                     console.log(data);
                     if (data.includes("sucesso")) {
+                        Swal.fire({
+                            icon: "success",
+                            text: "Dados atualizados com sucesso!",
+                          });
                         // Atualizar os textos com os novos valores
                         petDiv.querySelector('.nomePetText').textContent = nome;
                         petDiv.querySelector('.especieText').textContent = especie === 'cachorro' ? 'Cachorro' : 'Gato';
@@ -82,12 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         petDiv.querySelector('.pesoText').textContent = peso;
                         petDiv.querySelector('.castradoText').textContent = castrado;
                         petDiv.querySelector('.descricaoText').textContent = descricao;
-
-                        // Atualizar a imagem caso uma nova foto tenha sido enviada
-                        if (fotoInput && fotoInput.files.length > 0) {
-                            const newImageUrl = URL.createObjectURL(fotoInput.files[0]);
-                            petDiv.querySelector('.fotoPet img').src = newImageUrl;
-                        }
 
                         // Ocultar os inputs e exibir os textos
                         petDiv.querySelectorAll('.nomePetText, .especieText, .racaText, .idadeText, .sexoText, .pesoText, .castradoText, .descricaoText').forEach(text => {
@@ -102,12 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         petDiv.querySelector('.editar-btn').style.display = 'inline-block';
                         petDiv.querySelector('.cancelar-btn').style.display = 'none';
                     } else {
-                        alert('Erro ao atualizar os dados: ' + data);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Erro ao atualizar os dados!",
+                            text: data,
+                          });
                     }
                 })
                 .catch(error => {
                     console.error('Erro na requisição:', error);
-                    alert('Erro na comunicação com o servidor.');
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro na comunicação com o servidor.",
+                      });
                 });
         });
     });
@@ -147,50 +143,107 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
-    //Excluir Pet
-    // Evento para excluir um pet
+    //Excluir pet
     document.querySelectorAll('.excluir-btn').forEach(button => {
         button.addEventListener('click', function () {
-            if (confirm('Tem certeza que deseja excluir este pet?')) {
-                const petElement = this.closest('.pet');
-                const petId = petElement.getAttribute('data-pet-id');
+            Swal.fire({
+                title: "Tem certeza que deseja excluir esse pet?",
+                text: "Não será possível reverter essa ação!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim, deletar pet",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
 
-                // Enviar requisição AJAX para excluir o pet
-                fetch('excluir-pet.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'petId=' + encodeURIComponent(petId)
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            alert(data.message);
-                            petElement.remove(); // Remove o elemento da página
-                        } else {
-                            alert('Erro: ' + data.message);
-                        }
+
+                    const petElement = this.closest('.pet');
+                    const petId = petElement.getAttribute('data-pet-id');
+
+                    // Enviar requisição AJAX para excluir o pet
+                    fetch('../../../includes/perfil/excluir-pet.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: 'petId=' + encodeURIComponent(petId)
                     })
-                    .catch(error => {
-                        console.error('Erro:', error);
-                        alert('Ocorreu um erro ao tentar excluir o pet.');
-                    });
-            }
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    title: "Excluído!",
+                                    text: "O pet foi apagado do sistema.",
+                                    icon: "success"
+                                });
+                                petElement.remove(); // Remove o elemento da página
+                            } else {
+                                alert('Erro: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro:', error);
+                            Swal.fire({
+                                title: "Ocorreu um erro ao tentar excluir o pet.",
+                                icon: "error"
+                            });
+                        });
+                }
+            });
         });
     });
 
+    document.querySelector('.cad-pet').addEventListener('click', function (event) {
+        event.preventDefault(); // Impede o envio padrão do formulário
+    
+        const form = document.getElementById('form-pet');
+        const formData = new FormData(form); // Cria o FormData com os dados do formulário
 
+        if (!form.checkValidity()) {
+            form.reportValidity(); // Exibe mensagens de erro do HTML5
+            return; // Cancela o envio se o formulário for inválido
+        }
+    
+        fetch('/includes/perfil/cadastro-pet.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json()) // Recebe a resposta em JSON
+            .then(data => {
+                console.log(data);
+                if (data.status === "sucesso") {
+                    Swal.fire({
+                        icon: "success",
+                        text: data.message,
+                    });
+                    form.reset(); // Limpa o formulário após o sucesso
+                    document.getElementById("preview").style.display = "none"; // Esconde a pré-visualização da imagem
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: data.message,
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Erro na comunicação com o servidor.",
+                });
+            });
+    });
 
     document.addEventListener('DOMContentLoaded', function () {
         const fotoInput = document.getElementById('foto');
         const preview = document.getElementById('preview');
-    
+
         if (fotoInput && preview) {
             fotoInput.addEventListener('change', function (event) {
                 const file = event.target.files[0];
-    
+
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = function (e) {
@@ -206,43 +259,57 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
-    // Foto preview editar pet
     document.querySelectorAll('.fotoPetInput').forEach(function (input) {
         input.addEventListener('change', function (event) {
             const petId = event.target.id.split('-')[1]; // Extrai o ID do pet do input file
             const preview = document.getElementById('preview-' + petId); // Obtém o elemento de pré-visualização da imagem
             const file = event.target.files[0]; // O arquivo selecionado
-
+    
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    preview.src = e.target.result; // Define o src da imagem para o conteúdo do arquivo
+                    preview.src = e.target.result; // Atualiza o src da imagem
                 };
                 reader.readAsDataURL(file); // Lê o arquivo como uma URL base64
-
+    
                 // Criar um objeto FormData para enviar o arquivo via AJAX
                 let formData = new FormData();
                 formData.append('foto', file); // Anexa o arquivo de imagem
                 formData.append('pet_id', petId); // Anexa o ID do pet
-
+    
                 // Enviar a imagem para o servidor via AJAX
                 fetch('/includes/perfil/atualizar_foto.php', {
                     method: 'POST',
                     body: formData
                 })
-                    .then(response => response.text()) // Pega a resposta do servidor
+                    .then(response => response.json()) // Espera resposta JSON
                     .then(data => {
-                        console.log(data); // Exibe a resposta (se desejar)
+                        if (data.sucesso) {
+                            console.log(data.mensagem);
+                            Swal.fire({
+                                icon: "success",
+                                title: "Sucesso!",
+                                text: data.mensagem
+                            });
+                            // Atualiza o preview com o novo caminho da imagem
+                            preview.src = '/assets/uploads/fotos-pets/' + file.name + '?' + new Date().getTime();
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Erro!",
+                                text: data.mensagem
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
                     })
                     .catch(error => {
                         console.error('Erro ao atualizar a foto:', error);
                         alert('Houve um erro ao atualizar a foto.');
                     });
             } else {
-                preview.src = 'default-image.png'; // Imagem padrão se nenhum arquivo for selecionado
+                preview.src = '/assets/uploads/fotos-pets/default-image.png'; // Imagem padrão se nenhum arquivo for selecionado
             }
         });
     });
-
 });
