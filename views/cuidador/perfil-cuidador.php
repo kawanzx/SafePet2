@@ -1,5 +1,6 @@
 <?php
 include __DIR__ . '/../../auth/protect.php';
+include __DIR__ . '/../../includes/db.php'; //
 ?>
 <div id="conteudo-1" class="content-section active">
     <h1>Perfil do Cuidador</h1>
@@ -45,9 +46,46 @@ include __DIR__ . '/../../auth/protect.php';
             </div>
             <div class="disponibilidade">
                 <h3>Disponibilidade</h3>
-                <p>Segunda a Sexta: 08:00 - 18:00</p>
-                <p>Sábados: 10:00 - 14:00</p>
+                <?php
+                // Exibir a disponibilidade cadastrada
+                $sql = "SELECT dia_da_semana, hora_inicio, hora_fim FROM disponibilidade_cuidador WHERE cuidador_id = ?";
+                $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param("i", $cuidador['id']);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<p>{$row['dia_da_semana']}: {$row['hora_inicio']} - {$row['hora_fim']}</p>";
+                    }
+                } else {
+                    echo "<p>Nenhuma disponibilidade cadastrada.</p>";
+                }
+
+                $stmt->close();
+                ?>
+                <form action="/includes/perfil/salvar-disponibilidade.php" method="POST">
+                    <label for="dia_da_semana">Dia da Semana:</label>
+                    <select name="dia_da_semana" required>
+                        <option value="segunda">Segunda</option>
+                        <option value="terca">Terça</option>
+                        <option value="quarta">Quarta</option>
+                        <option value="quinta">Quinta</option>
+                        <option value="sexta">Sexta</option>
+                        <option value="sabado">Sábado</option>
+                        <option value="domingo">Domingo</option>
+                    </select>
+
+                    <label for="hora_inicio">Horário de Início:</label>
+                    <input type="time" name="hora_inicio" required>
+
+                    <label for="hora_fim">Horário de Fim:</label>
+                    <input type="time" name="hora_fim" required>
+
+                    <button type="submit">Adicionar Disponibilidade</button>
+                </form>
             </div>
+
         </div>
     </div>
     <script src="/views/cuidador/main.js" type="module"></script>
