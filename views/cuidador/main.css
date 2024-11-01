@@ -2,6 +2,7 @@
 @import url("/assets/css/perfil/layout.css");
 @import url("/assets/css/perfil/sidebar.css");
 @import url("/assets/css/perfil/meu-perfil.css");
+@import url("/assets/css/perfil/ganhos-cuidador.css");
 @import url("/assets/css/perfil/conta.css");
 @import url("/assets/css/perfil/suporte.css");
 @import url("/assets/css/perfil/politica-privacidade.css");
@@ -88,17 +89,8 @@
         align-items: flex-start;
     }
 
-    .tutor-avatar {
+    .cuidador-avatar {
         margin-bottom: 10px;
-    }
-
-    .pets-container {
-        flex-direction: column;
-    }
-
-    .pet {
-        flex: 1 1 100%;
-        /* Cada pet ocupa 100% da largura */
     }
 
     /* Conta */
@@ -154,8 +146,13 @@
         margin: 60px 0 0 60px;
     }
 
+    .section{
+        margin: 0;
+        padding: 15px;
+    }
+
     .meu-perfil {
-        padding: 20px;
+        padding: 13px;
     }
 
     .perfil-header {
@@ -163,10 +160,19 @@
         align-items: center;
     }
 
-    .tutor-avatar {
+    .cuidador-avatar {
         margin-bottom: 0;
         width: 90px;
     }
+
+    .perfil-header h2, .nomePet-perfil{
+        margin: 8px 0 8px 0;
+    }
+
+    .meu-perfil .info-label{
+        margin: 0;
+    }
+
 
     h1 {
         font-size: 1.5em;

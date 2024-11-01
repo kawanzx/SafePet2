@@ -7,6 +7,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'] ?? 'tutor'
 
 <link rel="stylesheet" href="/assets/css/navbar.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <nav class="transparent-nav">
     <div class="nav-container">
@@ -24,3 +25,4 @@ $tipo_usuario = $_SESSION['tipo_usuario'] ?? 'tutor'
 </nav>
 
 <script type="text/javascript" src="/assets/js/navbar.js"></script>
+<script type="text/javascript" src="/assets/js/perfil/logout.js"></script>

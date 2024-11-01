@@ -96,6 +96,7 @@
 
     .pets-container {
         flex-direction: column;
+        gap: 15px;
     }
 
     .pet {
@@ -156,6 +157,11 @@
         margin: 60px 0 0 60px;
     }
 
+    .section{
+        margin: 0;
+        padding: 15px;
+    }
+
     .meu-perfil {
         padding: 13px;
     }
@@ -168,6 +174,14 @@
     .tutor-avatar {
         margin-bottom: 0;
         width: 90px;
+    }
+
+    .perfil-header h2, .nomePet-perfil{
+        margin: 8px 0 8px 0;
+    }
+
+    .meu-perfil .info-label{
+        margin: 0;
     }
 
     h1 {

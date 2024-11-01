@@ -4,7 +4,7 @@ document.getElementById('logoutLink').addEventListener('click', function (event)
     event.preventDefault();
 
     Swal.fire({
-        title: "Tem certeza?",
+        title: "Tem certeza que deseja sair?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

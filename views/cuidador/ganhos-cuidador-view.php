@@ -2,7 +2,7 @@
 include __DIR__ . '/../../auth/protect.php';
 ?>
 <div id="conteudo-2" class="content-section">
-    <h2>Meus Ganhos</h2>
+    <h1>Meus Ganhos</h1>
     <div class="ganhos-container">
         <div class="ganhos-resumo">
             <h3>Total de Ganhos: R$ <span id="totalGanhos"><?php echo $totalGanhosFormatado; ?></span></h3>
