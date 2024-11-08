@@ -11,41 +11,28 @@ include __DIR__ . '/../../includes/db.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento Cuidador - SafePet</title>
+    <link rel="stylesheet" href="/assets/css/perfil/sidebar.css">
     <link rel="stylesheet" href="/assets/css/agendamentos.css">
 </head>
 <body>
+    
     <!-- Sidebar -->
-    <div class="sidebar">
-        <h2>Agendamento</h2>
-        <a href="#" onclick="showSection('em_breve')">Em Breve</a>
-        <a href="#" onclick="showSection('concluidos')">Concluídos</a>
-        <a href="#" onclick="showSection('cancelados')">Cancelados</a>
-        <a href="#" onclick="showSection('solicitacoes')">Solicitações</a>
-    </div>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="/img/favicon.ico" alt="SafePet">
+                <h2>SafePet</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showContent('conteudo-1', this)"><span class="material-symbols-outlined">account_circle</span><span class="item-description">Solicitações</span></a></li>
+                    <li><a href="#" onclick="showContent('conteudo-2', this)"><span class="material-symbols-outlined">finance</span><span class="item-description">Em Breve</span></a></li>
+                    <li><a href="#" onclick="showContent('conteudo-3', this)"><span class="material-symbols-outlined">info</span><span class="item-description">Cancelados</span></a></li>
+                    <li><a href="#" onclick="showContent('conteudo-4', this)"><span class="material-symbols-outlined">lock</span><span class="item-description">Concluídos</span></a></li>
+                </ul>
+            </nav>
+        </aside>
 
-    <!-- Conteúdo -->
-    <div class="content">
-        <div id="em_breve" class="section active">
-            <h2>Em Breve</h2>
-            <p>Aqui estão as solicitações agendadas que ainda não foram concluídas.</p>
-        </div>
-
-        <div id="concluidos" class="section">
-            <h2>Concluídos</h2>
-            <p>Aqui estão as solicitações que você já concluiu.</p>
-        </div>
-
-        <div id="cancelados" class="section">
-            <h2>Cancelados</h2>
-            <p>Aqui estão as solicitações que foram canceladas.</p>    
-        </div>
-
-        <div id="solicitacoes" class="section">
-            <h2>Solicitações</h2>
-            <p>Aqui estão as solicitações pendentes que você pode aceitar ou recusar.</p> 
-        </div>
-    </div>
-
-    <script src="/assets/js/agendamentos.js"></script>
+    <script src="/assets/js/perfil/sidebar.js"></script>
 </body>
 </html>
