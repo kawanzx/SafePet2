@@ -14,6 +14,12 @@ $sql = "
     LEFT JOIN avaliacoes a ON c.id = a.id_cuidador
     GROUP BY c.id, c.nome, c.preco_hora, c.cidade, c.uf, foto_perfil
 ";
+$stmt = $mysqli->prepare($sql);
+$stmt->execute();
+$stmt->bind_result($id, $nome, $preco_hora, $cidade, $uf, $foto_perfil, $nota_media);
+$stmt->fetch();
+$stmt->close();
+
 $result = $mysqli->query($sql);
 
 ?>
@@ -53,21 +59,21 @@ $result = $mysqli->query($sql);
                         <h3><?php echo htmlspecialchars($row['nome']); ?></h3>
                         <p>Avaliação:
                             <?php
-                            $avaliacao = isset($row['avaliacao_media']) ? round($row['avaliacao_media']) : 0;
+                            $avaliacao = isset($nota_media) ? round($nota_media) : 0;
                             echo str_repeat('⭐', $avaliacao) . str_repeat('☆', 5 - $avaliacao);
                             ?>
                         </p>
                         <p>Preço:
                             <?php
-                            if (isset($row['preco_hora'])) {
-                                echo 'R$ ' . number_format($row['preco_hora'], 2, ',', '.') . '/hora';
+                            if (isset($preco_hora)) {
+                                echo 'R$ ' . number_format($preco_hora, 2, ',', '.') . '/hora';
                             } else {
                                 echo 'Preço não informado';
                             }
                             ?></p>
-                        <p>Localização: <?php echo htmlspecialchars($row['cidade'] . ', ' . $row['uf']); ?></p>
+                        <p>Localização: <?php echo htmlspecialchars($cidade . ', ' . $uf); ?></p>
                     </div>
-                    <a href="perfil_cuidador.php?id=<?php echo $row['id']; ?>" class="schedule-button">Ver Perfil</a>
+                    <a href="perfil-cuidador.php?id=<?php echo $id; ?>" class="schedule-button">Ver Perfil</a>
                 </div>
             <?php endwhile; ?>
         <?php else : ?>
