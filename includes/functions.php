@@ -26,11 +26,11 @@ function getTutorProfile($mysqli, $tutor_id)
 
 function getCuidadorProfile($mysqli, $cuidador_id)
 {
-    $sql = "SELECT nome, bio, foto_perfil, experiencia FROM cuidadores WHERE id = ?";
+    $sql = "SELECT nome, bio, foto_perfil, experiencia, preco_hora FROM cuidadores WHERE id = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param('i', $cuidador_id);
     $stmt->execute();
-    $stmt->bind_result($nome, $bio, $foto_perfil, $experiencia);
+    $stmt->bind_result($nome, $bio, $foto_perfil, $experiencia, $preco_hora);
     $stmt->fetch();
     $stmt->close();
 
@@ -105,4 +105,3 @@ function getInformacoesUsuario($mysqli, $usuario_id, $tipo_usuario)
         'cpf' => $cpf
     ];
 }
-

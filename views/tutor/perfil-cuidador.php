@@ -21,24 +21,22 @@ $cuidador = getCuidadorProfile($mysqli, $cuidador_id);
     <h1>Perfil do Cuidador</h1>
     <div class="meu-perfil">
         <div class="section">
-            <span style="position: absolute; margin: -20px;" class="material-symbols-outlined" onclick="">arrow_back</span>
+            <span style="position: absolute; margin: -20px; cursor:pointer; font-size:27px" class="material-symbols-outlined" onclick="history.back()">arrow_back</span>
             <div class="perfil-header">
                 <img src="<?php echo $cuidador['foto_perfil'] . '?' . time(); ?>" alt="Foto do cuidador" class="cuidador-avatar" id="preview-avatar">
                 <div>
                     <h2><?php echo $cuidador['nome']; ?></h2>
                     <p><span class="info-label">Avaliação:</span> ⭐⭐⭐⭐ (4.8)</p>
                 </div>
-                <button>Agendar</button>
+                <a href="agendar.php?id=<?php echo $cuidador_id; ?>" class="schedule-button">Agendar</a>
             </div>
             <div class="bio">
-                <form action="/includes/perfil/editar-bio.php" method="POST">
-                    <h3>Bio</h3>
-                    <p><span class="bioText"><?php echo $cuidador['bio'];?></span></p>
-                </form>
+                <h3>Bio</h3>
+                <p><span class="bioText"><?php echo $cuidador['bio'];?></span></p>
             </div>
             <div class="experiencia">
-                    <h3>Experiência</h3>
-                    <p><span class="experienciaText"><?php echo $cuidador['experiencia'];?></span></p>
+                <h3>Experiência</h3>
+                <p><span class="experienciaText"><?php echo $cuidador['experiencia'];?></span></p>
             </div>
             <div class="disponibilidade">
                 <h3>Disponibilidade</h3>
