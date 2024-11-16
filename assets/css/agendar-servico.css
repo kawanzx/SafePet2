@@ -11,7 +11,7 @@ body {
     margin: 0;
 }
 
-h1{
+h1 {
     font-weight: 800;
     color:#1D3557;
 }
@@ -20,7 +20,7 @@ h1{
     display: flex;
     flex-direction: column;
     background-color: white;
-    margin: 20px;
+    margin: 90px 20px 20px 20px;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -29,6 +29,7 @@ h1{
 .container .cuidador-info {
     display: flex;   
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .cuidador-avatar {
@@ -61,7 +62,7 @@ h1{
     margin-left: 10px;
 }
 
-.form-group {
+.section {
     margin-bottom: 20px;
 }
 
@@ -95,3 +96,40 @@ button {
 button:hover {
     background-color: #e4603f;
 }
+
+/* Pets */
+
+.pet{
+    display: inline-block;
+    margin: 20px 0;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    border: 1px solid transparent;
+    padding: 10px;
+}
+
+.pet-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.pet-checkbox:checked + img, 
+.pet-checkbox:checked + .nomePet-perfil {
+    border: 2px solid #1D3557; 
+    background-color: #f0f0f0;
+}
+
+.pet img{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 2px solid #457B9D;
+}
+
+.pet h2{
+    font-size: 1rem;
+}
+

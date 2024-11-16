@@ -38,18 +38,18 @@ $pets = getPetsByTutor($mysqli, $tutor_id);
             </div>
             <nav>
                 <ul>
-                    <li><a href="#" onclick="showContent('conteudo-1', this)"><span class="material-symbols-outlined">account_circle</span><span class="item-description">Meu Perfil</span></a></li>
-                    <li><a href="#" onclick="showContent('conteudo-2', this)"><span class="material-symbols-outlined">pets</span><span class="item-description">Meus Pets</span></a></li>
+                    <li><a href="#1" onclick="showContent('conteudo-1', this)"><span class="material-symbols-outlined">account_circle</span><span class="item-description">Meu Perfil</span></a></li>
+                    <li><a href="#2" onclick="showContent('conteudo-2', this)"><span class="material-symbols-outlined">pets</span><span class="item-description">Meus Pets</span></a></li>
                     <li>
                         <a href="#" onclick="alternarSubmenu(event)"><span class="material-symbols-outlined">person</span><span class="item-description">Conta</span></a>
                         <ul class="submenu">
-                            <li><a href="#" onclick="showContent('conteudo-3', this)" data-sub-content="info-pessoais">Informações Pessoais</a></li>
-                            <li><a href="#" onclick="showContent('conteudo-3', this)" data-sub-content="trocar-senha">Trocar Senha</a></li>
-                            <li><a href="#" onclick="showContent('conteudo-3', this)" data-sub-content="excluir-conta">Excluir Conta</a></li>
+                            <li><a href="#3" onclick="showContent('conteudo-3', this)" data-sub-content="info-pessoais">Informações Pessoais</a></li>
+                            <li><a href="#4" onclick="showContent('conteudo-3', this)" data-sub-content="trocar-senha">Trocar Senha</a></li>
+                            <li><a href="#5" onclick="showContent('conteudo-3', this)" data-sub-content="excluir-conta">Excluir Conta</a></li>
                         </ul>
                     </li>
-                    <li><a href="#" onclick="showContent('conteudo-4', this)"><span class="material-symbols-outlined">info</span><span class="item-description">Suporte</span></a></li>
-                    <li><a href="#" onclick="showContent('conteudo-5', this)"><span class="material-symbols-outlined">lock</span><span class="item-description">Política de Privacidade</span></a></li>
+                    <li><a href="#6" onclick="showContent('conteudo-4', this)"><span class="material-symbols-outlined">info</span><span class="item-description">Suporte</span></a></li>
+                    <li><a href="#7" onclick="showContent('conteudo-5', this)"><span class="material-symbols-outlined">lock</span><span class="item-description">Política de Privacidade</span></a></li>
                 </ul>
             </nav>
         </aside>

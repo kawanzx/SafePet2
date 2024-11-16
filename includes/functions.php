@@ -56,7 +56,7 @@ function getCuidadorProfile($mysqli, $cuidador_id)
 
 function getPetsByTutor($mysqli, $tutor_id)
 {
-    $sql = "SELECT nome, especie, raca, idade, sexo, peso, castrado, descricao, foto FROM pets WHERE tutor_id = ?";
+    $sql = "SELECT id, nome, especie, raca, idade, sexo, peso, castrado, descricao, foto FROM pets WHERE tutor_id = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param('i', $tutor_id);
     $stmt->execute();
