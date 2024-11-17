@@ -1,6 +1,12 @@
 <?php
-include('../includes/db.php');
-include __DIR__ . '/protect.php';
+header('Content-Type: application/json; charset=utf-8');
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include ('../includes/db.php');
+include ('../includes/functions.php');
 
 if(isset($_POST['email'])){
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -10,6 +16,27 @@ if(isset($_POST['email'])){
     $tipo_usuario = $_POST['tipo_usuario'];
     $data_nascimento = $_POST['data_nascimento'];
     $cpf = preg_replace('/\D/', '', $_POST['cpf']);
+    $confirmar_senha = $_POST['confirmar_senha'];
+
+    if (!validarNome($nome_completo)) {
+        echo json_encode(['sucesso' => false, 'mensagem' => 'Nome inválido']);
+        exit();
+    } elseif (!validarEmail($email)) {
+        echo json_encode(['sucesso' => false, 'mensagem' => 'E-mail inválido.']);
+        exit();
+    } elseif (!validarCPF($cpf)) {
+        echo json_encode(['sucesso' => false, 'mensagem' => 'CPF inválido.']);
+        exit();
+    } elseif (!validarTelefone($telefone)) {
+        echo json_encode(['sucesso' => false, 'mensagem' => 'Telefone inválido.']);
+        exit();
+    } elseif (!validarSenha($senha)) {
+        echo json_encode(['sucesso' => false, 'mensagem' => 'A senha deve ter pelo menos 6 caracteres, incluindo números, letras maiúsculas e minúsculas']);
+        exit();
+    } elseif ($senha !== $confirmar_senha) {
+        echo json_encode(['sucesso' => false, 'mensagem' => 'As senhas não coincidem.']);
+        exit();
+    }
 
     if($tipo_usuario === 'tutor'){
         $stmt = $mysqli->prepare("SELECT id FROM tutores WHERE email = ? OR cpf = ?");
@@ -21,7 +48,7 @@ if(isset($_POST['email'])){
         $stmt->store_result();
     
         if ($stmt->num_rows > 0) {
-            echo "E-mail ou CPF já cadastrados. Por favor, realize o <a href='formlogin.html'>login</a>.";
+            echo json_encode(['sucesso' => false, 'mensagem' => 'E-mail ou CPF já cadastrados. Por favor, realize o login']);
             exit();
         }
         
@@ -40,7 +67,7 @@ if(isset($_POST['email'])){
         $stmt->store_result();
     
         if ($stmt->num_rows > 0) {
-            echo "E-mail ou CPF já cadastrados. Por favor, realize o <a href='formlogin.html'>login</a>.";
+            echo json_encode(['sucesso' => false, 'mensagem' => 'E-mail ou CPF já cadastrados. Por favor, realize o login.']);
             exit();
         }
         
@@ -50,8 +77,7 @@ if(isset($_POST['email'])){
 
         $mysqli->query("INSERT INTO cuidadores (nome, email, senha, telefone, dt_nascimento, cpf) VALUES ('$nome_completo', '$email', '$senha_hash', '$telefone', '$data_nascimento', '$cpf')");
     }
-    
-    echo "<script>alert('Cadastro bem sucedido. Realize o login para acessar sua conta');window.location.href='login.html';</script>";
+    echo json_encode(['sucesso' => true, 'mensagem' => 'Cadastro bem-sucedido. Realize o login']);
     exit();
 }
 

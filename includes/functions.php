@@ -1,6 +1,44 @@
 <?php
 require_once 'db.php';
 
+function validarNome($nome_completo) {
+    return preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ\s]{2,}$/', $nome_completo);
+}
+
+function validarEmail($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}
+
+function validarCPF($cpf) {
+    $cpf = preg_replace('/[^0-9]/', '', $cpf);
+
+    if (strlen($cpf) != 11 || preg_match('/(\d)\1{10}/', $cpf)) {
+        return false;
+    }
+
+    // Validação dos dígitos verificadores
+    for ($t = 9; $t < 11; $t++) {
+        $d = 0;
+        for ($c = 0; $c < $t; $c++) {
+            $d += $cpf[$c] * (($t + 1) - $c);
+        }
+        $d = ((10 * $d) % 11) % 10;
+        if ($cpf[$c] != $d) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function validarTelefone($telefone) {
+    return preg_match('/^\d{10,11}$/', $telefone);
+}
+
+function validarSenha($senha) {
+    return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/', $senha);
+}
+
 function getTutorProfile($mysqli, $tutor_id)
 {
     $sql = "SELECT nome, bio, foto_perfil FROM tutores WHERE id = ?";
