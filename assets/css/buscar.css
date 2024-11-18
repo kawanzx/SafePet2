@@ -1,3 +1,9 @@
+#divBusca{
+    display: flex;
+    justify-content: center;
+    gap: .1%;
+}
+
 .cuidadores {
     padding: 100px 20px 20px;
     /* Espaçamento superior para evitar a navbar */

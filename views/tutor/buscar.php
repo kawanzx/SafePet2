@@ -6,22 +6,7 @@ error_reporting(E_ALL);
 include __DIR__ . '/../../auth/protect.php';
 include __DIR__ . '/../../includes/navbar.php';
 include __DIR__ . '/../../includes/db.php';
-
-$sql = "
-    SELECT c.id, c.nome, c.preco_hora, c.cidade, c.uf, c.foto_perfil, 
-           AVG(a.nota) as avaliacao_media 
-    FROM cuidadores c
-    LEFT JOIN avaliacoes a ON c.id = a.id_cuidador
-    GROUP BY c.id, c.nome, c.preco_hora, c.cidade, c.uf, foto_perfil
-";
-$stmt = $mysqli->prepare($sql);
-$stmt->execute();
-$stmt->bind_result($id, $nome, $preco_hora, $cidade, $uf, $foto_perfil, $nota_media);
-$stmt->fetch();
-$stmt->close();
-
-$result = $mysqli->query($sql);
-
+include __DIR__ . '/../../includes/buscar.php';
 ?>
 
 <!DOCTYPE html>
@@ -37,14 +22,13 @@ $result = $mysqli->query($sql);
 </head>
 
 <body>
-    <!-- Seção de Cuidadores Disponíveis -->
-
     <section class="cuidadores">
 
-        <div id="divBusca">
-            <span class="material-symbols-outlined">search</span>
-            <input type="text" id="txtBusca" placeholder="Buscar..." />
-            <button id="btnBusca">Buscar</button>
+        <div class="busca" id="divBusca">
+            <input type="search" id="busca" placeholder="Pesquisar" />
+            <button onclick="searchData()" id="btnBusca">
+                <span class="material-symbols-outlined">search</span>
+            </button>
         </div>
 
         <h2>Cuidadores Disponíveis</h2>
@@ -53,7 +37,7 @@ $result = $mysqli->query($sql);
             <?php while ($row = $result->fetch_assoc()) : ?>
                 <div class="cuidador">
                     <div class="avatar">
-                        <img src="<?php echo '/assets/uploads/fotos-cuidadores/' . htmlspecialchars($row['foto_perfil'] ? $row['foto_perfil'] : '../../assets/profile-circle-icon.png'); ?>" class="cuidador-avatar" alt="Foto de <?php echo htmlspecialchars($row['nome']); ?>">
+                        <img src="<?php echo '/assets/uploads/fotos-cuidadores/' . htmlspecialchars($row['foto_perfil'] ? $row['foto_perfil'] : '../../../img/profile-circle-icon.png'); ?>" class="cuidador-avatar" alt="Foto de <?php echo htmlspecialchars($row['nome']); ?>">
                     </div>
                     <div class="details">
                         <h3><?php echo htmlspecialchars($row['nome']); ?></h3>
@@ -71,9 +55,9 @@ $result = $mysqli->query($sql);
                                 echo 'Preço não informado';
                             }
                             ?></p>
-                        <p>Localização: <?php echo htmlspecialchars($cidade . ', ' . $uf); ?></p>
+                        <p>Localização: <?php echo htmlspecialchars($row['cidade'] . ', ' . $row['uf']); ?></p>
                     </div>
-                    <a href="perfil-cuidador.php?id=<?php echo $id; ?>" class="schedule-button">Ver Perfil</a>
+                    <a href="perfil-cuidador.php?id=<?php echo $row['id']; ?>" class="schedule-button">Ver Perfil</a>
                 </div>
             <?php endwhile; ?>
         <?php else : ?>
@@ -81,3 +65,5 @@ $result = $mysqli->query($sql);
         <?php endif; ?>
 
     </section>
+    <script src="/assets/js/buscar.js"></script>
+</body>
