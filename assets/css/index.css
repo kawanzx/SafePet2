@@ -95,7 +95,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: url('') no-repeat center center/cover;
+    background: #ffc107;
     height: 100vh;
     display: flex;
     justify-content: flex-start; /* Alinha o conteúdo à esquerda */

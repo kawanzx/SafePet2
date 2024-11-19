@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SafePet</title>
+    <script src="../assets/js/auth/auth.js" defer></script>
     <link rel="stylesheet" href="../assets/css/auth/register.css">
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
                     <a href="../index.php"><img src="../img/seta-voltar.svg"></a>
                     <h1>Cadastro</h1>
                 </div>
-                <form id="form-cadastro" action="register.php" method="post">
+                <form action="register.php" method="post" onsubmit="return validarFormulario()">
                     <div class="form-content">
                         <div class="column">
                             <div class="textfield">
@@ -69,6 +69,6 @@
             </div>
         </div>
     </div>
-    <script src="../assets/js/auth/cadastro.js" type="module"></script>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>
