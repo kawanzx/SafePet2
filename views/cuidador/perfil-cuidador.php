@@ -89,46 +89,52 @@ $mysqli->close();
                 </form>
             </div>
 
-            <!-- Disponibilidade -->
-            <div class="disponibilidade">
-                <h3>Disponibilidade</h3>
+<!-- Disponibilidade -->
+<div class="disponibilidade">
+    <h3>Disponibilidade</h3>
 
-                <div id="disponibilidade-texto" <?= empty($disponibilidade) ? 'style="display:none;"' : '' ?>>
-                    <ul>
-                        <?php foreach ($disponibilidade as $dia => $horario): ?>
-                            <li>
-                                <strong><?= ucfirst($dia) ?>:</strong>
-                                <?= $horario['hora_inicio'] . ' - ' . $horario['hora_fim'] ?>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
+    <div id="disponibilidade-texto" <?= empty($disponibilidade) ? 'style="display:none;"' : '' ?>>
+        <ul>
+            <?php foreach ($disponibilidade as $dia => $horario): ?>
+                <li>
+                    <strong><?= ucfirst($dia) ?>:</strong>
+                    <?= $horario['hora_inicio'] . ' - ' . $horario['hora_fim'] ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 
-                <!-- Botão para editar a disponibilidade -->
-                <button id="editar-btn" onclick="exibirFormulario()">Editar</button>
+    <!-- Botão para editar a disponibilidade -->
+    <button id="editar-btn" onclick="exibirFormulario()">Editar</button>
 
-                <!-- Formulário de edição, inicialmente oculto -->
-                <form id="form-disponibilidade" action="" method="POST" <?= empty($disponibilidade) ? '' : 'style="display:none;"' ?> onsubmit="return validarFormulario()">
-                    <h4>Definir Disponibilidade</h4>
-                    <?php 
-                        // Definindo os dias da semana
-                        $diasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
-                        foreach ($diasSemana as $dia): 
-                    ?>
-                        <div style="margin-bottom: 10px;">
-                            <!-- Checkbox para marcar o dia -->
-                            <input type="checkbox" name="horarios[<?= $dia ?>][marcado]" value="1" <?= isset($disponibilidade[$dia]) ? 'checked' : '' ?> onclick="toggleHorarios('<?= $dia ?>')">
-                            <label><strong><?= ucfirst($dia) ?>:</strong></label>
-                            <!-- Campos de horário -->
-                            <input type="time" name="horarios[<?= $dia ?>][inicio]" value="<?= isset($disponibilidade[$dia]) ? $disponibilidade[$dia]['hora_inicio'] : '' ?>" class="horarios-input-<?= $dia ?>" <?= !isset($disponibilidade[$dia]) ? 'disabled' : '' ?>>
-                            <input type="time" name="horarios[<?= $dia ?>][fim]" value="<?= isset($disponibilidade[$dia]) ? $disponibilidade[$dia]['hora_fim'] : '' ?>" class="horarios-input-<?= $dia ?>" <?= !isset($disponibilidade[$dia]) ? 'disabled' : '' ?>>
-                        </div>
-                    <?php endforeach; ?>
-                    <button type="submit">Salvar</button>
-                </form>
+    <!-- Formulário de edição, inicialmente oculto -->
+    <form id="form-disponibilidade" action="" method="POST" <?= empty($disponibilidade) ? '' : 'style="display:none;"' ?> onsubmit="return validarFormulario()">
+        <h4>Definir Disponibilidade</h4>
+        <?php 
+            // Definindo os dias da semana
+            $diasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+            foreach ($diasSemana as $dia): 
+        ?>
+            <div style="margin-bottom: 10px;">
+                <!-- Checkbox para marcar o dia -->
+                <input type="checkbox" name="horarios[<?= $dia ?>][marcado]" value="1" <?= isset($disponibilidade[$dia]) ? 'checked' : '' ?> onclick="toggleHorarios('<?= $dia ?>')">
+                <label><strong><?= ucfirst($dia) ?>:</strong></label>
+                <!-- Campos de horário -->
+                <input type="time" name="horarios[<?= $dia ?>][inicio]" value="<?= isset($disponibilidade[$dia]) ? $disponibilidade[$dia]['hora_inicio'] : '' ?>" class="horarios-input-<?= $dia ?>" <?= !isset($disponibilidade[$dia]) ? 'disabled' : '' ?> step="3600" onchange="ajustarHorario(this)">
+                <input type="time" name="horarios[<?= $dia ?>][fim]" value="<?= isset($disponibilidade[$dia]) ? $disponibilidade[$dia]['hora_fim'] : '' ?>" class="horarios-input-<?= $dia ?>" <?= !isset($disponibilidade[$dia]) ? 'disabled' : '' ?> step="3600" onchange="ajustarHorario(this)">
             </div>
+        <?php endforeach; ?>
+        <button type="submit">Salvar</button>
+    </form>
+</div>
 
 <script>
+    // Função para ajustar os minutos para 00 ao selecionar o horário
+    function ajustarHorario(input) {
+        const hora = input.value.split(':')[0]; // Pega a hora
+        input.value = `${hora}:00`; // Define os minutos como 00
+    }
+
     // Exibe ou oculta o formulário de edição ao clicar no botão de editar
     function exibirFormulario() {
         var form = document.getElementById("form-disponibilidade");
