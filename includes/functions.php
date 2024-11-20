@@ -78,6 +78,12 @@ function getCuidadorProfile($mysqli, $cuidador_id)
         $bio = '';
     };
 
+    if ($preco_hora != '' || $preco_hora != null) {
+        $preco_hora;
+    } else {
+        $preco_hora = '';
+    };
+
     if ($experiencia != '' || $experiencia != null) {
         $experiencia;
     } else {
@@ -88,7 +94,8 @@ function getCuidadorProfile($mysqli, $cuidador_id)
         'nome' => htmlspecialchars($nome),
         'bio' => htmlspecialchars($bio),
         'foto_perfil' => !empty($foto_perfil) ? '/assets/uploads/fotos-cuidadores/' . $foto_perfil : '/img/profile-circle-icon.png',
-        'experiencia' => htmlspecialchars($experiencia)
+        'experiencia' => htmlspecialchars($experiencia),
+        'preco_hora' => htmlspecialchars($preco_hora)
     ];
 }
 
