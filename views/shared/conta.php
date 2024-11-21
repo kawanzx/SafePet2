@@ -5,8 +5,7 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-
-    //$informacoesTutor = getinf$informacoesTutor($mysqli, $tutor_id);
+    
     $tipo_usuario = $_SESSION['tipo_usuario'] ?? 'tutor';
     $usuario_id = $_SESSION['id'];
     $informacoesUsuario = getInformacoesUsuario($mysqli, $usuario_id, $tipo_usuario);

@@ -1,5 +1,5 @@
 /* @import url("/assets/css/perfil/responsividade.css"); */
-@import url("/assets/css/perfil/layout.css");
+@import url("/assets/css/layout.css");
 @import url("/assets/css/perfil/sidebar.css");
 @import url("/assets/css/perfil/meu-perfil.css");
 @import url("/assets/css/perfil/pet.css");
@@ -16,7 +16,7 @@
         transition: width 0.3s ease;
     }
 
-    .sidebar-expandida {
+    .sidebar.sidebar-expandida {
         width: 200px; 
     }
 

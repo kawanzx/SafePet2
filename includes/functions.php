@@ -1,5 +1,5 @@
 <?php
-require_once 'db.php';
+require 'db.php';
 
 function validarNome($nome_completo) {
     return preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ\s]{2,}$/', $nome_completo);
@@ -81,7 +81,7 @@ function getCuidadorProfile($mysqli, $cuidador_id)
     if ($preco_hora != '' || $preco_hora != null) {
         $preco_hora;
     } else {
-        $preco_hora = '';
+        $preco_hora = '00,00';
     };
 
     if ($experiencia != '' || $experiencia != null) {
@@ -110,6 +110,30 @@ function getPetsByTutor($mysqli, $tutor_id)
 
     while ($row = $result->fetch_assoc()) {
         $pets[] = $row;
+    }
+
+    $stmt->close();
+    return $pets;
+}
+
+function getPetNamesByIds($mysqli, $petIds)
+{
+    if (empty($petIds)) {
+        return [];
+    }
+
+    $placeholders = implode(',', array_fill(0, count($petIds), '?'));
+    $sql = "SELECT id, nome FROM pets WHERE id IN ($placeholders)";
+    $stmt = $mysqli->prepare($sql);
+    
+    $types = str_repeat('i', count($petIds));
+    $stmt->bind_param($types, ...$petIds);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $pets = [];
+    while ($row = $result->fetch_assoc()) {
+        $pets[$row['id']] = $row['nome'];
     }
 
     $stmt->close();
@@ -149,4 +173,37 @@ function getInformacoesUsuario($mysqli, $usuario_id, $tipo_usuario)
         'dt_nascimento' => $dt_nascimento,
         'cpf' => $cpf
     ];
+}
+
+function getAgendamentosByUser($mysqli, $user_id, $tipo_usuario, $status)
+{
+    $id = ($tipo_usuario === 'tutor') ? 'tutor_id' : 'cuidador_id';
+    $sql = "SELECT *  FROM agendamentos WHERE $id = ? AND status = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param('is', $user_id, $status);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $agendamentos = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $agendamentos[] = $row;
+    }
+
+    $stmt->close();
+    
+    return $agendamentos;
+}
+
+function updateAgendamentoStatus($mysqli, $agendamento_id, $novo_status)
+{
+    $sql = "UPDATE agendamentos SET status = ? WHERE id = ?";
+    $stmt = $mysqli->prepare($sql);
+    if ($stmt) {
+        $stmt->bind_param('si', $novo_status, $agendamento_id);
+        if ($stmt->execute()) {
+            return true;
+        }
+        $stmt->close();
+    }
+    return false;
 }

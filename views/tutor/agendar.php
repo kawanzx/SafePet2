@@ -27,7 +27,7 @@ $pets = getPetsByTutor($mysqli, $tutor_id);
             <img src="<?php echo $cuidador['foto_perfil'] . '?' . time(); ?>" alt="Foto do Cuidador" class="cuidador-avatar">
             <div>
                 <h2 id="nome-cuidador"><?php echo $cuidador['nome']; ?></h2>
-                <p id="valor-servico">Valor por Serviço: <?php echo $cuidador['preco_hora']; ?></p>
+                <p id="valor-servico">Cobrado por hora: R$ <?php echo $cuidador['preco_hora']; ?></p>
             </div>
         </div>
 
@@ -70,7 +70,7 @@ $pets = getPetsByTutor($mysqli, $tutor_id);
             <button type="submit">Agendar Serviço</button>
         </form>
     </div>
-    <script type="module" src="/assets/js/agendamentos.js"></script>
+    <script type="module" src="/assets/js/agendar-servico.js"></script>
 </body>
 
 </html>

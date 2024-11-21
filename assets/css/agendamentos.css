@@ -1,7 +1,44 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+.agendamento-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
     display: flex;
+    align-items: center;
+    border-radius: 8px;
+    background-color: #f9f9f9;
 }
 
+.agendamento-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.agendamento-info {
+    flex: 1;
+}
+
+.agendamento-acoes button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-aceitar {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-recusar {
+    background-color: #f44336;
+    color: white;
+}
+
+.agendamento-card:hover{
+    transform: scale(1); 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}

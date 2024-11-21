@@ -1,57 +1,35 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("form-agendar-servico");
-    const dataServico = document.getElementById("data-servico");
-    const petCheckboxes = document.querySelectorAll(".pet-checkbox");
-
-    form.addEventListener("submit", function (event) {
-        event.preventDefault(); 
-
-        if (!dataServico.value) {
-            Swal.fire({
-                icon: "warning",
-                title: "Campo Obrigatório",
-                text: "Por favor, selecione uma data para o serviço.",
+document.addEventListener('DOMContentLoaded', function () {
+    const handleAgendamentoAction = (buttonClass, url, successMessage, errorMessage) => {
+        document.querySelectorAll(buttonClass).forEach(button => {
+            button.addEventListener('click', function () {
+                const agendamentoId = this.getAttribute('data-id');
+                
+                if (confirm(`Você tem certeza que deseja ${successMessage.toLowerCase()} este agendamento?`)) {
+                    fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: agendamentoId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(successMessage);
+                            location.reload();
+                        } else {
+                            alert(errorMessage);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        alert('Ocorreu um erro ao processar o pedido.');
+                    });
+                }
             });
-            return;
-        }
+        });
+    };
 
-        const petsSelecionados = Array.from(petCheckboxes).some((checkbox) => checkbox.checked);
-        if (!petsSelecionados) {
-            Swal.fire({
-                icon: "warning",
-                title: "Nenhum Pet Selecionado",
-                text: "Por favor, selecione pelo menos um pet para o agendamento.",
-            });
-            return;
-        }
-
-        submitForm();
-    });
-
-    function submitForm() {
-        const formData = new FormData(form);
-
-        fetch(form.action, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sucesso!',
-                    text: data.message,
-                }).then(() => {
-                    window.location.href = '/views/shared/agendamentos.php';
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erro!',
-                    text: data.message,
-                });
-            }
-        })
-    }
+    handleAgendamentoAction('.btn-cancelar', '../../includes/agendamentos/cancelar-agendamento.php', 'Agendamento cancelado com sucesso!', 'Erro ao cancelar o agendamento. Tente novamente mais tarde.');
+    handleAgendamentoAction('.btn-aceitar', '../../includes/agendamentos/aceitar-agendamento.php', 'Agendamento foi aceito com sucesso!', 'Ocorreu um erro ao tentar aceitar o atendimento. Tente novamente mais tarde.');
+    handleAgendamentoAction('.btn-recusar', '../../includes/agendamentos/recusar-agendamento.php', 'Agendamento recusado com sucesso!', 'Ocorreu um erro ao tentar recusar o atendimento. Tente novamente mais tarde.');
 });
+

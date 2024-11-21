@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    $sql = "INSERT INTO agendamentos (tutor_id, cuidador_id, data_servico, pets, mensagem)
+    $sql = "INSERT INTO agendamentos (tutor_id, cuidador_id, data_servico, pet_id, mensagem)
             VALUES (?, ?, ?, ?, ?)";
 
     $stmt = $mysqli->prepare($sql);
