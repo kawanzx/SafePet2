@@ -47,7 +47,6 @@ h1 {
     color: #1D3557;
     margin: 0 0 5px 0px;
     font-weight: 700;
-    
     margin-bottom: 20px;
 }
 
@@ -117,7 +116,7 @@ button:hover {
 
 .pet-checkbox:checked + img, 
 .pet-checkbox:checked + .nomePet-perfil {
-    border: 2px solid #1D3557; 
+    border: 3px solid #fa0000; 
     background-color: #f0f0f0;
 }
 
@@ -126,7 +125,7 @@ button:hover {
     width: 60px;
     height: 60px;
     object-fit: cover;
-    border: 2px solid #457B9D;
+    border: 3.5px solid #457B9D;
 }
 
 .pet h2{

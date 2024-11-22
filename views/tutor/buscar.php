@@ -24,12 +24,23 @@ include __DIR__ . '/../../includes/buscar.php';
 <body>
     <section class="cuidadores">
 
-        <div class="busca" id="divBusca">
-            <input type="search" id="busca" placeholder="Pesquisar" />
-            <button onclick="searchData()" id="btnBusca">
-                <span class="material-symbols-outlined">search</span>
-            </button>
-        </div>
+        <div class="wrap">           
+            <div class="search" id="divBusca">
+                <input type="search" class="searchTerm" id="busca" placeholder="Pesquisar" />
+                <button type="submit" class="searchButton" onclick="searchData()" id="btnBusca">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+            </div>
+        </div> 
+
+        <!-- <div class="search" id="search">
+         <form action="" class="search__form">
+            <i class="ri-search-line search__icon"></i>
+            <input type="search" placeholder="What are you looking for?" class="search__input">
+         </form>
+
+         <i class="ri-close-line search__close" id="search-close"></i>
+      </div> -->
 
         <h2>Cuidadores Disponíveis</h2>
 

@@ -29,7 +29,7 @@ h1{
     cursor: pointer;
 }
 
-.tutor-avatar , .cuidador-avatar {
+.tutor-avatar , .cuidador-avatar, .usuario-avatar {
     width: 140px;
     height: auto;
     border-radius: 50%;

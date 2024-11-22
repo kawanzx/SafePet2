@@ -1,3 +1,7 @@
+.conteudo{
+    padding: 20px;
+}
+
 .agendamento-card {
     border: 1px solid #ddd;
     padding: 15px;
@@ -25,16 +29,25 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    color: white;
 }
 
 .btn-aceitar {
-    background-color: #4caf50;
+    background-color: #E76F51;
     color: white;
 }
 
-.btn-recusar {
-    background-color: #f44336;
+.btn-aceitar:hover{
+    background-color: #ee5028;
+}
+
+.btn-recusar, .btn-cancelar {
+    background-color: #ff4b56;
     color: white;
+}
+
+.btn-recusar:hover, .btn-cancelar{
+    background-color: #e43d50;
 }
 
 .agendamento-card:hover{

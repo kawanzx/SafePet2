@@ -20,6 +20,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendamento Cuidador - SafePet</title>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css">
 </head>
 
 <body>
