@@ -14,7 +14,6 @@ include __DIR__ . '/../../auth/protect.php';
                 </form>
                 <div>
                     <h2><?php echo $tutor['nome']; ?></h2>
-                    <p><span class="info-label">Avaliação:</span> ⭐⭐⭐⭐ (4.8)</p>
                 </div>
             </div>
             <div class="bio">

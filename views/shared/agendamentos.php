@@ -64,21 +64,23 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                             $pets = getPetNamesByIds($mysqli, $petIds);
                             ?>
 
-                            <div class="agendamento-card" data-id="<?= $agendamento['id'] ?>" onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
-                                <img src="<?= htmlspecialchars($outroUsuario['foto_perfil']) ?>" alt="Foto de perfil">
-                                <div class="agendamento-info">
-                                    <p><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
-                                    <p><strong>Nome:</strong> <?= htmlspecialchars($outroUsuario['nome']) ?></p>
-                                    <p><strong>Data do Serviço:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
-                                    <p><strong>Mensagem:</strong> <?= htmlspecialchars($agendamento['mensagem']) ?></p>
-                                    <p><strong>Pets:</strong>
-                                        <?= htmlspecialchars(implode(', ', array_values($pets))) ?>
-                                    </p>
+                            <div class="agendamento-card" data-id="<?= $agendamento['id'] ?>">
+                                <div onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
+                                    <img src="<?= htmlspecialchars($outroUsuario['foto_perfil']) ?>" alt="Foto de perfil">
+                                    <div class="agendamento-info">
+                                        <p class="id"><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
+                                        <p><strong>Nome:</strong> <?= htmlspecialchars($outroUsuario['nome']) ?></p>
+                                        <p><strong>Data do Serviço:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
+                                        <p><strong>Pets:</strong>
+                                            <?= htmlspecialchars(implode(', ', array_values($pets))) ?>
+                                        </p>
+                                        <p><strong>Mensagem:</strong> <?= htmlspecialchars($agendamento['mensagem']) ?></p>                                      
+                                    </div>
                                 </div>
                                 <div class="agendamento-acoes">
                                     <?php if ($tipo_usuario === 'cuidador'): ?>
-                                        <button class="btn-aceitar" data-id="<?= $agendamento['id'] ?>">Aceitar</button>
-                                        <button class="btn-recusar" data-id="<?= $agendamento['id'] ?>">Recusar</button>
+                                        <button class="btn-aceitar" type="button" data-id="<?= $agendamento['id'] ?>">Aceitar</button>
+                                        <button class="btn-recusar" type="button" data-id="<?= $agendamento['id'] ?>">Recusar</button>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -110,19 +112,21 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                             $petIds = explode(',', $agendamento['pet_id']);
                             $pets = getPetNamesByIds($mysqli, $petIds);
                             ?>
-                            <div class="agendamento-card" data-id="<?= $agendamento['id'] ?>" onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
-                                <img src="<?= htmlspecialchars($outroUsuario['foto_perfil']) ?>" alt="Foto de perfil">
-                                <div class="agendamento-info">
-                                    <p><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
-                                    <p><strong>Nome:</strong> <?= htmlspecialchars($outroUsuario['nome']) ?></p>
-                                    <p><strong>Data do Serviço:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
-                                    <p><strong>Mensagem:</strong> <?= htmlspecialchars($agendamento['mensagem']) ?></p>
-                                    <p><strong>Pets:</strong>
-                                        <?= htmlspecialchars(implode(', ', array_values($pets))) ?>
-                                    </p>
+                            <div class="agendamento-card" data-id="<?= $agendamento['id'] ?>">
+                                <div onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
+                                    <img src="<?= htmlspecialchars($outroUsuario['foto_perfil']) ?>" alt="Foto de perfil">
+                                    <div class="agendamento-info">
+                                        <p class="id"><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
+                                        <p><strong>Nome:</strong> <?= htmlspecialchars($outroUsuario['nome']) ?></p>
+                                        <p><strong>Data do Serviço:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
+                                        <p><strong>Pets:</strong>
+                                            <?= htmlspecialchars(implode(', ', array_values($pets))) ?>
+                                        </p>
+                                        <p><strong>Mensagem:</strong> <?= htmlspecialchars($agendamento['mensagem']) ?></p>    
+                                    </div>
                                 </div>
                                 <div class="agendamento-acoes">
-                                    <button class="btn-cancelar" data-id="<?= $agendamento['id'] ?>">Cancelar</button>
+                                    <button class="btn-cancelar" type="button" data-id="<?= $agendamento['id'] ?>">Cancelar</button>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -139,11 +143,13 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                     <?php if (!empty($agendamentos)): ?>
                         <?php foreach ($agendamentos as $agendamento): ?>
                             <?php if ($agendamento['status'] === 'cancelado'): ?>
-                                <div class="agendamento-card" data-id="<?= $agendamento['id'] ?>" onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
-                                    <div class="agendamento-info">
-                                        <p><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
-                                        <p><strong>Data:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
-                                        <p><strong>Mensagem:</strong> <?= htmlspecialchars($agendamento['mensagem']) ?></p>
+                                <div class="agendamento-card" data-id="<?= $agendamento['id'] ?>">
+                                    <div onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
+                                        <div class="agendamento-info">
+                                            <p class="id"><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
+                                            <p><strong>Data:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
+                                            <p><strong>Mensagem:</strong> <?= htmlspecialchars($agendamento['mensagem']) ?></p>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -171,19 +177,21 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                 $petIds = explode(',', $agendamento['pet_id']);
                                 $pets = getPetNamesByIds($mysqli, $petIds);
                             ?>
-                                <div class="agendamento-card" data-id="<?= $agendamento['id'] ?>" onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
+                                <div class="agendamento-card" data-id="<?= $agendamento['id'] ?>">
+                                <div onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
                                     <img src="<?= htmlspecialchars($outroUsuario['foto_perfil']) ?>" alt="Foto de perfil">
                                     <div class="agendamento-info">
-                                        <p><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
+                                        <p class="id"><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
                                         <p><strong>Nome:</strong> <?= htmlspecialchars($outroUsuario['nome']) ?></p>
                                         <p><strong>Data do Serviço:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
-                                        <p><strong>Mensagem:</strong> <?= htmlspecialchars($agendamento['mensagem']) ?></p>
                                         <p><strong>Pets:</strong>
                                             <?= htmlspecialchars(implode(', ', array_values($pets))) ?>
                                         </p>
+                                        <p><strong>Mensagem:</strong> <?= htmlspecialchars($agendamento['mensagem']) ?></p>          
                                     </div>
+                                </div>
                                     <div class="agendamento-acoes">
-                                        <button class="btn-cancelar" data-id="<?= $agendamento['id'] ?>">Cancelar</button>
+                                        <button class="btn-cancelar" type="button" data-id="<?= $agendamento['id'] ?>">Cancelar</button>
                                     </div>
                                 </div>
                             <?php endif; ?>

@@ -10,6 +10,13 @@
     align-items: center;
     border-radius: 8px;
     background-color: #f9f9f9;
+    position: relative;
+}
+
+.agendamento-card .id{
+    position:absolute;
+    right:40px;
+    top: 20px;
 }
 
 .agendamento-card img {
@@ -32,21 +39,23 @@
     color: white;
 }
 
-.btn-aceitar {
+.agendamento-card .btn-aceitar {
     background-color: #E76F51;
-    color: white;
+    position: absolute;
+    right: 30px;
 }
 
 .btn-aceitar:hover{
     background-color: #ee5028;
 }
 
-.btn-recusar, .btn-cancelar {
+.agendamento-card .btn-recusar, .btn-cancelar {
     background-color: #ff4b56;
-    color: white;
+    position: absolute;
+    right: 30px;
 }
 
-.btn-recusar:hover, .btn-cancelar{
+.btn-recusar:hover, .btn-cancelar:hover{
     background-color: #e43d50;
 }
 

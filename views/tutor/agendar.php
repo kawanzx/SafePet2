@@ -27,7 +27,7 @@ $pets = getPetsByTutor($mysqli, $tutor_id);
             <img src="<?php echo $cuidador['foto_perfil'] . '?' . time(); ?>" alt="Foto do Cuidador" class="cuidador-avatar">
             <div>
                 <h2 id="nome-cuidador"><?php echo $cuidador['nome']; ?></h2>
-                <p id="valor-servico">Cobrado por hora: R$ <?php echo $cuidador['preco_hora']; ?></p>
+                <p id="valor-servico">R$ <?php echo $cuidador['preco_hora']; ?> / hora</p>
             </div>
         </div>
 

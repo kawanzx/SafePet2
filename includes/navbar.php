@@ -1,6 +1,7 @@
 <?php
 
-$tipo_usuario = $_SESSION['tipo_usuario'] ?? 'tutor'
+$tipo_usuario = $_SESSION['tipo_usuario'] ?? 'tutor';
+$id = $_SESSION['id'];
 
 ?>
 
@@ -18,7 +19,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'] ?? 'tutor'
                 <li><a href="/views/tutor/buscar.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'buscar.php' ? 'active' : ''; ?>">Buscar</a></li>
             <?php endif; ?>
             <li><a href="/views/shared/agendamentos.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'agendamentos.php' ? 'active' : ''; ?>">Agendamentos</a></li>
-            <li><a href="/views/<?php echo $tipo_usuario; ?>/perfil.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'perfil.php' ? 'active' : ''; ?>">Perfil</a></li>
+            <li><a href="/views/<?php echo $tipo_usuario; ?>/perfil.php?id=<?php echo $id; ?>" class="<?php echo basename($_SERVER['PHP_SELF']) == 'perfil.php' ? 'active' : ''; ?>">Perfil</a></li>
             <li><a href="/auth/logout.php" id="logoutLink">Sair</a></li>
         </ul>
     </div>

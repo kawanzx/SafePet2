@@ -1,6 +1,7 @@
 <?php
 include __DIR__ . '/../../auth/protect.php';
-include __DIR__ . '/../../includes/db.php'; //
+include __DIR__ . '/../../includes/db.php'; 
+
 ?>
 <div id="conteudo-1" class="content-section active">
     <h1>Perfil do Cuidador</h1>
@@ -15,7 +16,11 @@ include __DIR__ . '/../../includes/db.php'; //
                 </form>
                 <div>
                     <h2><?php echo $cuidador['nome']; ?></h2>
-                    <p><span class="info-label">Avaliação:</span> ⭐⭐⭐⭐ (4.8)</p>
+                    <div class="avaliacoes" id="avaliacoes">
+                        <p id="media">Média: --</p>
+                        <div id="estrelas" class="estrelas"></div>
+                        <p id="total">Total de avaliações: --</p>
+                    </div>
                 </div>
             </div>
             <div class="bio">
@@ -25,7 +30,7 @@ include __DIR__ . '/../../includes/db.php'; //
                             <span class="material-symbols-outlined">edit</span>
                         </button>
                     </h3>
-                    <p><span class="bioText"><?php echo $cuidador['bio'];?></span>
+                    <p><span class="bioText"><?php echo $cuidador['bio']; ?></span>
                     </p>
                     <textarea class="bioInput" name="bio" rows="5" cols="37" style="display: none"><?php echo $cuidador['bio']; ?></textarea>
                     <button type="submit" class="salvar-bio" style="display: none;">Salvar</button>
@@ -38,7 +43,7 @@ include __DIR__ . '/../../includes/db.php'; //
                             <span class="material-symbols-outlined">edit</span>
                         </button>
                     </h3>
-                    <p><span class="experienciaText"><?php echo $cuidador['experiencia'];?></span>
+                    <p><span class="experienciaText"><?php echo $cuidador['experiencia']; ?></span>
                     </p>
                     <textarea class="experienciaInput" name="experiencia" rows="5" cols="37" style="display: none"><?php echo $cuidador['experiencia']; ?></textarea>
                     <button type="submit" class="salvar-experiencia" style="display: none;">Salvar</button>
@@ -84,6 +89,13 @@ include __DIR__ . '/../../includes/db.php'; //
 
                     <button type="submit">Adicionar Disponibilidade</button>
                 </form>
+            </div>
+
+            <div class="comentarios-card">
+                <h2>Comentários</h2>
+                <div id="comentarios">
+                    <!-- Os comentários serão carregados aqui via AJAX -->
+                </div>
             </div>
 
         </div>

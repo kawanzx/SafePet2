@@ -82,6 +82,10 @@
         margin: 61px 10px 0 78px;
     }
 
+    .section ,.sub-conteudo .section{
+        margin: 20px;
+    }
+
     /* Meu Perfil */
 
     .meu-perfil .perfil-header {

@@ -18,29 +18,21 @@ include __DIR__ . '/../../includes/buscar.php';
     <title>Cuidadores Disponíveis - SafePet</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
     <section class="cuidadores">
 
-        <div class="wrap">           
-            <div class="search" id="divBusca">
-                <input type="search" class="searchTerm" id="busca" placeholder="Pesquisar" />
+        <div class="wrap">
+            <div class="search" id="search">
                 <button type="submit" class="searchButton" onclick="searchData()" id="btnBusca">
                     <span class="material-symbols-outlined">search</span>
                 </button>
+                <input type="search" id="search_input" placeholder="Pesquisar" class="search__input">
             </div>
-        </div> 
-
-        <!-- <div class="search" id="search">
-         <form action="" class="search__form">
-            <i class="ri-search-line search__icon"></i>
-            <input type="search" placeholder="What are you looking for?" class="search__input">
-         </form>
-
-         <i class="ri-close-line search__close" id="search-close"></i>
-      </div> -->
+        </div>
 
         <h2>Cuidadores Disponíveis</h2>
 
@@ -48,25 +40,47 @@ include __DIR__ . '/../../includes/buscar.php';
             <?php while ($row = $result->fetch_assoc()) : ?>
                 <div class="cuidador">
                     <div class="avatar">
-                        <img src="<?php echo '/assets/uploads/fotos-cuidadores/' . htmlspecialchars($row['foto_perfil'] ? $row['foto_perfil'] : '../../../img/profile-circle-icon.png'); ?>" class="cuidador-avatar" alt="Foto de <?php echo htmlspecialchars($row['nome']); ?>">
+                        <img onclick="location.href='perfil-cuidador.php?id=<?php echo $row['id']; ?>'"
+                            src="<?php echo '/assets/uploads/fotos-cuidadores/' . htmlspecialchars($row['foto_perfil'] ? $row['foto_perfil'] : '../../../img/profile-circle-icon.png'); ?>"
+                            class="avatar-cuidador"
+                            alt="Foto de <?php echo htmlspecialchars($row['nome']); ?>">
                     </div>
                     <div class="details">
-                        <h3><?php echo htmlspecialchars($row['nome']); ?></h3>
-                        <p>Avaliação:
+                        <h3 onclick="location.href='perfil-cuidador.php?id=<?php echo $row['id']; ?>'">
+                            <?php echo htmlspecialchars($row['nome']); ?>
+                        </h3>
+                        <p>
                             <?php
-                            $avaliacao = isset($nota_media) ? round($nota_media) : 0;
-                            echo str_repeat('⭐', $avaliacao) . str_repeat('☆', 5 - $avaliacao);
+                            $notaMedia = isset($row['nota_media']) ? $row['nota_media'] : 0;
+                            $estrelasCompletas = floor($notaMedia); 
+                            $meiaEstrela = $notaMedia - $estrelasCompletas >= 0.5; 
+                            $estrelasVazias = 5 - $estrelasCompletas - ($meiaEstrela ? 1 : 0);
+
+                            echo str_repeat('<i class="fa-solid fa-star"></i>', $estrelasCompletas);
+                            if ($meiaEstrela) {
+                                echo '<i class="fa-solid fa-star-half-stroke"></i>';
+                            }
+                            echo str_repeat('<i class="fa-regular fa-star"></i>', $estrelasVazias);
                             ?>
                         </p>
-                        <p>Preço:
+                        <p>
                             <?php
-                            if (isset($preco_hora)) {
-                                echo 'R$ ' . number_format($preco_hora, 2, ',', '.') . '/hora';
+                            if (isset($row['preco_hora'])) {
+                                echo 'R$ ' . number_format($row['preco_hora'], 2, ',', '.') . '/hora';
                             } else {
                                 echo 'Preço não informado';
                             }
-                            ?></p>
-                        <p>Localização: <?php echo htmlspecialchars($row['cidade'] . ', ' . $row['uf']); ?></p>
+                            ?>
+                        </p>
+                        <p>
+                            <?php 
+                            if (isset($row['cidade']) && isset($row['uf'])) {
+                                echo htmlspecialchars($row['cidade'] . ', ' . $row['uf']);
+                            } else {
+                                echo 'Endereço não informado';
+                            }
+                            ?>
+                        </p>
                     </div>
                     <a href="perfil-cuidador.php?id=<?php echo $row['id']; ?>" class="schedule-button">Ver Perfil</a>
                 </div>

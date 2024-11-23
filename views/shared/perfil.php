@@ -36,6 +36,7 @@ if (!$usuario) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do <?php echo ucfirst($tipo_usuario); ?></title>
     <link rel="stylesheet" href="/views/tutor/main.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -49,7 +50,13 @@ if (!$usuario) {
                     <div>
                         <h2><?php echo $usuario['nome']; ?></h2>
                         <?php if ($tipo_usuario === 'cuidador'): ?>
-                            <p><span class="info-label">Avaliação:</span> ⭐⭐⭐⭐ (4.8)</p>
+                            <div class="header">
+                                <div class="avaliacoes" id="avaliacoes">
+                                    <p id="media">Média: --</p>
+                                    <div id="estrelas" class="estrelas"></div>
+                                    <p id="total">Total de avaliações: --</p>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -83,6 +90,13 @@ if (!$usuario) {
 
                         $stmt->close();
                         ?>
+                    </div>
+
+                    <div class="comentarios-card">
+                        <h3>Comentários</h3>
+                        <div id="comentarios">
+                            <!-- Os comentários serão carregados aqui via AJAX -->
+                        </div>
                     </div>
                 <?php else: ?>
                     <div class="pets-card">
@@ -119,6 +133,7 @@ if (!$usuario) {
             </div>
         </div>
     </div>
+    <script src="/assets/js/perfil/avaliacoes.js"></script>
 </body>
 
 </html>

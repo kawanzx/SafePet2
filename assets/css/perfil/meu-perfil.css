@@ -1,6 +1,6 @@
-h1{
+h1 {
     font-weight: 800;
-    color:#1D3557;
+    color: #1D3557;
     margin-left: 20px;
 }
 
@@ -10,11 +10,11 @@ h1{
 }
 
 .meu-perfil .perfil-header {
-    display: flex;   
+    display: flex;
     align-items: center;
 }
 
-.upload-avatar { 
+.upload-avatar {
     display: inline-block;
     cursor: pointer;
 }
@@ -25,11 +25,13 @@ h1{
     height: 100%;
     top: 0;
     left: 0;
-    opacity: 0; /* Torna o input invisível */
+    opacity: 0;
     cursor: pointer;
 }
 
-.tutor-avatar , .cuidador-avatar, .usuario-avatar {
+.tutor-avatar,
+.cuidador-avatar,
+.usuario-avatar {
     width: 140px;
     height: auto;
     border-radius: 50%;
@@ -39,11 +41,24 @@ h1{
     cursor: pointer;
 }
 
-.perfil-header h2 , .nomePet-perfil {
+.perfil-header h2,
+.nomePet-perfil {
     font-size: 1.6rem;
     color: #1D3557;
-    margin: 0 0 5px 12px;
     font-weight: 700;
+}
+
+.perfil-header .btn-agendar {
+    position: absolute;
+    right: 40px;
+    background-color: #E76F51;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 .meu-perfil p {
@@ -52,18 +67,49 @@ h1{
     margin: 0;
 }
 
-.meu-perfil .info-label {
-    font-weight: bold;
-    margin-left: 10px;
+.meu-perfil .avaliacoes {
+    display: flex;
 }
 
-.meu-perfil .avaliacao {
-    margin-top: 10px;
-    font-size: 1.3rem;
-    color: #ffc107;
+.header{
+    flex-direction: column;
 }
 
-form{
+.estrelas i {
+    color: #FFD700; 
+    font-size: 1.2rem;
+    margin-right: 5px;
+}
+
+.estrelas i.filled {
+    color: #FFD700; 
+}
+
+.estrelas i {
+    color: #ccc; 
+}
+
+#total{
+    margin-left: 5px;
+}
+
+#media{
+    margin-right: 10px;
+}
+
+.filled {
+    color: #FFD700;
+}
+
+.empty {
+    color: #ccc; 
+}
+
+.fa-star-half-alt {
+    color: #FFD700; 
+}
+
+form {
     margin: 0;
 }
 
@@ -72,7 +118,9 @@ form{
     margin-top: 15px;
 }
 
-.experiencia, .disponibilidade{
+.experiencia,
+.disponibilidade,
+.comentarios-card {
     background-color: #f6fcf4;
     padding: 20px;
     border-radius: 10px;
@@ -83,16 +131,11 @@ form{
     margin-top: 40px;
 }
 
-.experiencia:hover, .disponibilidade:hover{
-    transform: scale(1.02); 
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.section-pets{
+.section-pets {
     margin-top: 60px;
 }
 
-.section{
+.section {
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     padding: 30px;
@@ -103,27 +146,28 @@ form{
 .section h3 {
     font-size: 1.8rem;
     margin-bottom: 20px;
-    color:#1D3557;
+    color: #1D3557;
     margin-top: 0;
     font-weight: 800;
     text-align: center;
 }
 
-.bio h3{
+.bio h3 {
     font-size: 1.5rem;
     padding-top: 40px;
-    text-align:justify;
+    text-align: justify;
 }
 
-.editar-bio , .editar-experiencia{
+.editar-bio,
+.editar-experiencia {
     background: none;
     border: none;
     cursor: pointer;
     margin-left: 10px;
-    color:#1D3557;
+    color: #1D3557;
 }
 
-.experienciaInput{
+.experienciaInput {
     background: rgb(199, 199, 199);
     width: auto;
     border: none;
@@ -149,7 +193,8 @@ form{
     color: #555;
 }
 
-.salvar-bio , .salvar-experiencia{
+.salvar-bio,
+.salvar-experiencia {
     background: #E76F51;
     color: white;
     border-radius: 5px;
@@ -159,6 +204,34 @@ form{
     margin-top: 10px;
 }
 
-.salvar-bio:hover , .salvar-experiencia:hover{
+.salvar-bio:hover,
+.salvar-experiencia:hover {
     background-color: #ee5028;
+}
+
+.comentarios{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.comentario {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #585656;
+    width: 60%;
+}
+
+.comentario p {
+    margin: 10px 0;
+}
+
+.comentario small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.comentario-header{
+    display: flex;
+    align-items: center;
 }

@@ -133,15 +133,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.querySelector('.cidadeInput').value = data.localidade;
                         document.querySelector('.ufInput').value = data.uf;
                     } else {
-                        alert('CEP não encontrado!');
+                        Swal.fire({
+                            icon: "error",
+                            title: "Erro!",
+                            text:'CEP não encontrado!'
+                        });
                     }
                 })
                 .catch(error => {
                     console.error('Erro ao buscar o CEP:', error);
-                    alert('Erro ao buscar o CEP. Verifique sua conexão e tente novamente.');
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text:'Falha ao buscar o CEP. Verifique sua conexão e tente novamente.'
+                    });
                 });
         } else {
-            alert('CEP inválido. Use apenas 8 dígitos numéricos.');
+            Swal.fire({
+                icon: "error",
+                title: "Erro!",
+                text:'CEP inválido. Use apenas 8 dígitos numéricos.'
+            });
         }
     });
 

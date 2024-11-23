@@ -10,10 +10,6 @@
         transition: width 0.3s ease;
     }
 
-    .sidebar.sidebar-expandida {
-        width: 200px; 
-    }
-
     .sidebar-header {
         flex-direction: column;
         align-items: center;
@@ -53,6 +49,7 @@
 
     .sidebar.sidebar-expandida {
         width: 250px;
+        z-index: 1000;
     }
 
     .sidebar.sidebar-expandida .item-description {
@@ -92,6 +89,7 @@
 
     .conteudo {
         margin: 60px 0 0 60px;
+        padding: 10px;
     }
 
     .section{
@@ -124,5 +122,9 @@
 
     p {
         font-size: 14px;
+    }
+
+    .agendamento-acoes button {
+        right: 20px;
     }
 }
