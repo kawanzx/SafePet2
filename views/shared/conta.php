@@ -9,6 +9,7 @@
     $tipo_usuario = $_SESSION['tipo_usuario'] ?? 'tutor';
     $usuario_id = $_SESSION['id'];
     $informacoesUsuario = getInformacoesUsuario($mysqli, $usuario_id, $tipo_usuario);
+    $dataNascimento = date('d-m-Y', strtotime($informacoesUsuario['dt_nascimento']));
     ?>
 
     <div id="info-pessoais" class="sub-conteudo">
@@ -36,13 +37,13 @@
                 <div class="textfield">
                     <span id="dtNascimentoErro" class="erro"></span>
                     <label for="dt_nascimento">Data de Nascimento:</label>
-                    <span class="dt_nascimentoText"><?php echo htmlspecialchars($informacoesUsuario['dt_nascimento']); ?></span>
-                    <input type="date" class="dt_nascimentoInput" name="dt_nascimento" value="<?php echo htmlspecialchars($informacoesUsuario['dt_nascimento']); ?>" style="display: none" required>
+                    <span class="dt_nascimentoText"><?php echo htmlspecialchars($dataNascimento); ?></span>
+                    <input type="date" class="dt_nascimentoInput" name="dt_nascimento" value="<?php echo htmlspecialchars($dataNascimento); ?>" style="display: none" required>
                 </div>
                 <div class="textfield">
                     <span id="cpfErro" class="erro"></span>
                     <label for="cpf">CPF:</label>
-                    <span class="cpfText"><?php echo htmlspecialchars($informacoesUsuario['cpf']); ?></span>
+                    <span class="cpfText"><?php echo htmlspecialchars($informacoesUsuario['cpf']); ?> <span class="material-symbols-outlined lock">lock</span></span>
                 </div>
             </div>
             <div id="mensagemEndereco" style="display: none;">

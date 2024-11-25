@@ -55,7 +55,7 @@ $pets = getPetsByTutor($mysqli, $tutor_id);
                             </label>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p>Nenhum pet cadastrado. <a href="perfil.php#2">Clique aqui para cadastrar seu pet</a></p>
+                        <p>Nenhum pet cadastrado.</p>
                     <?php endif; ?>
                 </div>
             </div>

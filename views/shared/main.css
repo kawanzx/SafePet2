@@ -73,6 +73,38 @@
     .conteudo {
         margin: 61px 10px 0 78px;
     }
+
+    .agendamento-card {
+        display: flex;        
+        flex-direction: column; 
+        justify-content: space-between; 
+    }
+
+    .agendamento-details{
+        align-self:flex-start;
+    }
+    
+    .agendamento-acoes {
+        align-self: flex-end;
+        position: relative;   
+        bottom: 120px;
+    }
+
+    .agendamento-acoes button {
+        margin: 5px 5px;
+        position: relative;
+        flex-direction: column;
+        display: flex;
+    }
+
+    .agendamento-card .btn-aceitar, 
+    .agendamento-card .btn-recusar,
+    .agendamento-card .btn-cancelar,
+    .btn-chat{
+        right: 0px;
+        width: 73px;
+        text-align: center;
+    }
 }
 
 @media (max-width: 480px) {
@@ -112,10 +144,10 @@
         font-size: 12px;
     }
 
-    .btn-salvar,
-    .btn-trocar-senha,
-    .btn-excluir,
-    .btn-cancelar {
+    .section .btn-salvar,
+    .section .btn-trocar-senha,
+    .section .btn-excluir,
+    .section .btn-cancelar {
         padding: 10px;
         font-size: 12px;
     }
@@ -124,7 +156,23 @@
         font-size: 14px;
     }
 
-    .agendamento-acoes button {
-        right: 20px;
+    .agendamento-card {
+        display: flex;        
+        flex-direction: column; 
+        justify-content: space-between; 
     }
+
+    .agendamento-details{
+        align-self:flex-start;
+    }
+    
+    .agendamento-acoes {
+        align-self: flex-start;  
+        bottom: 0;
+    }
+
+    .agendamento-acoes button {
+        position: relative;
+        display: inline;
+    } 
 }

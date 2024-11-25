@@ -1,15 +1,35 @@
 <?php
 require 'db.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-function validarNome($nome_completo) {
+use Twilio\Rest\Client;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+function validarNome($nome_completo)
+{
     return preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ\s]{2,}$/', $nome_completo);
 }
 
-function validarEmail($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+function validarEmail($email)
+{
+    if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+        return false;
+    }
+
+    $dominio = substr(strrchr($email, '@'), 1);
+
+    if (!checkdnsrr($dominio, 'MX')) {
+        return false;
+    }
+
+    return true;
 }
 
-function validarCPF($cpf) {
+function validarCPF($cpf)
+{
     $cpf = preg_replace('/[^0-9]/', '', $cpf);
 
     if (strlen($cpf) != 11 || preg_match('/(\d)\1{10}/', $cpf)) {
@@ -31,12 +51,37 @@ function validarCPF($cpf) {
     return true;
 }
 
-function validarTelefone($telefone) {
-    return preg_match('/^\d{10,11}$/', $telefone);
+function validarTelefone($telefone)
+{
+    return preg_match('/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/', $telefone);
 }
 
-function validarSenha($senha) {
+function validarSenha($senha)
+{
     return preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/', $senha);
+}
+
+function validarDataNascimento($data_nascimento)
+{
+    $dataNascimento = DateTime::createFromFormat('Y-m-d', $data_nascimento);
+
+    if (!$dataNascimento) {
+        return false;
+    }
+
+    $dataAtual = new DateTime();
+    if ($dataNascimento > $dataAtual) {
+        return false;
+    }
+
+    $idade = $dataAtual->diff($dataNascimento)->y;
+
+    $idadeMaxima = 110;
+    if ($idade > $idadeMaxima) {
+        return false;
+    }
+
+    return $idade >= 18;
 }
 
 function getTutorProfile($mysqli, $tutor_id)
@@ -125,7 +170,7 @@ function getPetNamesByIds($mysqli, $petIds)
     $placeholders = implode(',', array_fill(0, count($petIds), '?'));
     $sql = "SELECT id, nome FROM pets WHERE id IN ($placeholders)";
     $stmt = $mysqli->prepare($sql);
-    
+
     $types = str_repeat('i', count($petIds));
     $stmt->bind_param($types, ...$petIds);
     $stmt->execute();
@@ -190,7 +235,7 @@ function getAgendamentosByUser($mysqli, $user_id, $tipo_usuario, $status)
     }
 
     $stmt->close();
-    
+
     return $agendamentos;
 }
 
@@ -206,4 +251,41 @@ function updateAgendamentoStatus($mysqli, $agendamento_id, $novo_status)
         $stmt->close();
     }
     return false;
+}
+
+function enviarSMS($telefone, $codigo)
+{
+    if (!validarTelefone($telefone)) {
+        return ['sucesso' => false, 'mensagem' => 'Número de telefone inválido.'];
+    }
+
+    $telefone = preg_replace('/\D/', '', $telefone);
+    $telefone = '+55' . $telefone;
+
+    // Credenciais do Twilio
+    $sid = $_ENV['TWILIO_SID'] ?? null;
+    $token = $_ENV['TWILIO_TOKEN'] ?? null;
+    $twilioNumber = $_ENV['TWILIO_NUMBER'] ?? null;
+
+    if (!$sid || !$token || !$twilioNumber) {
+        error_log('Credenciais Twilio ausentes.');
+        return ['sucesso' => false, 'mensagem' => 'Erro interno. Serviço de SMS indisponível.'];
+    }
+
+    // Criação do cliente Twilio
+    try {
+        $client = new Client($sid, $token);
+        $message = $client->messages->create(
+            $telefone,
+            [
+                'from' => $twilioNumber,
+                'body' => "Seu código de verificação é: $codigo"
+            ]
+        );
+
+        return ['sucesso' => true, 'sid' => $message->sid];
+    } catch (Exception $e) {
+        error_log("Erro ao enviar SMS para o número $telefone: " . $e->getMessage());
+        return ['sucesso' => false, 'mensagem' => $e->getMessage()];
+    }
 }

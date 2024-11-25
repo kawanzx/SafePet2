@@ -13,7 +13,8 @@ $sql = "
         c.nome, 
         c.preco_hora, 
         c.cidade, 
-        c.uf, 
+        c.uf,
+        c.ativo, 
         c.foto_perfil, 
         AVG(a.nota) AS nota_media
     FROM cuidadores c

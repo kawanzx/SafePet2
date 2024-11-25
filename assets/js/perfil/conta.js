@@ -108,9 +108,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (dt_nascimentoInput.style.display === 'none') {
             dt_nascimentoText.style.display = 'none';
             dt_nascimentoInput.style.display = 'block';
-            dt_nascimentoInput.value = dt_nascimentoText.textContent.trim();
+
+
+            const dataSpan = dt_nascimentoText.textContent.trim();
+            const partesData = dataSpan.split('-');
+            if (partesData.length === 3) {
+                const dataConvertida = `${partesData[2]}-${partesData[1]}-${partesData[0]}`;
+                dt_nascimentoInput.value = dataConvertida;
+            }
         } else {
-            dt_nascimentoText.textContent = dt_nascimentoInput.value.trim();
+            const partesInput = dt_nascimentoInput.value.split('-');
+            if (partesInput.length === 3) {
+                const dataConvertida = `${partesInput[2]}-${partesInput[1]}-${partesInput[0]}`;
+                dt_nascimentoText.textContent = dataConvertida;
+            }
             dt_nascimentoText.style.display = 'block';
             dt_nascimentoInput.style.display = 'none';
         }
@@ -136,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         Swal.fire({
                             icon: "error",
                             title: "Erro!",
-                            text:'CEP não encontrado!'
+                            text: 'CEP não encontrado!'
                         });
                     }
                 })
@@ -145,14 +156,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     Swal.fire({
                         icon: "error",
                         title: "Erro!",
-                        text:'Falha ao buscar o CEP. Verifique sua conexão e tente novamente.'
+                        text: 'Falha ao buscar o CEP. Verifique sua conexão e tente novamente.'
                     });
                 });
         } else {
             Swal.fire({
                 icon: "error",
                 title: "Erro!",
-                text:'CEP inválido. Use apenas 8 dígitos numéricos.'
+                text: 'CEP inválido. Use apenas 8 dígitos numéricos.'
             });
         }
     });
@@ -237,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Validação do e-mail
-            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailPattern.test(email)) {
                 const emailErro = tutorDiv.querySelector('#emailErro');
                 emailErro.textContent = 'E-mail inválido.';
@@ -245,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 valid = false;
             }
 
-            // Validação da data de nascimento (certifique-se que o campo não está vazio)
+            // Validação da data de nascimento
             if (dt_nascimento === '') {
                 const dtNascimentoErro = tutorDiv.querySelector('#dtNascimentoErro');
                 dtNascimentoErro.textContent = 'Data de nascimento é obrigatória.';
@@ -350,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 senha_antiga: senhaAntiga,
                 nova_senha: novaSenha,
                 confirmar_senha: confirmarSenha
@@ -397,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.isConfirmed) {
                 const form = document.getElementById('formExcluirConta');
                 if (form) {
-                    form.submit(); 
+                    form.submit();
                 }
             }
         });

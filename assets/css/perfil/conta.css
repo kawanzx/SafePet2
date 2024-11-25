@@ -40,6 +40,15 @@
     color: #3e3e3f;
 }
 
+.cpfText{
+    display: flex;
+    align-items: center;
+}
+
+.lock {
+    margin-left: 10px;
+}
+
 .btn-editar {
     background: none;
     border: none;

@@ -92,8 +92,8 @@ include __DIR__ . '/../../includes/db.php';
             </div>
 
             <div class="comentarios-card">
-                <h2>Comentários</h2>
-                <div id="comentarios">
+                <h3>Comentários</h3>
+                <div id="comentarios" class="comentarios">
                     <!-- Os comentários serão carregados aqui via AJAX -->
                 </div>
             </div>

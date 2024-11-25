@@ -37,12 +37,12 @@
     border-radius: 4px;
     cursor: pointer;
     color: white;
+    position: absolute;
 }
 
-.agendamento-card .btn-aceitar {
+.agendamento-card .btn-aceitar, .btn-chat {
     background-color: #E76F51;
-    position: absolute;
-    right: 30px;
+    right: 110px;
 }
 
 .btn-aceitar:hover{
@@ -51,7 +51,6 @@
 
 .agendamento-card .btn-recusar, .btn-cancelar {
     background-color: #ff4b56;
-    position: absolute;
     right: 30px;
 }
 

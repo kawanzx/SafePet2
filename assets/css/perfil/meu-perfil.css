@@ -109,6 +109,15 @@ h1 {
     color: #FFD700; 
 }
 
+.avatar-cuidador , .avatar-tutor{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #1D3557;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+
 form {
     margin: 0;
 }

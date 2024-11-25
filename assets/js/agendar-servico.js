@@ -54,4 +54,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
     }
+    
+    // Obtém a data atual no formato YYYY-MM-DD
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0'); 
+    const dia = String(hoje.getDate()).padStart(2, '0');
+    const dataAtual = `${ano}-${mes}-${dia}`;
+
+    const inputData = document.getElementById('data-servico');
+    inputData.min = dataAtual;
 });

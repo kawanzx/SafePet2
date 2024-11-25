@@ -94,10 +94,11 @@ if (!$usuario) {
 
                     <div class="comentarios-card">
                         <h3>Comentários</h3>
-                        <div id="comentarios">
+                        <div id="comentarios" class="comentarios">
                             <!-- Os comentários serão carregados aqui via AJAX -->
                         </div>
                     </div>
+                    <script src="/assets/js/perfil/avaliacoes.js"></script>
                 <?php else: ?>
                     <div class="pets-card">
                         <div class="section">
@@ -133,7 +134,6 @@ if (!$usuario) {
             </div>
         </div>
     </div>
-    <script src="/assets/js/perfil/avaliacoes.js"></script>
 </body>
 
 </html>

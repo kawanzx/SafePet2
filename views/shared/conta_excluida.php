@@ -1,6 +1,3 @@
-<?php
-include __DIR__ . '/../../auth/protect.php';
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

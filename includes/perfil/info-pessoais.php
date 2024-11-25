@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../db.php';
+include '../functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //$tutor_id = $_SESSION['id'];
@@ -27,6 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->num_rows > 0) {
         echo "E-mail já cadastrado.";
         exit();
+    } elseif (!validarEmail($email)){
+        echo ('E-mail inválido.');
+        exit();
+    } elseif (!validarDataNascimento($dt_nascimento)) {
+        echo ('Você deve ter entre 18 e 110 anos.');
+        exit();
+    } elseif (!validarTelefone($telefone)){
+        echo ('Número de telefone inválido');
     }
 
     $stmt->close();
