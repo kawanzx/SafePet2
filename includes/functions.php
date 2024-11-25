@@ -86,11 +86,11 @@ function validarDataNascimento($data_nascimento)
 
 function getTutorProfile($mysqli, $tutor_id)
 {
-    $sql = "SELECT nome, bio, foto_perfil FROM tutores WHERE id = ?";
+    $sql = "SELECT nome, bio, foto_perfil, ativo FROM tutores WHERE id = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param('i', $tutor_id);
     $stmt->execute();
-    $stmt->bind_result($nome, $bio, $foto_perfil);
+    $stmt->bind_result($nome, $bio, $foto_perfil, $ativo);
     $stmt->fetch();
     $stmt->close();
 
@@ -103,17 +103,18 @@ function getTutorProfile($mysqli, $tutor_id)
     return [
         'nome' => htmlspecialchars($nome),
         'bio' => htmlspecialchars($bio),
-        'foto_perfil' => !empty($foto_perfil) ? '/assets/uploads/fotos-tutores/' . $foto_perfil : '/img/profile-circle-icon.png'
+        'foto_perfil' => !empty($foto_perfil) ? '/assets/uploads/fotos-tutores/' . $foto_perfil : '/img/profile-circle-icon.png',
+        'ativo' => htmlspecialchars($ativo)
     ];
 }
 
 function getCuidadorProfile($mysqli, $cuidador_id)
 {
-    $sql = "SELECT nome, bio, foto_perfil, experiencia, preco_hora FROM cuidadores WHERE id = ?";
+    $sql = "SELECT nome, bio, foto_perfil, experiencia, preco_hora, ativo FROM cuidadores WHERE id = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param('i', $cuidador_id);
     $stmt->execute();
-    $stmt->bind_result($nome, $bio, $foto_perfil, $experiencia, $preco_hora);
+    $stmt->bind_result($nome, $bio, $foto_perfil, $experiencia, $preco_hora, $ativo);
     $stmt->fetch();
     $stmt->close();
 
@@ -140,7 +141,8 @@ function getCuidadorProfile($mysqli, $cuidador_id)
         'bio' => htmlspecialchars($bio),
         'foto_perfil' => !empty($foto_perfil) ? '/assets/uploads/fotos-cuidadores/' . $foto_perfil : '/img/profile-circle-icon.png',
         'experiencia' => htmlspecialchars($experiencia),
-        'preco_hora' => htmlspecialchars($preco_hora)
+        'preco_hora' => htmlspecialchars($preco_hora),
+        'ativo' => htmlspecialchars($ativo)
     ];
 }
 
