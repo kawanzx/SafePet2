@@ -8,9 +8,10 @@ session_start();
     if (isset($_SESSION['nome'])) {
         include __DIR__ . "/../../includes/navbar.php";
     } else { ?>
-        <nav class="nav-padrao">
-            <div class="navbar-container">
-                <ul>
+        <nav class="transparent-nav">
+            <div class="nav-container">
+            <button class="menu-toggle" aria-label="Menu"><span></span></button>
+                <ul class="nav-list">
                     <li><a href="#hero">Home</a></li>
                     <li><a href="#services">Serviços</a></li>
                     <li><a href="#about">Sobre</a></li>
@@ -21,3 +22,5 @@ session_start();
         </nav>
     <?php } ?>
 </header>
+
+<script type="text/javascript" src="/assets/js/navbar.js"></script>

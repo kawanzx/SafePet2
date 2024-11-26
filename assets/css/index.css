@@ -15,80 +15,128 @@ body {
     overflow-x: hidden;
 }
 
-
-/* Navbar existente */
-.nav-padrao {
-    background: rgb(68, 65, 65);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-    padding: 23px 0;
+/* Serviços */
+.services-section {
+    padding: 100px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
 }
 
-.navbar-container {
+.services-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    color: #333;
+}
+
+/* Container do carrossel */
+.card-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
+    justify-content: center; /* Centraliza os cards no container */
+    gap: 30px; /* Espaço entre os cards */
+    overflow: hidden; /* Oculta o excesso de cards */
+    padding: 0 15px; /* Espaçamento à esquerda e direita */
 }
 
-.nav-padrao ul {
+/* Card */
+.card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    flex: 0 0 auto; /* Impede que os cards se estiquem */
+    width: 100%; /* Garante que o card ocupe 100% da largura disponível */
+    max-width: 300px; /* Largura máxima do card */
+    height: 100%; /* Garante que a altura seja ajustada proporcionalmente */
+    max-height: 350px; /* Define uma altura máxima para os cards */
+    margin: 0 15px; /* Margem entre os cards */
+    box-sizing: border-box; /* Impede que o padding afete a largura */
     display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    flex-direction: column;
+    justify-content: space-between; /* Garante que o conteúdo se distribua bem */
 }
 
-.nav-padrao ul li {
-    margin: 0 30px;
-    position: relative;
+/* Efeito de hover no card */
+.card:hover {
+    transform: translateY(-10px); /* Levanta o card */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Aumenta a sombra para dar ênfase */
 }
 
-.nav-padrao ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    position: relative;
+.card h3 {
+    color: #ff6b6b;
+    margin-bottom: 15px;
+    font-size: 1.5rem; /* Aumenta o tamanho do título */
 }
 
-.nav-padrao ul li a:hover {
-    background: rgba(255, 255, 255, 0.2);
+.card p {
+    font-size: 1rem;
+    color: #666;
+    flex-grow: 1; /* Garante que o texto ocupe o espaço necessário */
 }
 
-.nav-padrao ul li a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background: #ffc107;
-    transition: width 0.3s ease;
+/* Responsividade */
+@media (max-width: 1024px) {
+    .card-container {
+        gap: 20px; /* Menor espaço entre os cards em telas menores */
+    }
+
+    .card {
+        max-width: 250px; /* Ajusta a largura dos cards em tablets */
+        max-height: 300px; /* Ajusta a altura dos cards em tablets */
+    }
 }
 
-.nav-padrao ul li a:hover::after {
-    width: 100%;
+@media (max-width: 768px) {
+    .card-container {
+        gap: 10px; /* Menor espaço entre os cards em dispositivos móveis */
+    }
+    
+    .card {
+        padding: 15px; /* Menor padding em dispositivos móveis */
+        max-width: 100%; /* Garante que os cards ocupem a largura total */
+        max-height: 270px; /* Ajusta a altura dos cards em dispositivos móveis */
+    }
+
+    .card h3 {
+        font-size: 1.2rem; /* Ajuste do tamanho da fonte do título em dispositivos móveis */
+    }
+
+    .card p {
+        font-size: 0.9rem; /* Ajuste do tamanho da fonte do texto em dispositivos móveis */
+    }
 }
 
-.nav-padrao ul li a.active {
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
+/* Ajustando para o carrossel Slick */
+.slick-slide {
+    display: flex;
+    justify-content: center; /* Garante que os cards fiquem centralizados */
 }
 
-.nav-padrao ul li a.active::after {
-    width: 100%;
+.slick-prev, .slick-next {
+    background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo dos botões de navegação */
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
 }
+
+.slick-prev:hover, .slick-next:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Escurece quando o botão é hover */
+}
+
+/* Posições de controle do carrossel */
+.slick-dots {
+    bottom: 10px; /* Coloca os dots mais próximos da parte inferior */
+}
+
+.slick-dots li button:before {
+    font-size: 12px;
+    color: #ff6b6b; /* Cor dos dots */
+}
+
+.slick-dots li.slick-active button:before {
+    color: #ff4b4b; /* Cor do dot ativo */
+}
+
+
 .user-info img {
     margin-right: 5px; 
 }
