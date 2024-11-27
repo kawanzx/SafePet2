@@ -37,26 +37,29 @@ h1 {
 
 /* Mensagens do remetente */
 .mensagem-remetente {
-    margin: 8px 0;
-    padding: 10px;
     background-color: #007bff;
     color: white;
-    border-radius: 8px;
-    max-width: 80%;
-    align-self: flex-end;
-    word-wrap: break-word;
+    text-align: right;
+    margin-left: auto;
+    float: right;
 }
 
 /* Mensagens do destinatário */
 .mensagem-recebida {
-    margin: 8px 0;
-    padding: 10px;
     background-color: #f1f1f1;
     color: #333;
+    text-align: left;
+    float: left;
+}
+
+.mensagem-recebida, .mensagem-remetente {
+    display: block;
+    max-width: 70%; 
+    padding: 10px 15px;
     border-radius: 8px;
-    max-width: 80%;
-    align-self: flex-start;
-    word-wrap: break-word;
+    margin: 8px 0;
+    word-wrap: break-word; 
+    clear: both;
 }
 
 /* Estilo para o input de mensagem */
@@ -98,4 +101,27 @@ h1 {
 /* Estilo para esconder elementos invisíveis */
 #agendamento_id, #id_remetente, #id_destinatario {
     display: none;
+}
+
+#destinatario-info {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f5f5f5;
+}
+
+.foto-perfil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 5px #0056b3;
+    margin: 0 10px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.nome-destinatario {
+    font-size: 16px;
+    font-weight: bold;
 }

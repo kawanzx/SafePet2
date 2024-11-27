@@ -4,33 +4,11 @@ session_start();
 include '../../includes/db.php';
 include '../../includes/functions.php';
 
-//$nome_remetente = $_SESSION['nome'];
 $id_remetente = $_SESSION['id'];
 $tipo_usuario = $_SESSION['tipo_usuario'];
 $agendamento_id = $_GET['agendamento_id'];
 
-$tabela = $tipo_usuario === 'tutor' ? 'tutores' : 'cuidadores';
-
-$query = "SELECT m.mensagem, m.id_remetente, u.nome as remetente_nome
-          FROM mensagens m
-          JOIN $tabela u ON m.id_remetente = u.id
-          WHERE m.agendamento_id = ? ORDER BY m.data_envio";
-
-$stmt = $mysqli->prepare($query);
-$stmt->bind_param("i", $agendamento_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-$mensagens = [];
-while ($row = $result->fetch_assoc()) {
-    $mensagens[] = [
-        'mensagem' => $row['mensagem'],
-        'remetente_nome' => $row['remetente_nome'],
-        'id_remetente' => $row['id_remetente']
-    ];
-}
-
-//echo json_encode($mensagens);
+$tabela = ($tipo_usuario === 'tutor' ? 'cuidadores' : 'tutores');
 
 $agendamentos = getAgendamentosByUser($mysqli, $id_remetente, $tipo_usuario, 'aceito');
 
@@ -39,25 +17,38 @@ if (!empty($agendamentos)) {
 
     if ($tipo_usuario === 'tutor') {
         $id_destinatario = $primeiroAgendamento['cuidador_id'];
-        $destinatario_info = getInformacoesUsuario($mysqli, $id_destinatario, 'cuidador');
-        $nome_destinatario = $destinatario_info['nome'];
     } else {
         $id_destinatario = $primeiroAgendamento['tutor_id'];
-        $destinatario_info = getInformacoesUsuario($mysqli, $id_destinatario, 'tutor');
-        $nome_destinatario = $destinatario_info['nome'];
     }
 } else {
     $id_destinatario = null;
 }
+
+$stmt = $mysqli->prepare("SELECT nome, foto_perfil FROM $tabela WHERE id = ?");
+$stmt->bind_param("i", $id_destinatario);
+$stmt->execute();
+$result = $stmt->get_result();
+$destinatario = $result->fetch_assoc();
+
+$outroUsuarioId = $_GET['user_id'];
+$outroUsuarioTipo = $_GET['tipo'];
+
 ?>
+
 <link rel="stylesheet" href="/assets/css/chat.css">
-<h1>Chat</h1>
 <div id="chat-container">
+    <div id="destinatario-info">
+        <img src="/img/seta-voltar.svg" style="cursor:pointer; width:25px;" onclick="history.back()" alt="Seta para voltar a página">
+        <?php if ($tipo_usuario === 'tutor') { ?>
+            <img src="/assets/uploads/fotos-cuidadores/<?php echo htmlspecialchars($destinatario['foto_perfil']); ?>" alt="Foto do destinatário" class="foto-perfil" onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
+        <?php } else { ?>
+            <img src="/assets/uploads/fotos-tutores/<?php echo htmlspecialchars($destinatario['foto_perfil']); ?>" alt="Foto do destinatário" class="foto-perfil" onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
+        <?php } ?>
+        <span class="nome-destinatario"><?php echo htmlspecialchars($destinatario['nome']); ?></span>
+    </div>
     <div id="agendamento_id" style="display: none;"><?php echo $agendamento_id; ?></div>
     <div id="id_remetente" style="display: none;"><?php echo $id_remetente ?></div>
     <div id="id_destinatario" style="display: none;"><?php echo $id_destinatario ?></div>
-    <div id="nome_remetente" style="display: none;"><?php echo $nome_remetente ?></div>
-    <div id="nome_destinatario" style="display: none;"><?php echo $nome_destinatario ?></div>
     <div id="mensagens"></div>
     <div class="enviar-mensagem">
         <input type="text" id="mensagem" placeholder="Digite sua mensagem">
@@ -81,48 +72,58 @@ if (!empty($agendamentos)) {
     // Receber mensagens em tempo real
     socket.on('chatMessage', (msg) => {
         const mensagensDiv = document.getElementById('mensagens');
-        mensagensDiv.innerHTML += `<div>${msg}</div>`;
+        mensagensDiv.innerHTML += `<div class="${msg.id_remetente === idRemetente ? 'mensagem-remetente' : 'mensagem-recebida'}">${msg.mensagem}</div>`;
     });
 
     window.onload = () => {
-    const idAgendamento = document.getElementById('agendamento_id').textContent;
+        const idAgendamento = document.getElementById('agendamento_id').textContent;
 
         fetch(`/includes/agendamentos/buscar-mensagens.php?agendamento_id=${idAgendamento}`)
-        .then(response => response.json())
-        .then(data => {
-            const mensagensDiv = document.getElementById('mensagens');
-            data.forEach(msg => {
-                const classe = msg.id_remetente == idRemetente ? 'mensagem-remetente' : 'mensagem-recebida';
-
-                // Exibir a mensagem com o nome do remetente
-                mensagensDiv.innerHTML += `
-                    <div class="${classe}">
-                        <strong>${msg.remetente_nome}</strong>: ${msg.mensagem}
-                    </div>
-                `;
+            .then(response => response.json())
+            .then(data => {
+                const mensagensDiv = document.getElementById('mensagens');
+                data.forEach(msg => {
+                    const classe = msg.id_remetente == idRemetente ? 'mensagem-remetente' : 'mensagem-recebida';
+                    mensagensDiv.innerHTML += `<div class="${classe}">${msg.mensagem}</div>`;
+                });
             });
-        });
     };
+
+    document.getElementById('mensagem').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault(); // Previne a quebra de linha ao pressionar Enter
+            enviarMensagem();
+        }
+    });
 
     // Enviar mensagem
     document.getElementById('enviar').addEventListener('click', () => {
+        enviarMensagem();
+    });
+
+    function enviarMensagem() {
         const idRemetente = document.getElementById('id_remetente').textContent;
         const idDestinatario = document.getElementById('id_destinatario').textContent;
         const idAgendamento = document.getElementById('agendamento_id').textContent;
-        const mensagem = document.getElementById('mensagem').value;
+        const mensagem = document.getElementById('mensagem').value.trim();
+
+        if (mensagem === "") {
+            return;
+        }
 
         // Exibir a mensagem localmente
         const mensagensDiv = document.getElementById('mensagens');
         mensagensDiv.innerHTML += `<div class="mensagem-remetente">${mensagem}</div>`;
 
+        // Enviar a mensagem via socket
         socket.emit('chatMessage', {
             id_remetente: idRemetente,
             id_destinatario: idDestinatario,
             mensagem: mensagem,
             agendamento_id: idAgendamento
-
         });
-
+        
         document.getElementById('mensagem').value = '';
-    });
+    }
+    
 </script>

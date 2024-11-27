@@ -138,7 +138,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                     </div>
                                     <div class="agendamento-acoes">
                                         <button class="btn-cancelar" type="button" data-id="<?= $agendamento['id'] ?>">Cancelar</button>
-                                        <button class="btn-chat" type="button" data-id="<?= $agendamento['id'] ?>" onclick="location.href = 'chat.php?agendamento_id=<?php echo $agendamento['id'] ?>'">Chat</button>
+                                        <button class="btn-chat" type="button" data-id="<?= $agendamento['id'] ?>" onclick="location.href = 'chat.php?agendamento_id=<?php echo $agendamento['id'] ?>&user_id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">Chat</button>
                                     </div>
                                 </div>
                             <?php endif; ?>
