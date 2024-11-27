@@ -1,6 +1,7 @@
 <?php
 include __DIR__ . '/../../auth/protect.php';
-include __DIR__ . '/../../includes/db.php'; 
+include __DIR__ . '/../../includes/db.php';
+include __DIR__ . '/../../includes/perfil/disponibilidade.php';
 
 ?>
 <div id="conteudo-1" class="content-section active">
@@ -49,46 +50,71 @@ include __DIR__ . '/../../includes/db.php';
                     <button type="submit" class="salvar-experiencia" style="display: none;">Salvar</button>
                 </form>
             </div>
+
+            <div class="preco">
+                <!-- Exibição do Preço -->
+                <h3>Preço por Hora</h3>
+                <div class="preco-valor">
+                    <?php
+                    // Exibir o preço, se existir, formatado
+                    if (isset($cuidador['preco_hora']) && $cuidador['preco_hora'] > 0) {
+                        echo 'R$ ' . number_format($cuidador['preco_hora'], 2, ',', '.') . '/hora';
+                    } else {
+                        echo 'Preço não informado';
+                    }
+                    ?>
+                </div>
+                
+                <!-- Formulário para Atualizar Preço -->
+                <form method="POST" action="\includes\perfil\salvar-preco.php">
+                    <div class="input-preco-unique">
+                        <label for="preco_hora">Defina seu Preço por Hora:</label>
+                        <input type="number" name="preco_hora" id="preco_hora" value="<?= htmlspecialchars($cuidador['preco_hora']) ?>" min="0" step="0.01" required>
+                    </div>
+                    <button type="submit" class="btn-salvar-preco">Salvar Preço</button>
+                </form>
+
+            </div>
+
+        
             <div class="disponibilidade">
                 <h3>Disponibilidade</h3>
-                <?php
-                // Exibir a disponibilidade cadastrada
-                $sql = "SELECT dia_da_semana, hora_inicio, hora_fim FROM disponibilidade_cuidador WHERE cuidador_id = ?";
-                $stmt = $mysqli->prepare($sql);
-                $stmt->bind_param("i", $cuidador['id']);
-                $stmt->execute();
-                $result = $stmt->get_result();
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<p>{$row['dia_da_semana']}: {$row['hora_inicio']} - {$row['hora_fim']}</p>";
-                    }
-                } else {
-                    echo "<p>Nenhuma disponibilidade cadastrada.</p>";
-                }
+                <!-- Texto exibindo a disponibilidade atual -->
+                <div id="disponibilidade-texto" <?= empty($disponibilidade) ? 'style="display:none;"' : '' ?>>
+                    <ul>
+                        <?php foreach ($disponibilidade as $dia => $horario): ?>
+                            <li>
+                                <strong><?= ucfirst($dia) ?>:</strong>
+                                <?= $horario['hora_inicio'] . ' - ' . $horario['hora_fim'] ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
 
-                $stmt->close();
+            <!-- Botão para editar a disponibilidade -->
+            <button id="btn-editar" onclick="exibirFormulario()">Editar</button>
+
+            <!-- Formulário de edição, inicialmente oculto -->
+            <form id="form-disponibilidade" action="" method="POST" <?= empty($disponibilidade) ? '' : 'style="display:none;"' ?> onsubmit="return validarFormulario()">
+                <h4>Definir Disponibilidade</h4>
+                <?php 
+                    // Definindo os dias da semana
+                    $diasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+                    foreach ($diasSemana as $dia): 
                 ?>
-                <form action="/includes/perfil/salvar-disponibilidade.php" method="POST">
-                    <label for="dia_da_semana">Dia da Semana:</label>
-                    <select name="dia_da_semana" required>
-                        <option value="segunda">Segunda</option>
-                        <option value="terca">Terça</option>
-                        <option value="quarta">Quarta</option>
-                        <option value="quinta">Quinta</option>
-                        <option value="sexta">Sexta</option>
-                        <option value="sabado">Sábado</option>
-                        <option value="domingo">Domingo</option>
-                    </select>
+                    <div class="input-dia" style="margin-bottom: 10px;">
+                        <!-- Checkbox para marcar o dia -->
+                        <input type="checkbox" name="horarios[<?= $dia ?>][marcado]" value="1" <?= isset($disponibilidade[$dia]) ? 'checked' : '' ?> onclick="toggleHorarios('<?= $dia ?>')" class="checkbox-dia">
+                        <label><strong><?= ucfirst($dia) ?>:</strong></label>
+                        <!-- Campos de horário -->
+                        <input type="time" name="horarios[<?= $dia ?>][inicio]" value="<?= isset($disponibilidade[$dia]) ? $disponibilidade[$dia]['hora_inicio'] : '' ?>" class="hora-inicio" <?= !isset($disponibilidade[$dia]) ? 'disabled' : '' ?> step="3600" onchange="ajustarHorario(this)">
+                        <input type="time" name="horarios[<?= $dia ?>][fim]" value="<?= isset($disponibilidade[$dia]) ? $disponibilidade[$dia]['hora_fim'] : '' ?>" class="hora-fim" <?= !isset($disponibilidade[$dia]) ? 'disabled' : '' ?> step="3600" onchange="ajustarHorario(this)">
+                    </div>
+                <?php endforeach; ?>
+                <button type="submit" class="btn-salvar">Salvar</button>
+            </form>
 
-                    <label for="hora_inicio">Horário de Início:</label>
-                    <input type="time" name="hora_inicio" required>
-
-                    <label for="hora_fim">Horário de Fim:</label>
-                    <input type="time" name="hora_fim" required>
-
-                    <button type="submit">Adicionar Disponibilidade</button>
-                </form>
             </div>
 
             <div class="comentarios-card">
@@ -100,5 +126,77 @@ include __DIR__ . '/../../includes/db.php';
 
         </div>
     </div>
+
     <script src="/views/cuidador/main.js" type="module"></script>
+    <script>
+    // Função para ajustar os minutos para 00 ao selecionar o horário
+    function ajustarHorario(input) {
+        const hora = input.value.split(':')[0]; // Pega a hora
+        input.value = `${hora}:00`; // Define os minutos como 00
+    }
+
+    // Exibe ou oculta o formulário de edição ao clicar no botão de editar
+    function exibirFormulario() {
+        var form = document.getElementById("form-disponibilidade");
+        var textoDisponibilidade = document.getElementById("disponibilidade-texto"); // Corrigido aqui
+
+        // Alternar entre exibir o texto ou o formulário
+        if (form.style.display === "none") {
+            form.style.display = "block";
+            textoDisponibilidade.style.display = "none";
+        } else {
+            form.style.display = "none";
+            textoDisponibilidade.style.display = "block";
+        }
+    }
+
+    // Habilita ou desabilita os campos de horário com base no checkbox
+    function toggleHorarios(dia) {
+        var checkbox = document.querySelector(`input[name="horarios[${dia}][marcado]"]`);
+        var horaInicio = document.querySelector(`input[name="horarios[${dia}][inicio]"]`); // Corrigido
+        var horaFim = document.querySelector(`input[name="horarios[${dia}][fim]"]`); // Corrigido
+
+        if (checkbox.checked) {
+            // Se o checkbox estiver marcado, habilitar os campos de horário
+            horaInicio.disabled = false;
+            horaFim.disabled = false;
+        } else {
+            // Se o checkbox não estiver marcado, desmarcar os campos de horário e desabilitá-los
+            horaInicio.disabled = true;
+            horaFim.disabled = true;
+            horaInicio.value = ''; // Limpar o valor do horário
+            horaFim.value = ''; // Limpar o valor do horário
+        }
+    }
+
+    // Função para validar o formulário antes de enviar
+    function validarFormulario() {
+        var dias = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+        var formValido = true;
+
+        // Verificar se os campos de horário foram preenchidos quando o dia for marcado
+        dias.forEach(function(dia) {
+            var checkbox = document.querySelector(`input[name="horarios[${dia}][marcado]"]`);
+            var horaInicio = document.querySelector(`input[name="horarios[${dia}][inicio]"]`);
+            var horaFim = document.querySelector(`input[name="horarios[${dia}][fim]"]`);
+
+            if (checkbox.checked) {
+                if (!horaInicio.value || !horaFim.value) {
+                    alert(`Por favor, preencha os horários para o dia ${dia}.`);
+                    formValido = false;
+                }
+
+                // Verificar se a hora de início é maior que a de fim
+                if (horaInicio.value && horaFim.value && horaInicio.value >= horaFim.value) {
+                    alert(`O horário de início para o dia ${dia} não pode ser maior ou igual ao horário de fim.`);
+                    formValido = false;
+                }
+            }
+        });
+
+        return formValido;
+    }
+
+    </script>
+
 </div>

@@ -6,11 +6,30 @@ include __DIR__ . '/../../includes/navbar.php';
 
 $cuidador_id = intval($_GET['id']);
 $cuidador = getCuidadorProfile($mysqli, $cuidador_id);
+
+// Buscar a disponibilidade do cuidador
+$query = "SELECT dia_da_semana, hora_inicio, hora_fim FROM disponibilidade_cuidador WHERE cuidador_id = ?";
+$stmt = $mysqli->prepare($query);
+$stmt->bind_param("i", $cuidador_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Inicializa o array de disponibilidade
+$disponibilidade = [];
+
+// Preenche o array de disponibilidade com os dados da consulta
+while ($row = $result->fetch_assoc()) {
+    $disponibilidade[$row['dia_da_semana']] = [
+        'hora_inicio' => $row['hora_inicio'],
+        'hora_fim' => $row['hora_fim']
+    ];
+}
+
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +37,6 @@ $cuidador = getCuidadorProfile($mysqli, $cuidador_id);
     <link rel="stylesheet" href="/views/tutor/main.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
-
 <body>
     <div id="conteudo-1" class="content-section active">
         <h1>Perfil do Cuidador</h1>
@@ -45,25 +63,34 @@ $cuidador = getCuidadorProfile($mysqli, $cuidador_id);
                     <h3>Experiência</h3>
                     <p><span class="experienciaText"><?php echo (htmlspecialchars($cuidador['experiencia'])); ?></span></p>
                 </div>
+
+                <div class="preco">
+                    <h3>Preço por Hora</h3>
+                    <div class="preco-valor">
+                        <?php
+                        // Exibir o preço, se existir, formatado
+                        if (isset($cuidador['preco_hora']) && $cuidador['preco_hora'] > 0) {
+                            echo 'R$ ' . number_format($cuidador['preco_hora'], 2, ',', '.') . '/hora';
+                        } else {
+                            echo 'Preço não informado';
+                        }
+                        ?>
+                    </div>
+                </div>
+            
+                
                 <div class="disponibilidade">
                     <h3>Disponibilidade</h3>
-                    <?php
-                    $sql = "SELECT dia_da_semana, hora_inicio, hora_fim FROM disponibilidade_cuidador WHERE cuidador_id = ?";
-                    $stmt = $mysqli->prepare($sql);
-                    $stmt->bind_param("i", $cuidador_id);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<p>" . htmlspecialchars($row['dia_da_semana']) . ": " . htmlspecialchars($row['hora_inicio']) . " - " . htmlspecialchars($row['hora_fim']) . "</p>";
-                        }
-                    } else {
-                        echo "<p>Nenhuma disponibilidade cadastrada.</p>";
-                    }
-
-                    $stmt->close();
-                    ?>
+                    <div id="disponibilidade-texto" <?= empty($disponibilidade) ? 'style="display:none;"' : '' ?>>
+                        <ul>
+                            <?php foreach ($disponibilidade as $dia => $horario): ?>
+                                <li>
+                                    <strong><?= ucfirst($dia) ?>:</strong>
+                                    <?= $horario['hora_inicio'] . ' - ' . $horario['hora_fim'] ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="comentarios-card">
@@ -78,5 +105,4 @@ $cuidador = getCuidadorProfile($mysqli, $cuidador_id);
     </div>
     <script src="/assets/js/perfil/avaliacoes.js"></script>
 </body>
-
 </html>
