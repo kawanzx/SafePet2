@@ -39,6 +39,11 @@ io.on('connection', (socket) => {
             io.to(recipientSocket).emit('chatMessage', mensagem);  // Enviar a mensagem para o destinatário
         }
 
+        socket.to(id_destinatario).emit('chatMessage', {
+            mensagem: mensagem,
+            remetente_nome: nome_remetente
+        });
+
         console.log('Enviando mensagem para salvar:', {
             id_remetente: msg.id_remetente,
             id_destinatario: id_destinatario,

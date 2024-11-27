@@ -1,18 +1,101 @@
+/* chat.css */
+
+/* Estilo para o container geral do chat */
+#chat-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    overflow: hidden;
+}
+
+/* Cabeçalho do chat */
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Div de mensagens */
 #mensagens {
-    max-height: 300px;
+    flex-grow: 1;
     overflow-y: auto;
     padding: 10px;
-    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    max-height: 500px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Mensagens do remetente */
 .mensagem-remetente {
-    text-align: right;
-    color: blue;
-    margin: 5px 0;
+    margin: 8px 0;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    max-width: 80%;
+    align-self: flex-end;
+    word-wrap: break-word;
 }
 
+/* Mensagens do destinatário */
 .mensagem-recebida {
-    text-align: left;
-    color: green;
-    margin: 5px 0;
+    margin: 8px 0;
+    padding: 10px;
+    background-color: #f1f1f1;
+    color: #333;
+    border-radius: 8px;
+    max-width: 80%;
+    align-self: flex-start;
+    word-wrap: break-word;
+}
+
+/* Estilo para o input de mensagem */
+.enviar-mensagem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+/* Estilo para o campo de input de texto */
+#mensagem {
+    width: 85%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    outline: none;
+}
+
+/* Estilo para o botão de envio */
+#enviar {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Efeito ao passar o mouse sobre o botão de envio */
+#enviar:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para esconder elementos invisíveis */
+#agendamento_id, #id_remetente, #id_destinatario {
+    display: none;
 }
