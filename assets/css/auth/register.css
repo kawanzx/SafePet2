@@ -106,15 +106,19 @@ body *{
     appearance: none;
 }
 
-.senha {
-    position: relative;
+.mostrar-senha {
+    margin: 0;
+    flex-direction: row;
+    justify-content:left;
+}
+
+.cpf{
+    margin-top: 36px;
 }
 
 input[type="checkbox"] {
     width: auto;
-    position: absolute;
-    right: 15px;
-    bottom: 20px;
+    margin-left: 10px;
 }
 
 .textfield > label,
@@ -181,6 +185,9 @@ input[type="checkbox"] {
     }
     .column {
         width: 100%; 
+    }
+    .cpf{
+        margin-top: 0;
     }
 }
 

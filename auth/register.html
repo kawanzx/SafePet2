@@ -19,7 +19,7 @@
         <div class="direita">
             <div class="card-login">
                 <div class="container">
-                    <a href="../index.php"><img src="../img/seta-voltar.svg"></a>
+                    <a href="../index.php"><img src="../img/seta-voltar.svg" style="width: 30px;"></a>
                     <h1>Cadastro</h1>
                 </div>
                 <form id="form-cadastro" action="register.php" method="post">
@@ -29,10 +29,13 @@
                                 <label for="nome_completo">Nome completo: </label>
                                 <input type="text" name="nome_completo" placeholder="Nome" required>
                             </div>
-                            <div class="textfield senha">
+                            <div class="textfield">
                                 <label for="senha">Senha: </label>
                                 <input type="password" id="senha" name="senha" placeholder="Senha" required>
-                                <input type="checkbox" id="mostrar-senha" onclick="mostrarSenhas()">
+                            </div>
+                            <div class="textfield mostrar-senha">
+                                <label for="mostrar-senha">Mostrar senha</label>
+                                <input type="checkbox" name="mostrar-senha" id="mostrar-senha" onclick="mostrarSenhas()">
                             </div>
                             <div class="textfield">
                                 <label for="confirmar_senha">Confirmar Senha: </label>
@@ -60,7 +63,7 @@
                                 <label for="data_nascimento">Data de nascimento: </label>
                                 <input type="date" name="data_nascimento" required>
                             </div>
-                            <div class="textfield">
+                            <div class="textfield cpf">
                                 <label for="cpf">CPF: </label>
                                 <input type="text" name="cpf" placeholder="CPF" required>
                             </div>

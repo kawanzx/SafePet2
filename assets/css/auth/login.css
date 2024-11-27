@@ -69,11 +69,15 @@ body {
     position: relative;
 }
 
+.mostrar-senha{
+    margin-top: 7px;
+}
+
 .textfield > input[type="checkbox"]{
     width: auto;
     position: absolute;
-    right: 15px;
-    bottom: 20px;
+    right: 80px;
+    bottom: 13px;
 }
 
 .textfield > input, select{
