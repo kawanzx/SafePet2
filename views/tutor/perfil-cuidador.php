@@ -4,8 +4,10 @@ include __DIR__ . '/../../includes/db.php';
 require_once '../../includes/functions.php';
 include __DIR__ . '/../../includes/navbar.php';
 
+$tutor_id = $_SESSION['id'];
 $cuidador_id = intval($_GET['id']);
 $cuidador = getCuidadorProfile($mysqli, $cuidador_id);
+$tutor = getTutorProfile($mysqli, $tutor_id);
 
 // Buscar a disponibilidade do cuidador
 $query = "SELECT dia_da_semana, hora_inicio, hora_fim FROM disponibilidade_cuidador WHERE cuidador_id = ?";
@@ -30,6 +32,7 @@ $stmt->close();
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,6 +40,7 @@ $stmt->close();
     <link rel="stylesheet" href="/views/tutor/main.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div id="conteudo-1" class="content-section active">
         <h1>Perfil do Cuidador</h1>
@@ -49,11 +53,15 @@ $stmt->close();
                         <h2><?php echo $cuidador['nome']; ?></h2>
                         <div class="avaliacoes" id="avaliacoes">
                             <p id="media">Média: --</p>
-                            <div id="estrelas" class="estrelas"></div>            
+                            <div id="estrelas" class="estrelas"></div>
                             <p id="total">Total de avaliações: --</p>
                         </div>
                     </div>
-                    <a href="agendar.php?id=<?php echo $cuidador_id; ?>" class="btn-agendar">Agendar</a>
+                    <?php if ((int)$tutor['ativo'] === 1 && !empty($tutor['cep'])) { ?>
+                        <a href="agendar.php?id=<?php echo $cuidador_id; ?>" class="btn-agendar">Agendar</a>
+                    <?php } else { ?>
+                        <a class="btn-agendar" onclick="redirecionarConta()">Agendar</a>
+                    <?php } ?>
                 </div>
                 <div class="bio">
                     <h3>Bio</h3>
@@ -77,8 +85,8 @@ $stmt->close();
                         ?>
                     </div>
                 </div>
-            
-                
+
+
                 <div class="disponibilidade">
                     <h3>Disponibilidade</h3>
                     <div id="disponibilidade-texto" <?= empty($disponibilidade) ? 'style="display:none;"' : '' ?>>
@@ -105,4 +113,5 @@ $stmt->close();
     </div>
     <script src="/assets/js/perfil/avaliacoes.js"></script>
 </body>
+
 </html>

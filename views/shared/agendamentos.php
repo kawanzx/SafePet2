@@ -51,6 +51,10 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                     <?php if (!empty($agendamentos)): ?>
                         <?php foreach ($agendamentos as $agendamento): ?>
                             <?php
+                            $dataServico = DateTime::createFromFormat('Y-m-d', $agendamento['data_servico']);
+                            $hora_inicio = date('H:i', strtotime($agendamento['hora_inicio']));
+                            $hora_fim = date('H:i', strtotime($agendamento['hora_fim']));
+
                             if ($tipo_usuario === 'tutor') {
                                 $outroUsuario = getCuidadorProfile($mysqli, $agendamento['cuidador_id']);
                                 $outroUsuarioId = $agendamento['cuidador_id'];
@@ -73,7 +77,8 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                         <div class="agendamento-info">
                                             <p class="id"><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
                                             <p><strong>Nome:</strong> <?= htmlspecialchars($outroUsuario['nome']) ?></p>
-                                            <p><strong>Data do Serviço:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
+                                            <p><strong>Data:</strong> <?= $dataServico->format('d/m/Y') ?></p>
+                                            <p><strong>Horário:</strong> <?= $hora_inicio . ' às ' . $hora_fim ?></p>
                                             <p><strong>Pets:</strong>
                                                 <?= htmlspecialchars(implode(', ', array_values($pets))) ?>
                                             </p>
@@ -97,6 +102,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                     <?php endif; ?>
 
                 </div>
+                <script src="main.js" type="module" defer></script>
             </div>
 
             <div id="breve" class="content-section">
@@ -107,6 +113,10 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                     <?php if (!empty($agendamentos)): ?>
                         <?php foreach ($agendamentos as $agendamento): ?>
                             <?php
+                            $dataServico = DateTime::createFromFormat('Y-m-d', $agendamento['data_servico']);
+                            $hora_inicio = date('H:i', strtotime($agendamento['hora_inicio']));
+                            $hora_fim = date('H:i', strtotime($agendamento['hora_fim']));
+
                             if ($tipo_usuario === 'tutor') {
                                 $outroUsuario = getCuidadorProfile($mysqli, $agendamento['cuidador_id']);
                                 $outroUsuarioId = $agendamento['cuidador_id'];
@@ -129,7 +139,8 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                         <div class="agendamento-info">
                                             <p class="id"><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
                                             <p><strong>Nome:</strong> <?= htmlspecialchars($outroUsuario['nome']) ?></p>
-                                            <p><strong>Data do Serviço:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
+                                            <p><strong>Data:</strong> <?= $dataServico->format('d/m/Y') ?></p>
+                                            <p><strong>Horário:</strong> <?= $hora_inicio . ' às ' . $hora_fim ?></p>
                                             <p><strong>Pets:</strong>
                                                 <?= htmlspecialchars(implode(', ', array_values($pets))) ?>
                                             </p>
@@ -150,20 +161,26 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                         <p>Não há agendamentos aceitos no momento.</p>
                     <?php endif; ?>
                 </div>
+                <script src="main.js" type="module" defer></script>
             </div>
 
             <div id="cancelados" class="content-section">
                 <?php $agendamentos = getAgendamentosByUser($mysqli, $user_id, $tipo_usuario, 'cancelado'); ?>
+
                 <h2>Cancelados</h2>
                 <div id="agendamentos">
                     <?php if (!empty($agendamentos)): ?>
                         <?php foreach ($agendamentos as $agendamento): ?>
-                            <?php if ($agendamento['status'] === 'cancelado'): ?>
+                            <?php $dataServico = DateTime::createFromFormat('Y-m-d', $agendamento['data_servico']);
+                            $hora_inicio = date('H:i', strtotime($agendamento['hora_inicio']));
+                            $hora_fim = date('H:i', strtotime($agendamento['hora_fim']));
+                            if ($agendamento['status'] === 'cancelado'): ?>
                                 <div class="agendamento-card" data-id="<?= $agendamento['id'] ?>">
                                     <div class="agendamento-details" onclick="location.href='/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
                                         <div class="agendamento-info">
                                             <p class="id"><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
-                                            <p><strong>Data:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
+                                            <p><strong>Data:</strong> <?= $dataServico->format('d/m/Y') ?></p>
+                                            <p><strong>Horário:</strong> <?= $hora_inicio . ' às ' . $hora_fim ?></p>
                                             <p><strong>Mensagem:</strong> <?= htmlspecialchars($agendamento['mensagem']) ?></p>
                                         </div>
                                     </div>
@@ -174,6 +191,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                         <p>Não há agendamentos cancelados.</p>
                     <?php endif; ?>
                 </div>
+                <script src="main.js" type="module" defer></script>
             </div>
 
             <div id="concluidos" class="content-section">
@@ -183,6 +201,10 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                     <?php if (!empty($agendamentos)): ?>
                         <?php foreach ($agendamentos as $agendamento): ?>
                             <?php
+                            $dataServico = DateTime::createFromFormat('Y-m-d', $agendamento['data_servico']);
+                            $hora_inicio = date('H:i', strtotime($agendamento['hora_inicio']));
+                            $hora_fim = date('H:i', strtotime($agendamento['hora_fim']));
+                            
                             if ($agendamento['status'] === 'concluido'):
                                 if ($tipo_usuario === 'tutor') {
                                     $outroUsuario = getCuidadorProfile($mysqli, $agendamento['cuidador_id']);
@@ -199,7 +221,8 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                         <div class="agendamento-info">
                                             <p class="id"><strong>ID:</strong> <?= htmlspecialchars($agendamento['id']) ?></p>
                                             <p><strong>Nome:</strong> <?= htmlspecialchars($outroUsuario['nome']) ?></p>
-                                            <p><strong>Data do Serviço:</strong> <?= htmlspecialchars($agendamento['data_servico']) ?></p>
+                                            <p><strong>Data:</strong> <?= $dataServico->format('d/m/Y') ?></p>
+                                            <p><strong>Horário:</strong> <?= $hora_inicio . ' às ' . $hora_fim ?></p>
                                             <p><strong>Pets:</strong>
                                                 <?= htmlspecialchars(implode(', ', array_values($pets))) ?>
                                             </p>
@@ -216,11 +239,10 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                         <p>Não há solicitações concluídas no momento.</p>
                     <?php endif; ?>
                 </div>
+                <script src="main.js" type="module" defer></script>
             </div>
         </main>
     </div>
-
-    <script src="main.js" type="module"></script>
 </body>
 
 </html>

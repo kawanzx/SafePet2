@@ -42,7 +42,7 @@ include __DIR__ . '/../../includes/buscar.php';
             ?>
 
             <?php while ($row = $result->fetch_assoc()) : ?>
-                <?php if ($row['ativo'] === 1 && $row['cidade'] !== null && $row['preco_hora'] !== null) : ?>
+                <?php if ($row['ativo'] === 1 && $row['cidade'] !== null && $row['preco_hora'] !== null && $row['horarios_disponiveis'] !== null) : ?>
                     <?php $encontrouCuidador = true; ?>
                     <div class="cuidador">
                         <div class="avatar">
@@ -75,6 +75,15 @@ include __DIR__ . '/../../includes/buscar.php';
                                     echo 'R$ ' . number_format($row['preco_hora'], 2, ',', '.') . '/hora';
                                 } else {
                                     echo 'Preço não informado';
+                                }
+                                ?>
+                            </p>
+                            <p>
+                                <?php
+                                if (isset($row['horarios_disponiveis'])) {
+                                    echo 'Disponível ' . htmlspecialchars($row['dias_disponiveis']);
+                                } else {
+                                    echo 'Disponibilidade não informadada';
                                 }
                                 ?>
                             </p>

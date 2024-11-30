@@ -33,9 +33,6 @@
 }
 
 .textfield {
-    width: 100%;
-    display: flex;
-    align-items: center;
     margin: 10px 0;
     color: #3e3e3f;
 }
@@ -57,7 +54,12 @@
     color: #1D3557;
 }
 
-.textfield > input {
+.telefoneInput,
+.emailInput{
+    width: 100%;
+}
+
+ input {
     border: none;
     border-radius: 10px;
     padding: 6px;
@@ -65,14 +67,50 @@
     color: #3e3e3f;
     font-size: 12pt;
     outline: none;
-    margin-left: 10px;
-    width: 100%; 
+    margin-top: 5px;
+    width: 30%; 
+    min-width: 30%; 
     max-width: 100%;
 }
 
 .textfield > label {
+    display: block;
+    margin-bottom: 5px;
     color: #3e3e3f;
-    margin-right: 3px;
+}
+
+.textfield-group {
+    display: flex;
+    gap: 20px; 
+    align-items: center;
+}
+
+.telefone-container,
+.email-container{
+    flex: 2;
+}
+
+.codigo-container{
+    flex: 4.5;
+}
+
+.codigoTelInput,
+.codigoEmailInput {
+    padding: 6px;
+    border-radius: 10px;
+    background: rgb(199, 199, 199);
+    border: none;
+    color: #3e3e3f;
+}
+
+.btn-codigo{
+    flex: 4;
+}
+
+button:disabled {
+    background-color: #ccc; /* Cor de fundo do botão desabilitado */
+    cursor: not-allowed; /* Cursor para indicar que o botão não pode ser clicado */
+    opacity: 0.5; /* Torna o botão semitransparente para indicar que está desabilitado */
 }
 
 .btn-salvar,
@@ -152,4 +190,14 @@
 
 .conta-excluida p, a{
     text-align: center;
+}
+
+.btn-codigo{
+    background: #E76F51;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+    padding: 8px;
 }

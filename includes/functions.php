@@ -10,7 +10,7 @@ $dotenv->load();
 
 function validarNome($nome_completo)
 {
-    return preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ\s]{2,}$/', $nome_completo);
+    return preg_match('/^[A-Za-zÀ-ÖØ-öø-ÿ\s\'-]{2,}$/u', $nome_completo);
 }
 
 function validarEmail($email)
@@ -86,11 +86,11 @@ function validarDataNascimento($data_nascimento)
 
 function getTutorProfile($mysqli, $tutor_id)
 {
-    $sql = "SELECT nome, bio, foto_perfil, ativo FROM tutores WHERE id = ?";
+    $sql = "SELECT nome, bio, foto_perfil, ativo, cep FROM tutores WHERE id = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param('i', $tutor_id);
     $stmt->execute();
-    $stmt->bind_result($nome, $bio, $foto_perfil, $ativo);
+    $stmt->bind_result($nome, $bio, $foto_perfil, $ativo, $cep);
     $stmt->fetch();
     $stmt->close();
 
@@ -104,7 +104,8 @@ function getTutorProfile($mysqli, $tutor_id)
         'nome' => htmlspecialchars($nome),
         'bio' => htmlspecialchars($bio),
         'foto_perfil' => !empty($foto_perfil) ? '/assets/uploads/fotos-tutores/' . $foto_perfil : '/img/profile-circle-icon.png',
-        'ativo' => htmlspecialchars($ativo)
+        'ativo' => htmlspecialchars($ativo),
+        'cep' => htmlspecialchars($cep),
     ];
 }
 

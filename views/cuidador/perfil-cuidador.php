@@ -57,8 +57,8 @@ include __DIR__ . '/../../includes/perfil/disponibilidade.php';
                 <div class="preco-valor">
                     <?php
                     // Exibir o preço, se existir, formatado
-                    if (isset($cuidador['preco_hora']) && $cuidador['preco_hora'] > 0) {
-                        echo 'R$ ' . number_format($cuidador['preco_hora'], 2, ',', '.') . '/hora';
+                    if (isset($cuidador['preco_hora']) && floatval($cuidador['preco_hora']) > 0) {
+                        echo 'R$ ' . number_format(floatval($cuidador['preco_hora']), 2, ',', '.') . '/hora';
                     } else {
                         echo 'Preço não informado';
                     }

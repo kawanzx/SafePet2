@@ -96,6 +96,12 @@ button:hover {
     background-color: #e4603f;
 }
 
+#data-servico{
+    width:auto; 
+    text-align:center;
+    margin-bottom: 5px;
+}
+
 /* Pets */
 
 .pet{

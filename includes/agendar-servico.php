@@ -5,27 +5,40 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include('db.php'); // Conexão com o banco de dados
+include('db.php'); 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Dados do formulário
-    $dataServico = $_POST['data_servico'];
+    $dataServico = $_POST['data_servico'] ?? '';
+    $horaInicio = $_POST['hora_inicio'] ?? '';
+    $horaFim = $_POST['hora_fim'] ?? '';
     $petsSelecionados = isset($_POST['petsSelecionados']) ? $_POST['petsSelecionados'] : [];
-    $petsIds = implode(",", $petsSelecionados);
-    $mensagem = $_POST['mensagem'];
-    $tutorId = $_SESSION['id'];
-    $cuidadorId = $_GET['id'];
+    $mensagem = $_POST['mensagem'] ?? '';
+    $tutorId = $_SESSION['id'] ?? null;
+    $cuidadorId = $_GET['id'] ?? null;;
 
-    if (empty($dataServico) || empty($petsSelecionados)) {
+    $dataServicoConvertida = DateTime::createFromFormat('d-m-Y', $dataServico);
+    $dataServico = $dataServicoConvertida->format('Y-m-d');
+
+    if (empty($dataServico) || empty($petsSelecionados) || empty($horaInicio) || empty($horaFim)) {
         echo json_encode(['status' => 'error', 'message' => 'Por favor, preencha todos os campos obrigatórios.']);
         exit;
     }
 
-    $sql = "INSERT INTO agendamentos (tutor_id, cuidador_id, data_servico, pet_id, mensagem)
-            VALUES (?, ?, ?, ?, ?)";
+    $petsIds = implode(",", $petsSelecionados);
+    $tempoInicio = strtotime($horaInicio);
+    $tempoFim = strtotime($horaFim);
+
+    if ($tempoFim <= $tempoInicio) {
+        echo json_encode(['status' => 'error', 'message' => 'A hora de término deve ser maior que a hora de início.']);
+        exit;
+    }
+
+    $sql = "INSERT INTO agendamentos (tutor_id, cuidador_id, data_servico, hora_inicio, hora_fim, pet_id, mensagem)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("iisss", $tutorId, $cuidadorId, $dataServico, $petsIds, $mensagem);
+    $stmt->bind_param("iisssss", $tutorId, $cuidadorId, $dataServico, $horaInicio, $horaFim, $petsIds, $mensagem);
 
     if ($stmt->execute()) {
         echo json_encode(['status' => 'success', 'message' => 'Agendamento realizado com sucesso!']);

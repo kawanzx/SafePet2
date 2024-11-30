@@ -71,3 +71,13 @@ fetch(`../../includes/get-avaliacoes.php?id=${cuidadorId}`)
     })
     .catch(error => console.error('Erro ao carregar as avaliações:', error));
 });
+
+
+function redirecionarConta() {
+    
+    Swal.fire({
+        icon: "warning",
+        title: "Perfil incompleto",
+        text: "Para prosseguir, termine de preencher sua conta..",
+    });
+  }

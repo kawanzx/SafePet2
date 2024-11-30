@@ -1,144 +1,14 @@
 //Informações pessoais tutor
 document.addEventListener('DOMContentLoaded', () => {
-    const editar = document.querySelector('.btn-editar');
-    const nomeTutorText = document.querySelector('.nome-tutorText');
-    const nomeTutorInput = document.querySelector('.nome-tutorInput');
-    const cepText = document.querySelector('.cepText');
-    const cepInput = document.querySelector('.cepInput');
-    const enderecoText = document.querySelector('.enderecoText');
-    const enderecoInput = document.querySelector('.enderecoInput');
-    const complementoText = document.querySelector('.complementoText');
-    const complementoInput = document.querySelector('.complementoInput');
-    const bairroText = document.querySelector('.bairroText');
-    const bairroInput = document.querySelector('.bairroInput');
-    const cidadeText = document.querySelector('.cidadeText');
-    const cidadeInput = document.querySelector('.cidadeInput');
-    const ufText = document.querySelector('.ufText');
-    const ufInput = document.querySelector('.ufInput');
-    const telefoneText = document.querySelector('.telefoneText');
-    const telefoneInput = document.querySelector('.telefoneInput');
-    const emailText = document.querySelector('.emailText');
-    const emailInput = document.querySelector('.emailInput');
-    const dt_nascimentoText = document.querySelector('.dt_nascimentoText');
-    const dt_nascimentoInput = document.querySelector('.dt_nascimentoInput');
-
-
-    editar.addEventListener('click', function () {
-        if (nomeTutorInput.style.display === 'none') {
-            nomeTutorText.style.display = 'none';
-            nomeTutorInput.style.display = 'block';
-            nomeTutorInput.value = nomeTutorText.textContent.trim();
-        } else {
-            nomeTutorText.textContent = nomeTutorInput.value.trim();
-            nomeTutorText.style.display = 'block';
-            nomeTutorInput.style.display = 'none';
-        }
-        if (cepInput.style.display === 'none') {
-            cepText.style.display = 'none';
-            cepInput.style.display = 'block';
-            cepInput.value = cepText.textContent.trim();
-        } else {
-            cepText.textContent = cepInput.value.trim();
-            cepText.style.display = 'block';
-            cepInput.style.display = 'none';
-        }
-        if (enderecoInput.style.display === 'none') {
-            enderecoText.style.display = 'none';
-            enderecoInput.style.display = 'block';
-            enderecoInput.value = enderecoText.textContent.trim();
-        } else {
-            enderecoText.textContent = enderecoInput.value.trim();
-            enderecoText.style.display = 'block';
-            enderecoInput.style.display = 'none';
-        }
-        if (complementoInput.style.display === 'none') {
-            complementoText.style.display = 'none';
-            complementoInput.style.display = 'block';
-            complementoInput.value = complementoText.textContent.trim();
-        } else {
-            complementoText.textContent = complementoInput.value.trim();
-            complementoText.style.display = 'block';
-            complementoInput.style.display = 'none';
-        }
-        if (bairroInput.style.display === 'none') {
-            bairroText.style.display = 'none';
-            bairroInput.style.display = 'block';
-            bairroInput.value = bairroText.textContent.trim();
-        } else {
-            bairroText.textContent = bairroInput.value.trim();
-            bairroText.style.display = 'block';
-            bairroInput.style.display = 'none';
-        }
-        if (cidadeInput.style.display === 'none') {
-            cidadeText.style.display = 'none';
-            cidadeInput.style.display = 'block';
-            cidadeInput.value = cidadeText.textContent.trim();
-        } else {
-            cidadeText.textContent = cidadeInput.value.trim();
-            cidadeText.style.display = 'block';
-            cidadeInput.style.display = 'none';
-        }
-        if (ufInput.style.display === 'none') {
-            ufText.style.display = 'none';
-            ufInput.style.display = 'block';
-            ufInput.value = ufText.textContent.trim();
-        } else {
-            ufText.textContent = ufInput.value.trim();
-            ufText.style.display = 'block';
-            ufInput.style.display = 'none';
-        }
-        if (telefoneInput.style.display === 'none') {
-            telefoneText.style.display = 'none';
-            telefoneInput.style.display = 'block';
-            telefoneInput.value = telefoneText.textContent.trim();
-        } else {
-            telefoneText.textContent = telefoneInput.value.trim();
-            telefoneText.style.display = 'block';
-            telefoneInput.style.display = 'none';
-        }
-        if (emailInput.style.display === 'none') {
-            emailText.style.display = 'none';
-            emailInput.style.display = 'block';
-            emailInput.value = emailText.textContent.trim();
-        } else {
-            emailText.textContent = emailInput.value.trim();
-            emailText.style.display = 'block';
-            emailInput.style.display = 'none';
-        }
-        if (dt_nascimentoInput.style.display === 'none') {
-            dt_nascimentoText.style.display = 'none';
-            dt_nascimentoInput.style.display = 'block';
-
-
-            const dataSpan = dt_nascimentoText.textContent.trim();
-            const partesData = dataSpan.split('-');
-            if (partesData.length === 3) {
-                const dataConvertida = `${partesData[2]}-${partesData[1]}-${partesData[0]}`;
-                dt_nascimentoInput.value = dataConvertida;
-            }
-        } else {
-            const partesInput = dt_nascimentoInput.value.split('-');
-            if (partesInput.length === 3) {
-                const dataConvertida = `${partesInput[2]}-${partesInput[1]}-${partesInput[0]}`;
-                dt_nascimentoText.textContent = dataConvertida;
-            }
-            dt_nascimentoText.style.display = 'block';
-            dt_nascimentoInput.style.display = 'none';
-        }
-    });
-
     document.querySelector('.cepInput').addEventListener('blur', function () {
         const cep = this.value.trim();
 
-        // Verifica se o CEP tem o formato correto (somente números e 8 dígitos)
         const cepPattern = /^[0-9]{8}$/;
         if (cepPattern.test(cep)) {
-            // Faz a requisição para a API ViaCEP
             fetch(`https://viacep.com.br/ws/${cep}/json/`)
                 .then(response => response.json())
                 .then(data => {
                     if (!data.erro) {
-                        // Preencher automaticamente os campos de endereço, bairro, cidade e UF
                         document.querySelector('.enderecoInput').value = data.logradouro;
                         document.querySelector('.bairroInput').value = data.bairro;
                         document.querySelector('.cidadeInput').value = data.localidade;
@@ -168,11 +38,137 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    const telefoneInput = document.querySelector('.telefoneInput');
+    const codigoTelInput = document.querySelector('.codigoTelInput');
+    const btnTelefone = document.getElementById('btn-telefone');
+    const btnSalvar = document.getElementById('btn-salvar');
+    const btnReenviartelefone = document.getElementById('btn-reenviar-tel');
+    const timerTelefone = document.getElementById('timer-tel');
+
+    btnTelefone.disabled = true;
+
+    telefoneInput.addEventListener('click', function () {
+        const telefone = telefoneInput.value.trim();
+
+        if (telefone !== '') {
+            btnTelefone.disabled = false;
+            codigoTelInput.required = true;
+            codigoTelInput.value = '';
+            btnSalvar.disabled = true;
+        } else {
+            btnTelefone.disabled = true;
+            codigoTelInput.required = false;
+        }
+
+        codigoTelInput.addEventListener('input', function () {
+            if (codigoTelInput.value.trim() !== '' && telefoneInput.value.trim() !== '') {
+                btnSalvar.disabled = false;
+            } else {
+                btnSalvar.disabled = true;
+            }
+        });
+
+        btnTelefone.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            btnTelefone.style.display = 'none';
+
+            btnReenviartelefone.style.display = 'inline-block';
+            timerTelefone.style.display = 'inline-block';
+
+            let tempoRestante = 60;
+
+            // Atualiza o contador a cada segundo
+            const intervalo = setInterval(function () {
+                timerTelefone.textContent = `Aguarde ${tempoRestante} segundos para reenviar o código.`;
+                tempoRestante--;
+
+                if (tempoRestante < 0) {
+                    clearInterval(intervalo);
+                    timerTelefone.textContent = '';
+                    btnReenviartelefone.disabled = false;
+                }
+            }, 1000);
+
+            btnReenviartelefone.disabled = true;
+
+            const telefone = telefoneInput.value.trim();
+
+            if (telefone) {
+                fetch('../../../includes/perfil/enviar-codigo.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ telefone: telefone })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.sucesso) {
+                            Swal.fire('Sucesso', data.mensagem, 'success');
+                            window.telefoneAlterado = true;
+                            btnSalvar.disabled = false;
+                        } else {
+                            Swal.fire('Erro', data.mensagem, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao enviar código:', error);
+                        Swal.fire('Erro', 'Falha ao enviar o código.', 'error');
+                    });
+            } else {
+                Swal.fire('Erro', 'Por favor, insira um número de telefone.', 'error');
+            }
+        });
+    });
+
+    btnReenviartelefone.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const telefone = telefoneInput.value.trim();
+
+        if (telefone) {
+            fetch('../../../includes/perfil/enviar-codigo.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ telefone: telefone })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.sucesso) {
+                        console.log("Código reenviado");
+                        Swal.fire('Sucesso', data.mensagem, 'success');
+                        window.telefoneAlterado = true;
+                        btnSalvar.disabled = false;
+                    } else {
+                        Swal.fire('Erro', data.mensagem, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar código:', error);
+                    Swal.fire('Erro', 'Falha ao enviar o código.', 'error');
+                });
+        } else {
+            Swal.fire('Erro', 'Por favor, insira um número de telefone.', 'error');
+        }
+
+        let tempoRestante = 90;
+
+        // Atualiza o contador a cada segundo
+        const intervalo = setInterval(function () {
+            timerTelefone.textContent = `Aguarde ${tempoRestante} segundos para reenviar o código.`;
+            tempoRestante--;
+
+            if (tempoRestante < 0) {
+                clearInterval(intervalo);
+                timerTelefone.textContent = '';
+                btnReenviartelefone.disabled = false;
+            }
+        }, 1000);
+    })
+
     document.querySelectorAll('.btn-salvar').forEach(button => {
         button.addEventListener('click', function () {
             const tutorDiv = this.closest('.section');
 
-            // Obter os valores dos inputs
             const nome = tutorDiv.querySelector('.nome-tutorInput').value.trim();
             const cep = tutorDiv.querySelector('.cepInput').value.trim();
             const endereco = tutorDiv.querySelector('.enderecoInput').value.trim();
@@ -183,11 +179,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const telefone = tutorDiv.querySelector('.telefoneInput').value.trim();
             const email = tutorDiv.querySelector('.emailInput').value.trim();
             const dt_nascimento = tutorDiv.querySelector('.dt_nascimentoInput').value.trim();
+            const codigo = tutorDiv.querySelector('.codigoTelInput').value.trim();
 
             let valid = true;
 
             // Limpar mensagens de erro anteriores
             tutorDiv.querySelectorAll('.erro').forEach(span => span.textContent = '');
+
+            if (window.telefoneAlterado && codigo === '') {
+                const codigoErro = tutorDiv.querySelector('#codigoTelErro');
+                codigoErro.textContent = 'Por favor, insira o código de verificação.';
+                codigoErro.style.color = 'red';
+                valid = false;
+            }
 
             // Validação do nome
             if (nome === '' || nome.length < 2) {
@@ -197,7 +201,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 valid = false;
             }
 
-            // Validação do endereço
+            if (cep === '') {
+                const cepErro = tutorDiv.querySelector('#cepErro');
+                cepErro.textContent = 'CEP é obrigatório.';
+                cepErro.style.color = 'red';
+                valid = false;
+            }
+
             if (endereco === '') {
                 const enderecoErro = tutorDiv.querySelector('#enderecoErro');
                 enderecoErro.textContent = 'Endereço é obrigatório.';
@@ -266,10 +276,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (valid) {
                 const tutorId = tutorDiv.getAttribute('tutor-id');
-                // Enviar os dados via AJAX
                 const formData = new FormData();
                 formData.append('tutorId', tutorId);
-                formData.append('nome-tutor', nome);
+                formData.append('nome', nome);
                 formData.append('cep', cep);
                 formData.append('endereco', endereco);
                 formData.append('complemento', complemento);
@@ -279,43 +288,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 formData.append('telefone', telefone);
                 formData.append('email', email);
                 formData.append('dt_nascimento', dt_nascimento);
+                formData.append('codigo', codigo);
+
+                //console.log('Nome enviado:', formData.get('nome'));
 
                 fetch('/includes/perfil/info-pessoais.php', {
                     method: 'POST',
                     body: formData
                 })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log('Resposta do servidor:', data);
-                        if (data.includes("sucesso")) {
-                            Swal.fire({
-                                icon: "success",
-                                text: "Dados atualizados com sucesso!",
-                            });
-                            // Atualizar os textos com os novos valores
-                            tutorDiv.querySelector('.nome-tutorText').textContent = nome;
-                            tutorDiv.querySelector('.cepText').textContent = cep;
-                            tutorDiv.querySelector('.enderecoText').textContent = endereco;
-                            tutorDiv.querySelector('.complementoText').textContent = complemento;
-                            tutorDiv.querySelector('.bairroText').textContent = bairro;
-                            tutorDiv.querySelector('.cidadeText').textContent = cidade;
-                            tutorDiv.querySelector('.ufText').textContent = uf;
-                            tutorDiv.querySelector('.telefoneText').textContent = telefone;
-                            tutorDiv.querySelector('.emailText').textContent = email;
-                            tutorDiv.querySelector('.dt_nascimentoText').textContent = dt_nascimento;
+                    .then(response => response.text())  // Retorne como texto primeiro para depuração
+                    .then(text => {
+                        console.log('Resposta bruta do servidor:', text);  // Verifique a resposta bruta
 
-                            // Ocultar os inputs e exibir os textos
-                            tutorDiv.querySelectorAll('.nome-tutorText, .cepText, .enderecoText, .complementoText, .bairroText, .cidadeText, .ufText, .telefoneText, .emailText, .dt_nascimentoText').forEach(text => {
-                                text.style.display = 'inline';
-                            });
-                            tutorDiv.querySelectorAll('.nome-tutorInput, .cepInput, .enderecoInput, .complementoInput, .bairroInput, .cidadeInput, .ufInput, .telefoneInput, .emailInput, .dt_nascimentoInput').forEach(input => {
-                                input.style.display = 'none';
-                            });
-                        } else {
+                        // Se a resposta não estiver vazia, tente convertê-la em JSON
+                        try {
+                            const data = JSON.parse(text);
+                            console.log('Resposta do servidor (JSON):', data);
+
+                            // Verifique o sucesso da resposta e mostre a mensagem
+                            if (data.sucesso) {
+                                Swal.fire('Sucesso', data.mensagem, 'success');
+                            } else {
+                                Swal.fire('Erro', data.mensagem, 'error');
+                            }
+                        } catch (error) {
+                            console.error('Erro ao processar a resposta JSON:', error);
                             Swal.fire({
                                 icon: "error",
-                                title: "Erro ao atualizar os dados!",
-                                text: data,
+                                title: "Erro ao processar a resposta do servidor.",
                             });
                         }
                     })
@@ -444,5 +444,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         document.getElementById('mensagemEndereco').style.display = 'none';
     });
+
+    const inputsTexto = document.querySelectorAll('.textfield > input[type="text"]');
+
+    inputsTexto.forEach(input => {
+        // Define o tamanho inicial
+        adjustInputWidth(input);
+
+        // Ajusta o tamanho à medida que o usuário digita
+        input.addEventListener('input', function () {
+            adjustInputWidth(input);
+        });
+    });
+
+    // Função que ajusta a largura do input com base no comprimento do texto
+    function adjustInputWidth(input) {
+        input.style.width = (input.value.length + 1) + 'ch'; // A largura é dada pelo número de caracteres
+    }
 });
 

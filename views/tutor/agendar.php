@@ -17,6 +17,9 @@ $pets = getPetsByTutor($mysqli, $tutor_id);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendar Serviço</title>
     <link rel="stylesheet" href="/assets/css/agendar-servico.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 </head>
 
 <body>
@@ -35,7 +38,17 @@ $pets = getPetsByTutor($mysqli, $tutor_id);
             <!-- Seleção de Data -->
             <div class="section">
                 <label for="data-servico">Data do Serviço:</label>
-                <input type="date" id="data-servico" name="data_servico" required>
+                <div class="data-agendamento">
+                    <input type="date" id="data-servico" name="data_servico" required>
+                </div>
+            </div>
+
+            <div class="section">
+                <label for="hora_inicio">Hora de Início:</label>
+                <select id="hora-inicio" name="hora_inicio"></select>
+
+                <label for="hora_fim">Hora de Término:</label>
+                <select id="hora-fim" name="hora_fim"></select>
             </div>
 
             <!-- Seleção de Pets -->
@@ -43,10 +56,10 @@ $pets = getPetsByTutor($mysqli, $tutor_id);
                 <label for="pets">Selecione os Pets:</label>
                 <div id="pets">
                     <?php if (!empty($pets)): ?>
-                        <?php foreach ($pets as $row): ?>     
+                        <?php foreach ($pets as $row): ?>
                             <label class="pet">
-                            <input type="checkbox" name="petsSelecionados[]" value="<?php echo $row['id']; ?>" class="pet-checkbox">
-                                <?php if (!empty($row['foto'])):?>
+                                <input type="checkbox" name="petsSelecionados[]" value="<?php echo $row['id']; ?>" class="pet-checkbox">
+                                <?php if (!empty($row['foto'])): ?>
                                     <img src="<?php echo htmlspecialchars('/assets/uploads/fotos-pets/' . $row['foto']); ?>" alt="Foto do pet">
                                 <?php else: ?>
                                     <img src="/assets/uploads/fotos-pets/default-image.png" alt="Foto padrão para pets">
