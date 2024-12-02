@@ -1,10 +1,12 @@
 <?php
 session_start();
 
-include '../../includes/db.php';
-include '../../includes/functions.php';
+include __DIR__ . '/../../auth/protect.php';
+include __DIR__ . '/../../includes/db.php';
+include __DIR__ . '/../../includes/functions.php';
 
 $id_remetente = $_SESSION['id'];
+$nome_remetente = $_SESSION['nome'];
 $tipo_usuario = $_SESSION['tipo_usuario'];
 $agendamento_id = $_GET['agendamento_id'];
 
@@ -49,6 +51,8 @@ $outroUsuarioTipo = $_GET['tipo'];
     <div id="agendamento_id" style="display: none;"><?php echo $agendamento_id; ?></div>
     <div id="id_remetente" style="display: none;"><?php echo $id_remetente ?></div>
     <div id="id_destinatario" style="display: none;"><?php echo $id_destinatario ?></div>
+    <div id="nome_remetente" style="display: none;"><?php echo $nome_remetente ?></div>
+    <div id="tipo_remetente" style="display: none;"><?php echo $tipo_usuario ?></div>
     <div id="mensagens"></div>
     <div class="enviar-mensagem">
         <input type="text" id="mensagem" placeholder="Digite sua mensagem">
@@ -58,7 +62,9 @@ $outroUsuarioTipo = $_GET['tipo'];
 
 <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
 <script>
-    const socket = io("http://localhost:3000");
+    const socket = io("http://localhost:3000",{
+        withCredentials: true,
+    });
 
     // Verifique se a conexão foi bem-sucedida
     socket.on('connect', () => {
@@ -106,6 +112,8 @@ $outroUsuarioTipo = $_GET['tipo'];
         const idDestinatario = document.getElementById('id_destinatario').textContent;
         const idAgendamento = document.getElementById('agendamento_id').textContent;
         const mensagem = document.getElementById('mensagem').value.trim();
+        const nomeRemetente = document.getElementById('nome_remetente').textContent;
+        const tipoRemetente = document.getElementById('tipo_remetente').textContent;
 
         if (mensagem === "") {
             return;
@@ -120,7 +128,9 @@ $outroUsuarioTipo = $_GET['tipo'];
             id_remetente: idRemetente,
             id_destinatario: idDestinatario,
             mensagem: mensagem,
-            agendamento_id: idAgendamento
+            agendamento_id: idAgendamento,
+            nome_remetente: nomeRemetente,
+            tipo_remetente: tipoRemetente
         });
         
         document.getElementById('mensagem').value = '';

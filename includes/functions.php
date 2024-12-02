@@ -292,3 +292,58 @@ function enviarSMS($telefone, $codigo)
         return ['sucesso' => false, 'mensagem' => $e->getMessage()];
     }
 }
+
+function criarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem) {
+    $stmt = $mysqli->prepare("
+        INSERT INTO notificacoes (agendamento_id, remetente_id, tipo_remetente, destinatario_id, tipo_destinatario, mensagem, lida, data_criacao) 
+        VALUES (?, ?, ?, ?, ?, ?, FALSE, NOW())
+    ");
+    if ($stmt) {
+        $stmt->bind_param("iisiss",$agendamento_id, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem);
+        if (!$stmt->execute()) {
+            echo json_encode(['status' => 'error', 'message' => 'Erro ao executar a query']);
+            exit;
+        }
+        $stmt->close();
+    } else {
+        error_log("Erro ao preparar o statement: " . $mysqli->error);
+    }
+}
+
+function buscarNotificacoesNaoLidas($mysqli, $user_id, $tipo_usuario) {
+    $stmt = $mysqli->prepare("
+        SELECT id, agendamento_id, remetente_id, tipo_remetente, mensagem, data_criacao 
+        FROM notificacoes 
+        WHERE destinatario_id = ? AND tipo_destinatario = ? AND lida = FALSE 
+        ORDER BY data_criacao DESC
+    ");
+    $stmt->bind_param("is", $user_id, $tipo_usuario);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $notificacoes = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+    return $notificacoes;
+}
+
+function enviarNotificacao($mysqli, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem) {
+    criarNotificacao($mysqli, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem);
+
+    // Simular envio de notificação via WebSocket
+    enviarNotificacaoWebSocket($id_destinatario, $mensagem);
+}
+
+
+function enviarNotificacaoWebSocket($userId, $mensagem) {
+    $data = json_encode(['userId' => $userId, 'mensagem' => $mensagem]);
+
+    $ch = curl_init('http://localhost:3000');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($data)
+    ]);
+    curl_exec($ch);
+    curl_close($ch);
+}

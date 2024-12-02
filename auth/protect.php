@@ -23,7 +23,7 @@ $stmt->bind_result($telefone_validado);
 $stmt->fetch();
 $stmt->close();
 
-if (!$telefone_validado) {
+if ($telefone_validado === 0) {
     header("Location: /auth/validacao-telefone.php");
     exit;
 }

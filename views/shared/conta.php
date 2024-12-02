@@ -107,15 +107,15 @@
                 <h3>Trocar senha</h3>
                 <form method="POST" action="/includes/perfil/trocar-senha.php">
                     <div class="textfield">
-                        <label for="senha_antiga">Senha Antiga:</label> <br>
+                        <label for="senha_antiga">Senha Antiga:</label> 
                         <input type="password" name="senha_antiga" id="senha_antiga" required>
                     </div>
                     <div class="textfield">
-                        <label for="nova_senha">Nova Senha:</label> <br>
+                        <label for="nova_senha">Nova Senha:</label>
                         <input type="password" name="nova_senha" id="nova_senha" minlength="6" required>
                     </div>
                     <div class="textfield">
-                        <label for="confirmar_senha">Confirmar Nova Senha:</label> <br>
+                        <label for="confirmar_senha">Confirmar Nova Senha:</label>
                         <input type="password" name="confirmar_senha" id="confirmar_senha" required>
                     </div>
                     <button class="btn-trocar-senha" type="button" onclick="validarSenha()">Trocar Senha</button>
