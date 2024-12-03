@@ -17,13 +17,22 @@ $id_destinatario = $data['id_destinatario'];
 $id_remetente = $data['id_remetente'];
 $mensagem = $data['mensagem'];
 $tipo_remetente = $data['tipo_remetente'];
-$tipo_destinatario = $tipo_remetente === 'tutor' ? 'cuidador' : 'tutor';
+$tipo_notificacao = $data['tipo_notificacao'];
 
-if (empty($id_remetente) || empty($id_destinatario) || empty($mensagem)) {
+if (!isset($id_remetente) || empty($id_destinatario) || empty($mensagem)) {
     echo json_encode(['status' => 'error', 'message' => 'Dados incompletos para criar notificação.']);
     exit;
 }
 
-criarNotificacao($mysqli, $id_agendamento, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem);
-echo json_encode(['status' => 'success']);
+if ($tipo_remetente === 'tutor') {
+    $tipo_destinatario = 'cuidador';
+    criarNotificacao($mysqli, $id_agendamento, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem);
+} elseif ($tipo_remetente === 'cuidador') {
+    $tipo_destinatario = 'tutor';
+    criarNotificacao($mysqli, $id_agendamento, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem);
+} elseif ($tipo_remetente === 'sistema') {
+    criarNotificacao($mysqli, $id_agendamento, $id_remetente, 'sistema', $tipo_notificacao, $id_destinatario, 'tutor', $mensagem);
+    criarNotificacao($mysqli, $id_agendamento, $id_remetente, 'sistema', $tipo_notificacao, $id_destinatario, 'cuidador', $mensagem);
+}
 
+echo json_encode(['status' => 'success']);

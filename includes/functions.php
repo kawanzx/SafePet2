@@ -293,26 +293,28 @@ function enviarSMS($telefone, $codigo)
     }
 }
 
-function criarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem) {
+function criarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem) {
     $stmt = $mysqli->prepare("
-        INSERT INTO notificacoes (agendamento_id, remetente_id, tipo_remetente, destinatario_id, tipo_destinatario, mensagem, lida, data_criacao) 
-        VALUES (?, ?, ?, ?, ?, ?, FALSE, NOW())
+        INSERT INTO notificacoes (agendamento_id, remetente_id, tipo_remetente, tipo_notificacao, destinatario_id, tipo_destinatario, mensagem, lida, data_criacao) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, FALSE, NOW())
     ");
     if ($stmt) {
-        $stmt->bind_param("iisiss",$agendamento_id, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem);
+        $stmt->bind_param("iississ",$agendamento_id, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem);
         if (!$stmt->execute()) {
+            error_log("Erro ao executar a query: " . $stmt->error);
             echo json_encode(['status' => 'error', 'message' => 'Erro ao executar a query']);
             exit;
         }
         $stmt->close();
     } else {
         error_log("Erro ao preparar o statement: " . $mysqli->error);
+        error_log("Erro ao preparar o statement: " . $mysqli->error);
     }
 }
 
 function buscarNotificacoesNaoLidas($mysqli, $user_id, $tipo_usuario) {
     $stmt = $mysqli->prepare("
-        SELECT id, agendamento_id, remetente_id, tipo_remetente, mensagem, data_criacao 
+        SELECT id, agendamento_id, remetente_id, tipo_remetente, mensagem, data_criacao, tipo_notificacao 
         FROM notificacoes 
         WHERE destinatario_id = ? AND tipo_destinatario = ? AND lida = FALSE 
         ORDER BY data_criacao DESC
@@ -325,12 +327,12 @@ function buscarNotificacoesNaoLidas($mysqli, $user_id, $tipo_usuario) {
     return $notificacoes;
 }
 
-function enviarNotificacao($mysqli, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem) {
-    criarNotificacao($mysqli, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem);
+// function enviarNotificacao($mysqli, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem) {
+//     criarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remetente, $id_destinatario, $tipo_destinatario, $mensagem);
 
-    // Simular envio de notificação via WebSocket
-    enviarNotificacaoWebSocket($id_destinatario, $mensagem);
-}
+//     // Simular envio de notificação via WebSocket
+//     enviarNotificacaoWebSocket($id_destinatario, $mensagem);
+// }
 
 
 function enviarNotificacaoWebSocket($userId, $mensagem) {

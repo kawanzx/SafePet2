@@ -26,18 +26,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    const userId = document.body.dataset.userId; // Pegue o ID do usuário do DOM
+    const userId = document.body.dataset.userId;
     socket.emit('register', userId);
 
-    // Escutar notificações recebidas
     socket.on('receiveNotification', (mensagem) => {
-        alert("Nova notificação: " + mensagem); // Exemplo simples de alerta
-        carregarNotificacoes(); // Atualiza a lista de notificações
+        Swal.fire("Nova notificação: " + mensagem);
+        carregarNotificacoes(); 
     });
 
     socket.on('newNotification', (data) => {
-        const { tipo, mensagem } = data;
-        if (tipo === 'chat') {
+        const { tipo_notificacao, mensagem } = data;
+        if (tipo_notificacao === 'chat') {
             mostrarNotificacao(mensagem);
             criarNotificacoes();
         }
@@ -77,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     data.forEach(notificacao => {
                         const li = document.createElement('li');
                         li.textContent = notificacao.mensagem;
-                        li.addEventListener('click', () => marcarComoLida(notificacao.id, notificacao.agendamento_id, notificacao.remetente_id, notificacao.tipo_remetente));
+                        li.addEventListener('click', () => marcarComoLida(notificacao.id, notificacao.agendamento_id, notificacao.remetente_id, notificacao.tipo_remetente, notificacao.tipo_notificacao));
                         listaNotificacoes.appendChild(li);
                     });
                 } else {
@@ -96,34 +95,51 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(() => document.body.removeChild(notificacao), 5000);
     }
 
-    function marcarComoLida(id, agendamentoId, remetenteId, tipo_remetente) {
+    function marcarComoLida(id, agendamentoId, remetenteId, tipo_remetente, tipo_notificacao) {
         const bodyData = new URLSearchParams({
             id: id,
             agendamento_id: agendamentoId,
             remetente_id: remetenteId,
-            tipo_remetente: tipo_remetente
+            tipo_remetente: tipo_remetente,
+            tipo_notificacao: tipo_notificacao
         });
-
+    
         fetch('../../includes/notificacoes/marcar-notificacoes.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: bodyData.toString()
-        }).then(response => response.json())
-          .then(data => {
+        })
+        .then(response => response.json())
+        .then(data => {
             if (data.status === 'sucesso') {
                 carregarNotificacoes();
-                window.location.href = `../../views/shared/chat.php?agendamento_id=${agendamentoId}&user_id=${remetenteId}&tipo=${tipo_remetente}`;
+                switch (data.tipo_notificacao) {
+                    case 'chat':
+                        window.location.href = `../../views/shared/chat.php?agendamento_id=${agendamentoId}&user_id=${remetenteId}&tipo=${tipo_remetente}`;
+                        break;
+                    case 'verificar_agendamento':
+                        window.location.href = `../../views/shared/agendamentos.php`;
+                        break;
+                    case 'agendamento_status':
+                        window.location.href = `../../views/shared/agendamentos.php`;
+                        break;
+                    default:
+                        console.warn("Tipo de notificação desconhecido:", data.tipo_notificacao);
+                        break;
+                }
             } else {
                 console.error("Erro ao marcar notificação como lida:", data.message);
             }
-        }).catch(error => console.error("Erro na requisição:", error));
+        })
+        .catch(error => console.error("Erro na requisição:", error));
     }
     
+    carregarNotificacoes();
 
     setInterval(() => {
         if (document.getElementById('notificacoes-dropdown').style.display === 'block') {
             carregarNotificacoes();
         }
-    }, 5000);
+    }, 3000);
 });
 

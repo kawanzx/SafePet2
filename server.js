@@ -23,9 +23,10 @@ const db = mysql.createConnection({
 
 function verificarAgendamentos() {
     const dataAtual = new Date().toISOString().slice(0, 10); // Obtém a data atual no formato YYYY-MM-DD
+    const SISTEMA_ID = 0;
 
     const query = `
-        SELECT a.id AS agendamento_id, a.data, a.horario, t.id AS tutor_id, c.id AS cuidador_id, p.nome AS pet_nome 
+        SELECT a.id AS agendamento_id, a.data_servico, a.hora_inicio, a.hora_fim, t.id AS tutor_id, c.id AS cuidador_id, p.nome AS pet_nome 
         FROM agendamentos a
         JOIN tutores t ON a.tutor_id = t.id
         JOIN cuidadores c ON a.cuidador_id = c.id
@@ -50,23 +51,45 @@ function verificarAgendamentos() {
                 io.to(cuidadorSocket).emit('receiveNotification', mensagem);
             }
 
-            fetch('includes/notificacoes/criar-notificacoes.php', {
+            console.log('JSON gerado verificar agendamento:', JSON.stringify({
+                tipo_notificacao: 'verificar_agendamento'
+            }));
+
+            // Enviar notificação para o tutor
+            fetch('http://localhost:8000/includes/notificacoes/criar-notificacoes.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    id_remetente: null, // Sistema pode ser o remetente
+                    id_remetente: SISTEMA_ID,
                     id_destinatario: agendamento.tutor_id,
                     tipo_remetente: 'sistema',
                     mensagem: mensagem,
-                    agendamento_id: agendamento.agendamento_id
+                    agendamento_id: agendamento.agendamento_id,
+                    tipo_notificacao: 'verificar_agendamento'
                 })
-            }).catch(error => console.error('Erro ao criar notificação:', error));
+            }).catch(error => console.error('Erro ao criar notificação para tutor:', error));
+
+            // Enviar notificação para o cuidador
+            fetch('http://localhost:8000/includes/notificacoes/criar-notificacoes.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id_remetente: SISTEMA_ID,
+                    id_destinatario: agendamento.cuidador_id,
+                    tipo_remetente: 'sistema',
+                    mensagem: mensagem,
+                    agendamento_id: agendamento.agendamento_id,
+                    tipo_notificacao: 'verificar_agendamento'
+                })
+            }).catch(error => console.error('Erro ao criar notificação para cuidador:', error));
         });
     });
 }
 
-// Verificar agendamentos a cada 1 minuto
-setInterval(verificarAgendamentos, 60000);
+verificarAgendamentos();
+
+// Verificar agendamentos a cada 1 hora
+setInterval(verificarAgendamentos, 3600000);
 
 
 let userSockets = {};  // Para mapear os sockets aos IDs de usuário
@@ -97,17 +120,18 @@ io.on('connection', (socket) => {
             io.to(recipientSocket).emit('chatMessage', { mensagem: mensagem, id_remetente: id_remetente, nome_remetente });  // Enviar a mensagem para o destinatário
 
             io.to(recipientSocket).emit('newNotification', {
-                tipo: 'chat',
+                tipo_notificacao: 'chat',
                 mensagem: `Nova mensagem de ${nome_remetente}`,
                 remetente: id_remetente
             });
         }
-        console.log('JSON gerado:', JSON.stringify({
+        console.log('JSON gerado chat:', JSON.stringify({
             id_remetente: msg.id_remetente,
             id_destinatario: id_destinatario,
             tipo_remetente: tipo_remetente,
             mensagem: `Nova mensagem de ${msg.nome_remetente}`,
-            agendamento_id: agendamento_id
+            agendamento_id: agendamento_id,
+            tipo_notificacao: 'chat'
         }));
         // Enviar requisição ao PHP para criar notificação no banco
         fetch('http://localhost:8000/includes/notificacoes/criar-notificacoes.php', {
@@ -118,7 +142,8 @@ io.on('connection', (socket) => {
                 id_destinatario: id_destinatario,
                 tipo_remetente: tipo_remetente,
                 mensagem: `Nova mensagem de ${msg.nome_remetente}`,
-                agendamento_id: agendamento_id
+                agendamento_id: agendamento_id,
+                tipo_notificacao: 'chat'
             })
 
         });
