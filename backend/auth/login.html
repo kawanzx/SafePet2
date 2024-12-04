@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafePet</title>
+    <link rel="stylesheet" href="../assets/css/auth/login.css">
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="esquerda">
+            <h1>Faça login <br>para acessar sua conta</h1>
+            <img src="../img/cachorro.svg" class="imagem-esquerda" alt="Cachorro">
+        </div>
+        <div class="direita">
+            <div class="card-login">
+                <div class="container">
+                    <a href="../index.php"><img src="../img/seta-voltar.svg" class="seta-voltar"></a>
+                    <h1>Login</h1>
+                </div>
+                <form id="form-login" action="login.php" method="post">
+                    <div class="textfield">
+                        <label for="tipo_usuario">Tipo de usuário: </label>
+                        <select name="tipo_usuario" required>
+                            <option value="tutor">Tutor</option>
+                            <option value="cuidador">Cuidador</option>
+                        </select> <br>
+                    </div>
+                    <div class="textfield">
+                        <label for="email">E-mail: </label>
+                        <input type="email" name="email" placeholder="E-mail" required>
+                    </div>
+                    <div class="textfield senha">
+                        <label for="senha">Senha: </label>
+                        <input id="senha" type="password" name="senha" placeholder="Senha" required>
+                        <label class="mostrar-senha" for="mostrar-senha">Mostrar senha</label>
+                        <input id="mostrar-senha" name="mostrar-senha" type="checkbox" onclick="mostrarSenha()">
+                    </div>
+                    <button type="submit" class="btn-login">Entrar</button>
+                    <p class="esqueci-senha"><a href="esqueci-senha.html">Esqueceu sua senha</a></p>
+                    <p class="criar-conta">Não tem conta? <a href="register.html">crie uma</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function mostrarSenha() {
+          const senha = document.getElementById('senha');
+          const mostrarSenha = document.getElementById('mostrar-senha');
+          
+          if (mostrarSenha.checked) {
+            senha.type = 'text'; 
+          } else {
+            senha.type = 'password'; 
+          }
+        }
+      </script>
+    <script src="/backend/assets/js/auth/login.js" type="module"></script>
+</body>
+
+</html>
