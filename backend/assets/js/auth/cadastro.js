@@ -2,24 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("form[id='form-cadastro']").addEventListener('submit', function (event) {
         event.preventDefault();
 
-        var telefoneInput = document.querySelector("input[name='telefone']");
-        telefoneInput.addEventListener('input', function () {
-            let telefone = telefoneInput.value.replace(/\D/g, '');
-            if (telefone.length <= 10) {
-                telefone = telefone.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXX-XXXX
-            } else {
-                telefone = telefone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
-            }
-            telefoneInput.value = telefone;
-        });
-
-        telefoneInput.addEventListener('blur', function () {
-            let telefone = telefoneInput.value.replace(/\D/g, '');
-            if (telefone.length >= 10) {
-                telefone = '+55' + telefone;
-            }
-        });
-
         var email = document.querySelector("input[name='email']").value;
         var senha = document.querySelector("input[name='senha']").value;
         var tipo_usuario = document.querySelector("select[name='tipo_usuario']").value;
@@ -52,10 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (!response.ok) {
                     throw new Error('Erro na rede: ' + response.statusText);
                 }
-                return response.text(); 
+                return response.text();
             })
             .then(text => {
-                //console.log('Corpo da resposta:', text);
+                console.log('Corpo da resposta:', text);
                 try {
                     const data = JSON.parse(text);
                     //console.log('JSON Parseado:', data);
@@ -65,8 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         text: data.mensagem,
                     }).then(() => {
                         if (data.sucesso) {
-                            window.location.href = '/backend/auth/validacao-telefone.php';
-                        } else{
+                            window.location.href = '/backend/auth/validacao-email.php';
+                        } else {
                             location.reload();
                         }
                     });

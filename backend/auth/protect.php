@@ -7,7 +7,6 @@ if(!isset($_SESSION)){
 }
 
 if(!isset($_SESSION['id'])){
-
     header("Location: /backend/auth/login.html");
     exit();
 }
@@ -15,16 +14,16 @@ if(!isset($_SESSION['id'])){
 $id_usuario = $_SESSION['id'];
 $tipo_usuario = $_SESSION['tipo_usuario'];
 $tabela = ($tipo_usuario === 'tutor' ? 'tutores' : 'cuidadores');
-$query = "SELECT telefone_validado FROM $tabela WHERE id = ?";
+$query = "SELECT sit_usuario_id FROM $tabela WHERE id = ?";
 $stmt = $mysqli->prepare($query);
 $stmt->bind_param("i", $id_usuario);
 $stmt->execute();
-$stmt->bind_result($telefone_validado);
+$stmt->bind_result($email_validado);
 $stmt->fetch();
 $stmt->close();
 
-if ($telefone_validado === 0) {
-    header("Location: /backend/auth/validacao-telefone.php");
+if ($email_validado != 1) {
+    header("Location: /backend/auth/validacao-email.php");
     exit;
 }
 

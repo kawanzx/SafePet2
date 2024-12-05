@@ -1,6 +1,10 @@
 <?php
 require 'db.php';
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../lib/vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 use Twilio\Rest\Client;
 use Dotenv\Dotenv;
@@ -256,6 +260,33 @@ function updateAgendamentoStatus($mysqli, $agendamento_id, $novo_status)
     return false;
 }
 
+function enviarEmail($email, $nome_completo, $chave_hash)
+{
+    $mail = new PHPMailer(true);
+
+    $mail->CharSet = "UTF-8";
+    $mail->isSMTP();
+    $mail->Host       = $_ENV['MAILTRAP_HOST'];
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $_ENV['MAILTRAP_USERNAME'];
+    $mail->Password   = $_ENV['MAILTRAP_PASSWORD'];
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port       = 2525;
+
+    //Recipients
+    $mail->setFrom('suporte.safepet@gmail.com', 'SafePet');
+    $mail->addAddress($email, $nome_completo);
+
+    //Content
+    $mail->isHTML(true);
+    $mail->Subject = 'Confirmar o e-mail';
+    $mail->Body    = "Prezado(a) " . $nome_completo . "<br><br>Agradecemos a sua solicitação de cadastro em nosso site!<br><br>Para que possamos liberar o seu acesso ao sistema, solicitamos a confirmação do e-mail clicando no link abaixo: <br><br> <a href='http://localhost:8000/backend/auth/confirmar-email.php?chave=$chave_hash'>Clique aqui</a><br><br>Esta mensagem foi enviada a você pela empresa SafePet.<br>Nenhum e-mail enviado pela SafePet tem arquivos anexados os solicita o preenchimento de senhas e informações pessoais.<br><br>";
+    $mail->AltBody = "Prezado(a) " . $nome_completo . "\n\nAgradecemos a sua solicitação de cadastro em nosso site!\n\nPara que possamos liberar o seu acesso ao sistema, solicitamos a confirmação do e-mail clicando no link abaixo: \n\n http://localhost:8000/backend/auth/confirmar-email.php?chave=$chave_hash \n\nEsta mensagem foi enviada a você pela empresa SafePet.\n>Nenhum e-mail enviado pela SafePet tem arquivos anexados os solicita o preenchimento de senhas e informações pessoais.\n\n ";
+
+    $mail->send();
+    return true;
+}
+
 function enviarSMS($telefone, $codigo)
 {
     if (!validarTelefone($telefone)) {
@@ -275,7 +306,6 @@ function enviarSMS($telefone, $codigo)
         return ['sucesso' => false, 'mensagem' => 'Erro interno. Serviço de SMS indisponível.'];
     }
 
-    // Criação do cliente Twilio
     try {
         $client = new Client($sid, $token);
         $message = $client->messages->create(
@@ -289,17 +319,18 @@ function enviarSMS($telefone, $codigo)
         return ['sucesso' => true, 'sid' => $message->sid];
     } catch (Exception $e) {
         error_log("Erro ao enviar SMS para o número $telefone: " . $e->getMessage());
-        return ['sucesso' => false, 'mensagem' => $e->getMessage()];
+        return ['sucesso' => false, 'mensagem' => "Ocorreu um erro ao enviar SMS! Tente novamente mais tarde."];
     }
 }
 
-function criarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem) {
+function criarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem)
+{
     $stmt = $mysqli->prepare("
         INSERT INTO notificacoes (agendamento_id, remetente_id, tipo_remetente, tipo_notificacao, destinatario_id, tipo_destinatario, mensagem, lida, data_criacao) 
         VALUES (?, ?, ?, ?, ?, ?, ?, FALSE, NOW())
     ");
     if ($stmt) {
-        $stmt->bind_param("iississ",$agendamento_id, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem);
+        $stmt->bind_param("iississ", $agendamento_id, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem);
         if (!$stmt->execute()) {
             error_log("Erro ao executar a query: " . $stmt->error);
             echo json_encode(['status' => 'error', 'message' => 'Erro ao executar a query']);
@@ -312,7 +343,8 @@ function criarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remeten
     }
 }
 
-function buscarNotificacoesNaoLidas($mysqli, $user_id, $tipo_usuario) {
+function buscarNotificacoesNaoLidas($mysqli, $user_id, $tipo_usuario)
+{
     $stmt = $mysqli->prepare("
         SELECT id, agendamento_id, remetente_id, tipo_remetente, mensagem, data_criacao, tipo_notificacao 
         FROM notificacoes 
@@ -327,15 +359,17 @@ function buscarNotificacoesNaoLidas($mysqli, $user_id, $tipo_usuario) {
     return $notificacoes;
 }
 
- function enviarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem) {
-     criarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem);
+function enviarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem)
+{
+    criarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remetente, $tipo_notificacao, $id_destinatario, $tipo_destinatario, $mensagem);
 
-     // Simular envio de notificação via WebSocket
-     enviarNotificacaoWebSocket($id_destinatario, $mensagem);
- }
+    // Simular envio de notificação via WebSocket
+    enviarNotificacaoWebSocket($id_destinatario, $mensagem);
+}
 
 
-function enviarNotificacaoWebSocket($userId, $mensagem) {
+function enviarNotificacaoWebSocket($userId, $mensagem)
+{
     $data = json_encode(['userId' => $userId, 'mensagem' => $mensagem]);
 
     $ch = curl_init('http://localhost:3000');

@@ -8,7 +8,6 @@ ob_start();
 
 include('../includes/db.php');
 include('../includes/functions.php');
-require_once '../vendor/autoload.php';
 
 error_reporting(0);
 ini_set('display_errors', '0');
@@ -29,7 +28,7 @@ if (isset($_POST['email'])) {
         echo json_encode(['sucesso' => false, 'mensagem' => 'Nome inválido']);
         exit();
     } elseif (!validarEmail($email)) {
-        echo json_encode(['sucesso' => false, 'mensagem' => 'E-mail inválido.']);
+        echo json_encode(['sucesso' => false, 'mensagem' => 'E-email inválido.']);
         exit();
     } elseif (!validarCPF($cpf)) {
         echo json_encode(['sucesso' => false, 'mensagem' => 'CPF inválido.']);
@@ -62,14 +61,15 @@ if (isset($_POST['email'])) {
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        echo json_encode(['sucesso' => false, 'mensagem' => 'E-mail ou CPF já cadastrados. Por favor, realize o login.']);
+        echo json_encode(['sucesso' => false, 'mensagem' => 'E-email ou CPF já cadastrados. Por favor, realize o login.']);
         $stmt->close();
         exit();
     }
     $stmt->close();
 
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO $tabela (nome, email, senha, telefone, dt_nascimento, cpf, genero, codigo_verificacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $chave_hash = password_hash($email . date("Y-m-d H:i:s"), PASSWORD_DEFAULT);
+    $sql = "INSERT INTO $tabela (nome, email, senha, chave, telefone, dt_nascimento, cpf, genero, codigo_verificacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
 
     if (!$stmt) {
@@ -77,17 +77,21 @@ if (isset($_POST['email'])) {
         exit();
     }
 
-    $stmt->bind_param("ssssssss", $nome_completo, $email, $senha_hash, $telefone, $data_nascimento, $cpf, $genero, $codigo);
+    $stmt->bind_param("sssssssss", $nome_completo, $email, $senha_hash, $chave_hash, $telefone, $data_nascimento, $cpf, $genero, $codigo);
     if ($stmt->execute()) {
         session_start();
         $_SESSION['id'] = $stmt->insert_id;
         $_SESSION['nome'] = $nome_completo;
         $_SESSION['tipo_usuario'] = $tipo_usuario;
 
-        $smsResult = enviarSMS($telefone, $codigo);
+        try {
+            enviarEmail($email, $nome_completo, $chave_hash);
 
-        if (!$smsResult['sucesso']) {
-            echo json_encode(['sucesso' => false, 'mensagem' => $smsResult['mensagem']]);
+            echo json_encode(['sucesso' => true, 'mensagem' => "Cadastro bem-sucedido!"]);
+            exit();
+
+        } catch (Exception $e) {
+            echo json_encode(['sucesso' => false, 'mensagem' => "Usuário não cadastrado"]);
             exit();
         }
 

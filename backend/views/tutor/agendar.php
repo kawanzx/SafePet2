@@ -15,9 +15,10 @@ $pets = getPetsByTutor($mysqli, $tutor_id);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendar Serviço</title>
+    <title>Agendar Serviço - SafePet</title>
     <link rel="stylesheet" href="/backend/assets/css/agendar-servico.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="shortcut icon" href="/backend/img/favicon.ico" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 </head>
