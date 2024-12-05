@@ -10,4 +10,7 @@
     } else { ?>
         <a href="/backend/auth/login.html" class="cta-button">Começar Agora</a>
     <?php } ?>
+    <div class="dog-walking-container">
+        <img src="/backend/img/dog-walking.svg" alt="dog walking" class="dog-walking">
+    </div>
 </section>
