@@ -37,7 +37,7 @@ $stmt->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do cuidador</title>
-    <link rel="stylesheet" href="/views/tutor/main.css">
+    <link rel="stylesheet" href="/backend/views/tutor/main.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
 
@@ -111,7 +111,7 @@ $stmt->close();
             </div>
         </div>
     </div>
-    <script src="/assets/js/perfil/avaliacoes.js"></script>
+    <script src="/backend/assets/js/perfil/avaliacoes.js"></script>
 </body>
 
 </html>
