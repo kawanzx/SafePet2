@@ -10,170 +10,39 @@
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    background-color: #ffc107;
+    background-color: #ffffff;
     color: #333;
     overflow-x: hidden;
 }
 
-/* Serviços */
-.services-section {
-    padding: 100px 20px;
-    background-color: #f4f4f4;
-    text-align: center;
-}
-
-.services-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 50px;
-    color: #333;
-}
-
-/* Container do carrossel */
-.card-container {
-    display: flex;
-    justify-content: center; /* Centraliza os cards no container */
-    gap: 30px; /* Espaço entre os cards */
-    overflow: hidden; /* Oculta o excesso de cards */
-    padding: 0 15px; /* Espaçamento à esquerda e direita */
-}
-
-/* Card */
-.card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    flex: 0 0 auto; /* Impede que os cards se estiquem */
-    width: 100%; /* Garante que o card ocupe 100% da largura disponível */
-    max-width: 300px; /* Largura máxima do card */
-    height: 100%; /* Garante que a altura seja ajustada proporcionalmente */
-    max-height: 350px; /* Define uma altura máxima para os cards */
-    margin: 0 15px; /* Margem entre os cards */
-    box-sizing: border-box; /* Impede que o padding afete a largura */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Garante que o conteúdo se distribua bem */
-}
-
-/* Efeito de hover no card */
-.card:hover {
-    transform: translateY(-10px); /* Levanta o card */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Aumenta a sombra para dar ênfase */
-}
-
-.card h3 {
-    color: #ff6b6b;
-    margin-bottom: 15px;
-    font-size: 1.5rem; /* Aumenta o tamanho do título */
-}
-
-.card p {
-    font-size: 1rem;
-    color: #666;
-    flex-grow: 1; /* Garante que o texto ocupe o espaço necessário */
-}
-
-/* Responsividade */
-@media (max-width: 1024px) {
-    .card-container {
-        gap: 20px; /* Menor espaço entre os cards em telas menores */
-    }
-
-    .card {
-        max-width: 250px; /* Ajusta a largura dos cards em tablets */
-        max-height: 300px; /* Ajusta a altura dos cards em tablets */
-    }
-}
-
-@media (max-width: 768px) {
-    .card-container {
-        gap: 10px; /* Menor espaço entre os cards em dispositivos móveis */
-    }
-    
-    .card {
-        padding: 15px; /* Menor padding em dispositivos móveis */
-        max-width: 100%; /* Garante que os cards ocupem a largura total */
-        max-height: 270px; /* Ajusta a altura dos cards em dispositivos móveis */
-    }
-
-    .card h3 {
-        font-size: 1.2rem; /* Ajuste do tamanho da fonte do título em dispositivos móveis */
-    }
-
-    .card p {
-        font-size: 0.9rem; /* Ajuste do tamanho da fonte do texto em dispositivos móveis */
-    }
-}
-
-/* Ajustando para o carrossel Slick */
-.slick-slide {
-    display: flex;
-    justify-content: center; /* Garante que os cards fiquem centralizados */
-}
-
-.slick-prev, .slick-next {
-    background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo dos botões de navegação */
-    color: white;
-    border-radius: 50%;
-    padding: 10px;
-}
-
-.slick-prev:hover, .slick-next:hover {
-    background-color: rgba(0, 0, 0, 0.8); /* Escurece quando o botão é hover */
-}
-
-/* Posições de controle do carrossel */
-.slick-dots {
-    bottom: 10px; /* Coloca os dots mais próximos da parte inferior */
-}
-
-.slick-dots li button:before {
-    font-size: 12px;
-    color: #ff6b6b; /* Cor dos dots */
-}
-
-.slick-dots li.slick-active button:before {
-    color: #ff4b4b; /* Cor do dot ativo */
-}
-
-
-.user-info img {
-    margin-right: 5px; 
-}
-
 /* Hero Section */
 .hero {
-    background: url('') no-repeat center center/cover;
+    background-repeat: no-repeat;
     height: 100vh;
     display: flex;
-    justify-content: flex-start; /* Alinha o conteúdo à esquerda */
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    text-align: left; /* Ajusta o texto para a esquerda */
-    color: #fff;
+    text-align: left;
+    color: #1D3557;
     padding: 0 20px;
-    padding-left: 5%; /* Dá espaço da borda esquerda */
-    padding-right: 35%; /* Deixa o lado direito livre para o personagem */
     box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
-    margin-top: 56px; /* Ajusta para que a hero não fique coberta pela navbar */
+    margin-top: 56px;
 }
-
 
 .hero h1 {
     font-size: 3.5rem;
     margin-bottom: 25px;
     margin-top: 30px;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 50px;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .cta-button {
-    background-color: #ff6b6b;
+    background-color: #1D3557;
     color: #fff;
     padding: 15px 30px;
     text-transform: uppercase;
@@ -185,126 +54,69 @@ body {
 }
 
 .cta-button:hover {
-    background-color: #ff4b4b;
+    background-color: #2e5386;
 }
+
+/* Container da imagem do cachorro */
+.dog-walking {
+    position: absolute; /* Usar posição absoluta para a imagem */
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%); /* Centralizar horizontalmente */
+    z-index: -1; /* Garantir que a imagem fique atrás de outros elementos */
+    max-width: none; /* Remover a limitação de tamanho máximo */
+    width: 400px;
+    height: 400;
+}
+
+@media (max-width: 768px) {
+    .dog-walking {
+        width: 100%; /* Aumentar a largura da imagem no celular */
+        max-width: none;
+        height: auto; /* Manter a altura proporcional */
+    }
+}
+
 
 /* Serviços */
-.services-section {
-    padding: 100px 20px;
-    background-color: #f4f4f4;
-    text-align: center;
-}
-
-.services-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 50px;
-    color: #333;
-}
-
-.card-container {
-    display: flex;
-    justify-content: space-around;
-    gap: 30px;
-    flex-wrap: wrap;
-}
-
-.card {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    max-width: 300px;
-    min-height: 250px;
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-}
-
-.card h3 {
-    color: #ff6b6b;
-    margin-bottom: 15px;
-}
-
-.card p {
-    font-size: 1rem;
-    color: #666;
-}
-
-/* Sessão Destaques */
-.highlights {
-    padding: 100px 20px;
-    background-color: #fff;
-    text-align: center;
-
-}
-
-.highlights h2 {
-    font-size: 2.5rem;
-    margin-bottom: 50px;
-    color: #333;
-}
-
-.highlight-container {
-    display: flex;
-    justify-content: space-around;
-    gap: 30px;
-    flex-wrap: wrap;
-}
-
-.highlight {
-    background-color: #f9f9f9;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    max-width: 300px;
-    min-height: 200px;
-}
-
-.highlight h3 {
-    color: #007bff;
-    margin-bottom: 15px;
-}
-
-.highlight p {
-    font-size: 1rem;
-    color: #666;
-}
-
-/* Sobre */
-.about-section {
-    padding: 100px 20px;
-    background-color: #007bff;
-    color: #fff;
-    text-align: center;
-}
-
-.about-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 50px;
-}
-
-.about-section p {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    margin-bottom: 20px;
-}
-
-/* Testemunhos */
+.services-section,
+.highlights,
+.about-section,
 .testimonials {
     padding: 100px 20px;
-    background-color: #f4f4f4;
     text-align: center;
 }
 
+.services-section {
+    background-color: #f4f4f4;
+}
+
+.highlights,
+.testimonials {
+    background-color: #fff;
+}
+
+.about-section {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.services-section h2,
+.highlights h2,
+.about-section h2,
 .testimonials h2 {
     font-size: 2.5rem;
     margin-bottom: 50px;
+    color: #333;
 }
 
+.services-section h2 {
+    color: #333;
+}
+
+/* Container de cards */
+.card-container,
+.highlight-container,
 .testimonial-container {
     display: flex;
     justify-content: space-around;
@@ -312,6 +124,8 @@ body {
     flex-wrap: wrap;
 }
 
+.card,
+.highlight,
 .testimonial {
     background-color: #fff;
     padding: 30px;
@@ -319,13 +133,31 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     flex: 1;
     max-width: 300px;
-    min-height: 150px;
+    min-height: 250px;
 }
 
+.card h3,
+.highlight h3,
+.testimonial p:last-child {
+    font-weight: bold;
+    color: #333;
+}
+
+.card h3 {
+    color: #ff6b6b;
+    margin-bottom: 15px;
+}
+
+.highlight h3 {
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+.card p,
+.highlight p,
 .testimonial p {
     font-size: 1rem;
     color: #666;
-    margin-bottom: 10px;
 }
 
 .testimonial p:last-child {
@@ -377,7 +209,74 @@ body {
     margin-top: 20px;
 }
 
-.p-Highlight
-{
+/* Responsividade */
+@media (max-width: 1024px) {
+    .card-container {
+        gap: 20px;
+    }
+
+    .card {
+        max-width: 250px;
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        gap: 10px;
+    }
+
+    .card {
+        padding: 15px;
+        max-width: 100%;
+        max-height: 270px;
+    }
+
+    .card h3 {
+        font-size: 1.2rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Ajustando para o carrossel Slick */
+.slick-slide {
+    display: flex;
+    justify-content: center;
+}
+
+.slick-prev,
+.slick-next {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.slick-dots {
+    bottom: 10px;
+}
+
+.slick-dots li button:before {
+    font-size: 12px;
+    color: #ff6b6b;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #ff4b4b;
+}
+
+.user-info img {
+    margin-right: 5px;
+}
+
+.p-Highlight {
     padding-bottom: 60px;
 }
