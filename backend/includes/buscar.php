@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include('db.php');
 
 $search = !empty($_GET['search']) ? $_GET['search'] : '';
@@ -25,7 +21,7 @@ $sql = "
 ";
 
 if ($search) {
-    $sql .= " GROUP BY c.id HAVING c.cidade LIKE ? OR c.nome LIKE ? OR c.uf LIKE ? OR c.preco_hora LIKE ? OR dias_disponiveis LIKE ? OR horarios_disponiveis LIKE ?";
+    $sql .= " WHERE c.cidade LIKE ? OR c.nome LIKE ? OR c.uf LIKE ? OR c.preco_hora LIKE ? OR d.dia_da_semana LIKE ? OR d.hora_inicio LIKE ? OR d.hora_fim LIKE ?";
 }
 
 $sql .= " GROUP BY c.id";
@@ -33,7 +29,7 @@ $sql .= " GROUP BY c.id";
 $stmt = $mysqli->prepare($sql);
 if ($search) {
     $searchParam = "%{$search}%";
-    $stmt->bind_param('sssiss', $searchParam, $searchParam, $searchParam, $searchParam, $searchParam, $searchParam);
+    $stmt->bind_param('sssisss', $searchParam, $searchParam, $searchParam, $searchParam, $searchParam, $searchParam, $searchParam);
 }
 $stmt->execute();
 $result = $stmt->get_result();

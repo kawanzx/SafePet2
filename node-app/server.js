@@ -17,7 +17,7 @@ const io = new Server(server, {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'safepet'
 });
 

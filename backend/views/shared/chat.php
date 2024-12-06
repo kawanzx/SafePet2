@@ -70,6 +70,8 @@ $outroUsuarioTipo = $_GET['tipo'];
         </div>
     </div>
 
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+
     <script>
         const socket = io("http://localhost:3000", {
             withCredentials: true,
@@ -145,7 +147,6 @@ $outroUsuarioTipo = $_GET['tipo'];
             document.getElementById('mensagem').value = '';
         }
     </script>
-    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
 </body>
 
 </html>

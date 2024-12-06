@@ -3,7 +3,7 @@
    display: flex;
    align-items: center;
    column-gap: .5rem;
-   background-color: var(--container-color);
+   background-color: white;
    box-shadow: 0 8px 32px hsla(230, 75%, 15%, .2);
    padding-inline: 1rem;
    border-radius: .5rem;
@@ -25,7 +25,7 @@
  .search__input {
    width: 100%;
    padding: 1rem;
-   background-color: var(--container-color);
+   background-color: white;
    color: var(--text-color);
    cursor: pointer;
  }
@@ -36,8 +36,6 @@
 
  .cuidadores {
    padding: 100px 20px 20px;
-   /* Espaçamento superior para evitar a navbar */
-   background-color: #f9f9f9;
  }
 
  .cuidadores h2 {
