@@ -19,7 +19,7 @@ $mensagem = $data['mensagem'];
 $tipo_remetente = $data['tipo_remetente'];
 $tipo_notificacao = $data['tipo_notificacao'];
 
-if (!isset($id_remetente) || empty($id_destinatario) || empty($mensagem)) {
+if (empty($id_remetente) || empty($id_destinatario) || empty($mensagem) || empty($tipo_notificacao) || empty($id_agendamento)) {
     echo json_encode(['status' => 'error', 'message' => 'Dados incompletos para criar notificação.']);
     exit;
 }

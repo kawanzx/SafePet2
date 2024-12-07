@@ -3,6 +3,11 @@ session_start();
 
 include_once '../includes/db.php';
 
+if (!isset($_SESSION['tipo_usuario'], $_SESSION['id'])) {
+    echo json_encode(['sucesso' => false, 'mensagem' => 'Sessão expirada ou inválida. Faça login novamente.']);
+    exit;
+}
+
 $chave = filter_input(INPUT_GET, "chave", FILTER_DEFAULT);
 $chave = htmlspecialchars($chave, ENT_QUOTES, 'UTF-8');
 $tipo_usuario = $_SESSION['tipo_usuario'];

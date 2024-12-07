@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+
     document.querySelector("form[id='form-cadastro']").addEventListener('submit', function (event) {
         event.preventDefault();
+
+        document.getElementById("btn-cadastrar").innerText = "Cadastrando...";
+        document.getElementById("btn-cadastrar").disabled = true;
 
         var email = document.querySelector("input[name='email']").value;
         var senha = document.querySelector("input[name='senha']").value;
@@ -48,8 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     }).then(() => {
                         if (data.sucesso) {
                             window.location.href = '/backend/auth/validacao-email.php';
-                        } else {
-                            location.reload();
                         }
                     });
                 } catch (error) {

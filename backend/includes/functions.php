@@ -339,7 +339,6 @@ function criarNotificacao($mysqli, $agendamento_id, $id_remetente, $tipo_remeten
         $stmt->close();
     } else {
         error_log("Erro ao preparar o statement: " . $mysqli->error);
-        error_log("Erro ao preparar o statement: " . $mysqli->error);
     }
 }
 

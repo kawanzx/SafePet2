@@ -17,9 +17,87 @@ const io = new Server(server, {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: '',
     database: 'safepet'
 });
+
+function notificarAceiteAgendamento(agendamentoId, tutorId, cuidadorId, petNome) {
+    const mensagem = `O agendamento para o pet ${petNome} foi aceito!`;
+    const SISTEMA_ID = 0;
+
+    const tutorSocket = userSockets[tutorId];
+    if (tutorSocket) {
+        io.to(tutorSocket).emit('receiveNotification', mensagem);
+
+        io.to(tutorSocket).emit('newNotification', {
+            tipo_notificacao: 'agendamento_status',
+            mensagem: mensagem,
+            remetente: SISTEMA_ID
+        });
+    }
+
+    console.log('Notificação de aceite gerada:', JSON.stringify({
+        tipo_notificacao: 'agendamento_status',
+        mensagem: mensagem
+    }));
+
+    // Enviar notificação para o tutor via API
+    fetch('http://localhost:8000/backend/includes/notificacoes/criar-notificacoes.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id_remetente: SISTEMA_ID,
+            id_destinatario: tutorId,
+            tipo_remetente: 'sistema',
+            mensagem: mensagem,
+            agendamento_id: agendamentoId,
+            tipo_notificacao: 'agendamento_status'
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Resposta do servidor:", data);
+        })
+        .catch(error => console.error('Erro na requisição:', error));
+}
+
+// Evento para quando o status do agendamento for atualizado para "aceito"
+function verificarAceite() {
+    const query = `
+        SELECT a.id AS agendamento_id, a.tutor_id, a.cuidador_id, p.nome AS pet_nome
+        FROM agendamentos a
+        JOIN pets p ON a.pet_id = p.id
+        WHERE a.status = 'aceito' AND a.notificacao_enviada = 0`;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar agendamentos aceitos:', err);
+            return;
+        }
+        console.log('Resultados encontrados:', results);
+
+        results.forEach(agendamento => {
+            // Notificar tutor
+            notificarAceiteAgendamento(
+                agendamento.agendamento_id,
+                agendamento.tutor_id,
+                agendamento.cuidador_id,
+                agendamento.pet_nome
+            );
+
+            // Marcar como notificado
+            db.query('UPDATE agendamentos SET notificacao_enviada = 1 WHERE id = ?', [agendamento.agendamento_id], (err) => {
+                if (err) {
+                    console.error('Erro ao marcar agendamento como notificado:', err);
+                }
+            });
+        });
+    });
+}
+
+verificarAceite();
+// Verificar agendamentos aceitos a cada 1 minuto
+setInterval(verificarAceite, 60000);
 
 function verificarAgendamentos() {
     const dataAtual = new Date().toISOString().slice(0, 10); // Obtém a data atual no formato YYYY-MM-DD
@@ -95,9 +173,8 @@ setInterval(verificarAgendamentos, 3600000);
 let userSockets = {};  // Para mapear os sockets aos IDs de usuário
 io.on('connection', (socket) => {
     console.log('Usuário conectado:', socket.id);
-    // Armazenar o socket do usuário
     socket.on('register', (userId) => {
-        userSockets[userId] = socket.id;  // Mapeando o usuário ao socket
+        userSockets[userId] = socket.id;
         console.log(`Usuário ${userId} registrado com o socket ID ${socket.id}`);
     });
 

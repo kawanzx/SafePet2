@@ -7,6 +7,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div class="validar-email">
+    <a href="../index.php"><img src="../img/seta-voltar.svg" class="seta-voltar"></a>
     <div id="mensagem-erro">
         <p>Você precisa validar seu e-mail antes de continuar usando o site.</p>
     </div>

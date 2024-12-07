@@ -40,6 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
             mostrarNotificacao(mensagem);
             criarNotificacoes();
         }
+        if (tipo_notificacao === 'agendamento_status') {
+            mostrarNotificacao(mensagem);
+        }
         carregarNotificacoes();
     });
 
