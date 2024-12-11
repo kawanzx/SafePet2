@@ -33,7 +33,7 @@ h1 {
 .cuidador-avatar,
 .usuario-avatar {
     width: 140px;
-    height: auto;
+    height: 140px;
     border-radius: 50%;
     border: 3px solid #457B9D;
     object-fit: cover;
@@ -46,6 +46,11 @@ h1 {
     font-size: 1.6rem;
     color: #1D3557;
     font-weight: 700;
+}
+
+.preco-hora{
+    margin-bottom: 15px !important;
+    font-weight: 500;
 }
 
 .perfil-header .btn-agendar {
@@ -64,7 +69,7 @@ h1 {
 .meu-perfil p {
     font-size: 1.1rem;
     color: #3e3e3f;
-    margin: 0;
+    margin: 10px 0;
 }
 
 .meu-perfil .avaliacoes {
@@ -91,10 +96,14 @@ h1 {
 
 #total{
     margin-left: 5px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 #media{
     margin-right: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .filled {
@@ -128,7 +137,7 @@ form {
 }
 
 .experiencia,
-.disponibilidade,
+.disponibilidade-card,
 .comentarios-card,
 .preco {
     background-color: #f6fcf4;
@@ -139,6 +148,70 @@ form {
     box-sizing: border-box;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-top: 40px;
+    position: relative;
+}
+
+.disponibilidade{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.disponibilidade ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+#disponibilidade-texto{
+    margin-left: 50px;
+}
+
+.disponibilidade p {
+    margin: 10px 0;
+}
+
+.disponibilidade-card .btn-editar{
+    margin: 0;
+    position: absolute;
+    top: 15px;
+    right: 80px;
+    background-color: #E76F51;
+    color: #fff;
+    font-size: 1rem;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.flatpickr-day.flatpickr-disabled{
+    background-color: white !important;
+    cursor: default !important;
+    color: #393939 !important; 
+    border-radius: 0 !important;
+    font-size: 1rem !important;
+}
+
+.disponibilidade-card .btn-editar:hover{
+    background-color: #ee5028;
+}
+
+#calendario-disponibilidade {
+    width: 100%; /* Faz o calendário ocupar toda a largura disponível */
+    max-width: 600px; /* Limita a largura máxima do calendário */
+    margin: 0 auto; /* Centraliza o calendário */
+}
+
+.flatpickr-day {
+    background-color: #66dd82 !important;
+    color: white !important; 
+    border-radius: 0 !important;
+    cursor: default !important;
+    font-size: 1rem !important;
 }
 
 .section-pets {
@@ -149,8 +222,13 @@ form {
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     padding: 30px;
-    background-color: #A8DADC;
+    /* background-color: #A8DADC; */
+    background-color: #d7e2e2;
     margin: 0 20px;
+}
+
+.infos-cuidador{
+    margin-top: 50px;
 }
 
 .section h3 {
@@ -276,7 +354,7 @@ form .input-preco-unique input[type="number"]:focus {
 form .btn-salvar-preco {
     width: 100%;
     padding: 12px;
-    background-color: #007bff;
+    background-color: #E76F51;
     color: #fff;
     font-size: 1rem;
     font-weight: bold;
@@ -287,41 +365,25 @@ form .btn-salvar-preco {
 }
 
 form .btn-salvar-preco:hover {
-    background-color: #0056b3;
+    background-color: #ee5028;
 }
 
 form .btn-salvar-preco:active {
-    background-color: #004085;
+    background-color: #ee5028;
 }
 
 /* Estilo do botão editar disponibilidade */
-#btn-editar {
-    background-color: #007bff;
-    color: #fff;
-    font-size: 1rem;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#btn-editar:hover {
-    background-color: #0056b3;
-}
 
 #btn-editar:active {
-    background-color: #004085;
+    background-color: #ee5028;
 }
 
 /* Estilo do formulário de disponibilidade */
 #form-disponibilidade {
-    background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
     margin: 20px auto;
+    width: 50%;
 }
 
 #form-disponibilidade .input-dia {
@@ -344,16 +406,17 @@ form .btn-salvar-preco:active {
     border-radius: 4px;
     outline: none;
     transition: border-color 0.3s;
+    width: 100%;
 }
 
 #form-disponibilidade input[type="time"]:focus {
-    border-color: #007bff;
+    border-color: #ee5028;
 }
 
 #form-disponibilidade .btn-salvar {
     width: 100%;
     padding: 12px;
-    background-color: #28a745;
+    background-color: #E76F51;
     color: #fff;
     font-size: 1rem;
     font-weight: bold;
@@ -364,9 +427,9 @@ form .btn-salvar-preco:active {
 }
 
 #form-disponibilidade .btn-salvar:hover {
-    background-color: #218838;
+    background-color: #ee5028;
 }
 
 #form-disponibilidade .btn-salvar:active {
-    background-color: #1e7e34;
+    background-color: #ee5028;
 }

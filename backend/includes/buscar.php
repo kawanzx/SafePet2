@@ -12,6 +12,7 @@ $sql = "
         c.uf,
         c.ativo, 
         c.foto_perfil,
+        c.telefone_validado,
         AVG(a.nota) AS nota_media,
         GROUP_CONCAT(DISTINCT d.dia_da_semana ORDER BY d.dia_da_semana ASC SEPARATOR ', ') AS dias_disponiveis,
         GROUP_CONCAT(DISTINCT CONCAT(d.dia_da_semana, ' (', d.hora_inicio, ' - ', d.hora_fim, ')') ORDER BY d.dia_da_semana ASC SEPARATOR ', ') AS horarios_disponiveis

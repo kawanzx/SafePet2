@@ -18,7 +18,7 @@ include __DIR__ . '/../../auth/protect.php';
             </div>
             <div class="bio">
                 <form action="/backend/includes/perfil/editar-bio.php" method="POST">
-                    <h3>Bio
+                    <h3>Sobre mim
                         <button type="button" class="editar-bio">
                             <span class="material-symbols-outlined">edit</span>
                         </button>

@@ -143,9 +143,22 @@
         font-size: 14px;
         width: 100%;
     }
+
+    .disponibilidade{
+        flex-direction: column;
+    }
+
+    #disponibilidade-texto{
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+
+    .flatpickr-calendar.inline {
+        max-width: 100%;
+    }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .sidebar{
         width: 60px;
     }
@@ -175,9 +188,14 @@
         align-items: center;
     }
 
-    .tutor-avatar {
+    .tutor-avatar, .cuidador-avatar, .usuario-avatar {
         margin-bottom: 0;
         width: 90px;
+        height: 90px;
+    }
+
+    .section, .sub-conteudo .section {
+        margin: 10px;
     }
 
     .perfil-header h2, .nomePet-perfil{

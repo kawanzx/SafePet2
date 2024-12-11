@@ -16,7 +16,7 @@
     }
 
     .sidebar-expandida {
-        width: 200px; 
+        width: 200px;
     }
 
     .sidebar-header {
@@ -32,7 +32,7 @@
         display: none;
     }
 
-    .sidebar .item-description{
+    .sidebar .item-description {
         width: 0px;
         margin-left: 10px;
         overflow: hidden;
@@ -61,7 +61,8 @@
     }
 
     .sidebar.sidebar-expandida .item-description {
-        width: auto; /* Faz o texto da descrição ser exibido */
+        width: auto;
+        /* Faz o texto da descrição ser exibido */
     }
 
     .sidebar.sidebar-expandida ul li a {
@@ -82,7 +83,8 @@
         margin: 61px 10px 0 78px;
     }
 
-    .section ,.sub-conteudo .section{
+    .section,
+    .sub-conteudo .section {
         margin: 20px;
     }
 
@@ -108,19 +110,22 @@
     }
 
     .textfield {
-        flex-direction: column; /* Colocar os campos de entrada e labels em coluna */
+        flex-direction: column;
+        /* Colocar os campos de entrada e labels em coluna */
         align-items: flex-start;
         margin: 8px 0;
     }
 
     .textfield>input {
-        width: 100%; /* Fazer os inputs ocuparem toda a largura */
+        width: 100%;
+        /* Fazer os inputs ocuparem toda a largura */
         margin-left: 0;
         font-size: 12pt;
     }
 
     .textfield>label {
-        margin-bottom: 5px; /* Espaço entre o label e o campo */
+        margin-bottom: 5px;
+        /* Espaço entre o label e o campo */
         font-size: 14px;
     }
 
@@ -132,12 +137,26 @@
         font-size: 14px;
         width: 100%;
     }
+
+    .disponibilidade {
+        flex-direction: column;
+    }
+
+    #disponibilidade-texto {
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+
+    .flatpickr-calendar.inline {
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
-    .sidebar{
+    .sidebar {
         width: 60px;
     }
+
     .sidebar ul li a {
         padding: 8px;
     }
@@ -150,13 +169,12 @@
         margin: 60px 0 0 60px;
     }
 
-    .section{
-        margin: 0;
-        padding: 15px;
+    .section, .sub-conteudo .section {
+        margin: 10px;
     }
 
-    .meu-perfil {
-        padding: 13px;
+    .section {
+        padding: 15px;
     }
 
     .perfil-header {
@@ -167,13 +185,15 @@
     .cuidador-avatar {
         margin-bottom: 0;
         width: 90px;
+        height: 90px;
     }
 
-    .perfil-header h2, .nomePet-perfil{
+    .perfil-header h2,
+    .nomePet-perfil {
         margin: 8px 0 8px 0;
     }
 
-    .meu-perfil .info-label{
+    .meu-perfil .info-label {
         margin: 0;
     }
 
@@ -196,7 +216,7 @@
     .pet-header img {
         width: 90px;
         height: 90px;
-     }
+    }
 
     .nomePet-perfil {
         font-size: 1em;
@@ -237,14 +257,14 @@
 
     .cadastrar-pet {
         padding: 20px;
-        
+
     }
-    
+
     .cadastrar-pet form {
         grid-template-columns: 2.5fr 1.8fr 1fr;
         gap: 10px;
     }
-    
+
     .cadastrar-pet input,
     .cadastrar-pet select,
     .cadastrar-pet textarea {
@@ -275,12 +295,13 @@
         padding: 10px;
     }
 
-    .textfield > label {
-        font-size: 12px; 
+    .textfield>label {
+        font-size: 12px;
     }
 
     .btn-editar {
-        margin-left: 0; /* Remover o espaçamento em telas menores */
+        margin-left: 0;
+        /* Remover o espaçamento em telas menores */
         padding: 5px;
         font-size: 12px;
     }
@@ -302,19 +323,56 @@
         font-size: 14px;
     }
 
-    p.show{
+    p.show {
         font-size: 12pt;
     }
 
-    .question button{
+    .question button {
         font-size: 16pt;
     }
 
-    .sub-conteudo{
+    .sub-conteudo {
         width: 100vw;
     }
 
-    .suporte{
+    .suporte {
         padding: 15px;
+    }
+
+    .disponibilidade-card .btn-editar {
+        position: relative;
+        width: 100%;
+        top: auto;
+        right: auto;
+        margin-top: 10px;
+    }
+
+    #form-disponibilidade {
+        width: 100%;
+    }
+
+    .flatpickr-calendar.inline {
+        font-size: 0.7rem;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    /* Opcional: Ajusta os botões do calendário */
+    .flatpickr-calendar .flatpickr-prev-month,
+    .flatpickr-calendar .flatpickr-next-month {
+        font-size: 0.7rem;
+        /* Botões de navegação menores */
+    }
+
+    .flatpickr-calendar .dayContainer {
+        grid-template-columns: repeat(7, minmax(30px, 1fr));
+    }
+
+    .comentario-header{
+        flex-direction: column;
+    }
+
+    .avatar-tutor{
+        margin-right: 0;
     }
 }

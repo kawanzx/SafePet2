@@ -21,22 +21,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $stmt->close();
 }
-
-// Buscar disponibilidade do cuidador
-$query = "SELECT * FROM disponibilidade_cuidador WHERE cuidador_id = ?";
-$stmt = $mysqli->prepare($query);
-$stmt->bind_param("i", $cuidador_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-$disponibilidade = [];
-while ($row = $result->fetch_assoc()) {
-    $disponibilidade[$row['dia_da_semana']] = [
-        'hora_inicio' => $row['hora_inicio'],
-        'hora_fim' => $row['hora_fim']
-    ];
-}
-
-$stmt->close();
-$mysqli->close();
 ?>

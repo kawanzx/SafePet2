@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
 const urlParams = new URLSearchParams(window.location.search);
 const cuidadorId = urlParams.get("id");
 
-//Preencher estrelas
 function preencherEstrelas(media) {
     const estrelasDiv = document.getElementById('estrelas');
     estrelasDiv.innerHTML = '';
@@ -20,7 +19,6 @@ function preencherEstrelas(media) {
     }
 }
 
-// Função para gerar estrelas em formato HTML
 function gerarEstrelasHTML(media) {
     let estrelasHTML = '';
 
@@ -38,7 +36,7 @@ function gerarEstrelasHTML(media) {
 }
 
 // Carregar comentários
-fetch(`../../includes/get-comentarios.php?id=${cuidadorId}`)
+fetch(`/backend/includes/get-comentarios.php?id=${cuidadorId}`)
     .then(response => response.json())
     .then(comentarios => {
         const comentariosDiv = document.getElementById('comentarios');
@@ -62,7 +60,7 @@ fetch(`../../includes/get-comentarios.php?id=${cuidadorId}`)
     .catch(error => console.error('Erro ao carregar comentários:', error));
 
  // Carregar avaliações
-fetch(`../../includes/get-avaliacoes.php?id=${cuidadorId}`)
+fetch(`/backend/includes/get-avaliacoes.php?id=${cuidadorId}`)
     .then(response => response.json())
     .then(data => {
         document.getElementById('media').innerText = `${data.media_rating.toFixed(1)}`;
@@ -74,10 +72,17 @@ fetch(`../../includes/get-avaliacoes.php?id=${cuidadorId}`)
 
 
 function redirecionarConta() {
-    
     Swal.fire({
         icon: "warning",
         title: "Perfil incompleto",
         text: "Para prosseguir, termine de preencher sua conta..",
+    });
+  }
+
+  function redirecionarContaTelefone() {
+    Swal.fire({
+        icon: "warning",
+        title: "Telefone não verificado",
+        text: "Para prosseguir, valide seu número de telefone.",
     });
   }

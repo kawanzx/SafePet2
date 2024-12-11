@@ -1,8 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include __DIR__ . '/../../auth/protect.php';
 include __DIR__ . '/../../includes/navbar.php';
 include __DIR__ . '/../../includes/db.php';
@@ -43,7 +39,7 @@ include __DIR__ . '/../../includes/buscar.php';
             ?>
 
             <?php while ($row = $result->fetch_assoc()) : ?>
-                <?php if ($row['ativo'] === 1 && $row['cidade'] !== null && $row['preco_hora'] !== null && $row['horarios_disponiveis'] !== null) : ?>
+                <?php if ($row['ativo'] === 1 && $row['cidade'] !== null && $row['preco_hora'] !== null && $row['horarios_disponiveis'] !== null && $row['telefone_validado'] === 1) : ?>
                     <?php $encontrouCuidador = true; ?>
                     <div class="cuidador">
                         <div class="avatar">

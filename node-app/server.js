@@ -4,6 +4,7 @@ const { Server } = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 const mysql = require('mysql2');
+require('dotenv').config({ path: '../backend/includes/.env' });
 const io = new Server(server, {
     cors: {
         origin: "http://localhost:8000", // Permitir apenas localhost:8000
@@ -14,11 +15,20 @@ const io = new Server(server, {
 
     }
 });
+
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'safepet'
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USERNAME,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+});
+
+db.connect((err) => {
+    if (err) {
+        console.error('Erro ao conectar ao banco de dados:', err);
+    } else {
+        console.log('Conexão com o banco de dados bem-sucedida!');
+    }
 });
 
 function notificarAceiteAgendamento(agendamentoId, tutorId, cuidadorId, petNome) {
@@ -57,50 +67,57 @@ function notificarAceiteAgendamento(agendamentoId, tutorId, cuidadorId, petNome)
         .then(response => response.json())
         .then(data => {
             console.log("Resposta do servidor:", data);
+
+            const updateQuery = `UPDATE agendamentos SET notificacao_enviada = 1 WHERE id = ?`;
+            db.query(updateQuery, [agendamentoId], (err, result) => {
+                if (err) {
+                    console.error('Erro ao atualizar agendamento:', err);
+                } else {
+                    console.log(`Agendamento ${agendamentoId} marcado como notificado.`);
+                }
+            });
         })
         .catch(error => console.error('Erro na requisição:', error));
 }
 
 // Evento para quando o status do agendamento for atualizado para "aceito"
-function verificarAceite() {
-    const query = `
-        SELECT a.id AS agendamento_id, a.tutor_id, a.cuidador_id, p.nome AS pet_nome
-        FROM agendamentos a
-        JOIN pets p ON a.pet_id = p.id
-        WHERE a.status = 'aceito' AND a.notificacao_enviada = 0`;
-
-    db.query(query, (err, results) => {
+function atualizarStatusAgendamento(agendamentoId, novoStatus) {
+    const query = `UPDATE agendamentos SET status = ? WHERE id = ?`;
+    db.query(query, [novoStatus, agendamentoId], (err, result) => {
         if (err) {
-            console.error('Erro ao buscar agendamentos aceitos:', err);
+            console.error('Erro ao atualizar status do agendamento:', err);
             return;
         }
-        console.log('Resultados encontrados:', results);
+        console.log(`Status do agendamento ${agendamentoId} atualizado para ${novoStatus}.`);
 
-        results.forEach(agendamento => {
-            // Notificar tutor
-            notificarAceiteAgendamento(
-                agendamento.agendamento_id,
-                agendamento.tutor_id,
-                agendamento.cuidador_id,
-                agendamento.pet_nome
-            );
-
-            // Marcar como notificado
-            db.query('UPDATE agendamentos SET notificacao_enviada = 1 WHERE id = ?', [agendamento.agendamento_id], (err) => {
+        // Verificar se o status é "aceito" e disparar a notificação
+        if (novoStatus === 'aceito') {
+            const selectQuery = `SELECT a.id AS agendamento_id, a.tutor_id, a.cuidador_id, p.nome AS pet_nome
+                FROM agendamentos a
+                JOIN pets p ON a.pet_id = p.id
+                WHERE a.id = ?`;
+            db.query(selectQuery, [agendamentoId], (err, results) => {
                 if (err) {
-                    console.error('Erro ao marcar agendamento como notificado:', err);
+                    console.error('Erro ao buscar detalhes do agendamento aceito:', err);
+                    return;
+                }
+                if (results.length > 0) {
+                    const agendamento = results[0];
+                    notificarAceiteAgendamento(
+                        agendamento.agendamento_id,
+                        agendamento.tutor_id,
+                        agendamento.cuidador_id,
+                        agendamento.pet_nome
+                    );
                 }
             });
-        });
+        }
     });
 }
 
-verificarAceite();
-// Verificar agendamentos aceitos a cada 1 minuto
-setInterval(verificarAceite, 60000);
-
 function verificarAgendamentos() {
-    const dataAtual = new Date().toISOString().slice(0, 10); // Obtém a data atual no formato YYYY-MM-DD
+    //const dataAtual = new Date().toISOString().slice(0, 10); // Obtém a data atual no formato YYYY-MM-DD
+    const dataAtual = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
     const SISTEMA_ID = 0;
 
     const query = `

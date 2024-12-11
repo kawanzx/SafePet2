@@ -26,6 +26,7 @@
                     <div class="textfield">
                         <label for="tipo_usuario">Tipo de usuário: </label>
                         <select name="tipo_usuario" required>
+                            <option value="" disabled selected>Selecione</option>
                             <option value="tutor">Tutor</option>
                             <option value="cuidador">Cuidador</option>
                         </select> <br>
@@ -40,7 +41,7 @@
                         <label class="mostrar-senha" for="mostrar-senha">Mostrar senha</label>
                         <input id="mostrar-senha" name="mostrar-senha" type="checkbox" onclick="mostrarSenha()">
                     </div>
-                    <button type="submit" class="btn-login">Entrar</button>
+                    <button type="submit" id="btn-login" class="btn-login">Entrar</button>
                     <p class="esqueci-senha"><a href="esqueci-senha.html">Esqueceu sua senha</a></p>
                     <p class="criar-conta">Não tem conta? <a href="register.html">crie uma</a></p>
                 </form>

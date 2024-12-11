@@ -15,9 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const semNotificacoes = document.getElementById('sem-notificacoes');
 
     notificacaoIcon.addEventListener('click', () => {
-        dropdown.style.display = dropdown.style.display === 'none' || dropdown.style.display === '' ? 'block' : 'none';
-        
-
+        const isDropdownOpen = dropdown.style.display === 'block';
+        dropdown.style.display = isDropdownOpen ? 'none' : 'block';
+        if (!isDropdownOpen) {
+            carregarNotificacoes(); // Recarregar notificações apenas ao abrir
+        }
     });
 
     document.addEventListener('click', (e) => {

@@ -80,6 +80,10 @@
         justify-content: space-between; 
     }
 
+    .agendamento-card:hover{
+        box-shadow: none;
+    }
+
     .agendamento-details{
         align-self:flex-start;
     }
@@ -88,6 +92,10 @@
         align-self: flex-end;
         position: relative;   
         bottom: 120px;
+    }
+
+    .agendamento-card .btn-concluir{
+        right: 0px;
     }
 
     .agendamento-acoes button {
@@ -100,10 +108,26 @@
     .agendamento-card .btn-aceitar, 
     .agendamento-card .btn-recusar,
     .agendamento-card .btn-cancelar,
-    .btn-chat{
+    .agendamento-card .btn-chat,
+    .agendamento-card .btn-concluir,
+    .agendamento-card .btn-avaliar {
         right: 0px;
         width: 73px;
         text-align: center;
+        align-items: center;
+    }
+
+    .disponibilidade{
+        flex-direction: column;
+    }
+
+    #disponibilidade-texto{
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+
+    .flatpickr-calendar.inline {
+        max-width: 100%;
     }
 }
 

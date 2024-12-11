@@ -90,11 +90,11 @@ function validarDataNascimento($data_nascimento)
 
 function getTutorProfile($mysqli, $tutor_id)
 {
-    $sql = "SELECT nome, bio, foto_perfil, ativo, cep FROM tutores WHERE id = ?";
+    $sql = "SELECT nome, bio, foto_perfil, ativo, cep, telefone_validado FROM tutores WHERE id = ?";
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param('i', $tutor_id);
     $stmt->execute();
-    $stmt->bind_result($nome, $bio, $foto_perfil, $ativo, $cep);
+    $stmt->bind_result($nome, $bio, $foto_perfil, $ativo, $cep, $telefone_validado);
     $stmt->fetch();
     $stmt->close();
 
@@ -110,6 +110,7 @@ function getTutorProfile($mysqli, $tutor_id)
         'foto_perfil' => !empty($foto_perfil) ? '/backend/assets/uploads/fotos-tutores/' . $foto_perfil : '/backend/img/profile-circle-icon.png',
         'ativo' => htmlspecialchars($ativo),
         'cep' => htmlspecialchars($cep),
+        'telefone_validado' => htmlspecialchars($telefone_validado),
     ];
 }
 

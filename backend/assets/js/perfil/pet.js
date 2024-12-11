@@ -43,8 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const peso = petDiv.querySelector('.pesoInput').value;
             const castrado = petDiv.querySelector('.castradoInput').value;
             const descricao = petDiv.querySelector('.descricaoInput').value;
-
-            // Enviar os dados via AJAX
             const formData = new FormData();
             formData.append('petId', petId);
             formData.append('nome', nome);
@@ -78,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         petDiv.querySelector('.castradoText').textContent = castrado;
                         petDiv.querySelector('.descricaoText').textContent = descricao;
 
-                        // Ocultar os inputs e exibir os textos
                         petDiv.querySelectorAll('.nomePetText, .especieText, .racaText, .idadeText, .sexoText, .pesoText, .castradoText, .descricaoText').forEach(text => {
                             text.style.display = 'inline';
                         });
@@ -86,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             input.style.display = 'none';
                         });
 
-                        // Alternar os botões
                         petDiv.querySelector('.salvar-btn').style.display = 'none';
                         petDiv.querySelector('.editar-btn').style.display = 'inline-block';
                         petDiv.querySelector('.cancelar-btn').style.display = 'none';
@@ -113,12 +109,10 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', function () {
             const petDiv = this.closest('.pet');
 
-            // Restaurar os valores originais dos inputs
             petDiv.querySelectorAll('.nomePetInput, .especieInput, .racaInput, .idadeInput, .sexoInput, .pesoInput, .castradoInput, .descricaoInput').forEach(input => {
                 input.value = input.getAttribute('data-original');
             });
 
-            // Ocultar os inputs e exibir os textos
             petDiv.querySelectorAll('.nomePetText, .especieText, .racaText, .idadeText, .sexoText, .pesoText, .castradoText, .descricaoText').forEach(text => {
                 text.style.display = 'inline';
             });
@@ -127,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 input.style.display = 'none';
             });
 
-            // Alternar os botões
             petDiv.querySelector('.salvar-btn').style.display = 'none';
             petDiv.querySelector('.cancelar-btn').style.display = 'none';
             petDiv.querySelector('.editar-btn').style.display = 'inline-block';
@@ -162,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const petElement = this.closest('.pet');
                     const petId = petElement.getAttribute('data-pet-id');
 
-                    // Enviar requisição AJAX para excluir o pet
                     fetch('../../../includes/perfil/excluir-pet.php', {
                         method: 'POST',
                         headers: {
@@ -178,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     text: "O pet foi apagado do sistema.",
                                     icon: "success"
                                 });
-                                petElement.remove(); // Remove o elemento da página
+                                petElement.remove(); 
                             } else {
                                 alert('Erro: ' + data.message);
                             }
@@ -196,21 +188,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.querySelector('.cad-pet').addEventListener('click', function (event) {
-        event.preventDefault(); // Impede o envio padrão do formulário
+        event.preventDefault(); 
     
         const form = document.getElementById('form-pet');
-        const formData = new FormData(form); // Cria o FormData com os dados do formulário
+        const formData = new FormData(form);
 
         if (!form.checkValidity()) {
-            form.reportValidity(); // Exibe mensagens de erro do HTML5
-            return; // Cancela o envio se o formulário for inválido
+            form.reportValidity();
+            return; 
         }
     
         fetch('/backend/includes/perfil/cadastro-pet.php', {
             method: 'POST',
             body: formData
         })
-            .then(response => response.json()) // Recebe a resposta em JSON
+            .then(response => response.json()) 
             .then(data => {
                 console.log(data);
                 if (data.status === "sucesso") {
@@ -218,8 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         icon: "success",
                         text: data.message,
                     });
-                    form.reset(); // Limpa o formulário após o sucesso
-                    document.getElementById("preview").style.display = "none"; // Esconde a pré-visualização da imagem
+                    form.reset(); 
+                    document.getElementById("preview").style.display = "none";
                 } else {
                     Swal.fire({
                         icon: "error",
@@ -261,28 +253,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.fotoPetInput').forEach(function (input) {
         input.addEventListener('change', function (event) {
-            const petId = event.target.id.split('-')[1]; // Extrai o ID do pet do input file
-            const preview = document.getElementById('preview-' + petId); // Obtém o elemento de pré-visualização da imagem
-            const file = event.target.files[0]; // O arquivo selecionado
+            const petId = event.target.id.split('-')[1]; 
+            const preview = document.getElementById('preview-' + petId); 
+            const file = event.target.files[0]; 
     
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    preview.src = e.target.result; // Atualiza o src da imagem
+                    preview.src = e.target.result; 
                 };
-                reader.readAsDataURL(file); // Lê o arquivo como uma URL base64
+                reader.readAsDataURL(file); 
     
-                // Criar um objeto FormData para enviar o arquivo via AJAX
                 let formData = new FormData();
-                formData.append('foto', file); // Anexa o arquivo de imagem
-                formData.append('pet_id', petId); // Anexa o ID do pet
+                formData.append('foto', file); 
+                formData.append('pet_id', petId); 
     
-                // Enviar a imagem para o servidor via AJAX
                 fetch('/backend/includes/perfil/atualizar_foto.php', {
                     method: 'POST',
                     body: formData
                 })
-                    .then(response => response.json()) // Espera resposta JSON
+                    .then(response => response.json())
                     .then(data => {
                         if (data.sucesso) {
                             console.log(data.mensagem);
@@ -291,7 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 title: "Sucesso!",
                                 text: data.mensagem
                             });
-                            // Atualiza o preview com o novo caminho da imagem
                             preview.src = '/backend/assets/uploads/fotos-pets/' + file.name + '?' + new Date().getTime();
                         } else {
                             Swal.fire({
@@ -308,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert('Houve um erro ao atualizar a foto.');
                     });
             } else {
-                preview.src = '/backend/assets/uploads/fotos-pets/default-image.png'; // Imagem padrão se nenhum arquivo for selecionado
+                preview.src = '/backend/assets/uploads/fotos-pets/default-image.png';
             }
         });
     });

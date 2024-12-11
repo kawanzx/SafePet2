@@ -1,4 +1,4 @@
-.pets-card{
+.pets-card {
     margin-top: 50px;
 }
 
@@ -19,13 +19,13 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.pet p{
+.pet p {
     margin-bottom: 10px;
-    color:#3e3e3f;
+    color: #3e3e3f;
 }
 
 .pet:hover {
-    transform: scale(1.02); 
+    transform: scale(1.02);
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -69,8 +69,8 @@
     border: none;
     border-radius: 10px;
     padding: 6px;
-    background: #b5d6d6;
-    color: #3e3e3f;
+    background: rgb(199, 199, 199);
+    color: black;
     font-size: 12pt;
     outline: none;
     box-sizing: border-box;
@@ -79,8 +79,7 @@
 
 .pet-header .editar-btn,
 .salvar-btn,
-.cancelar-btn
-{
+.cancelar-btn {
     background: #E76F51;
     color: white;
     border-radius: 5px;
@@ -110,12 +109,12 @@
     background-color: #e43d50;
 }
 
-.cad-pet-card{
+.cad-pet-card {
     margin-top: 50px;
 }
 
 .cadastrar-pet {
-    background: #f6fcf4 ;
+    background: #f6fcf4;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -123,7 +122,7 @@
 }
 
 .cadastrar-pet:hover {
-    transform: scale(1.02); 
+    transform: scale(1.02);
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -151,7 +150,22 @@
 
 .cadastrar-pet textarea,
 .cadastrar-pet input[type="file"],
-/* .cadastrar-pet input[type="submit"], */
-.cadastrar-pet button {
+.cadastrar-pet button,
+.upload-foto {
     grid-column: span 3;
+}
+
+.hidden-input {
+    display: none;
+}
+
+.upload-button {
+    background: rgb(199, 199, 199);
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
 }

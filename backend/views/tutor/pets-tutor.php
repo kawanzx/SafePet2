@@ -117,12 +117,14 @@ include __DIR__ . '/../../auth/protect.php';
                         </div>
                         <label for="descricao">Descrição (comportamento, necessidades especiais):</label>
                         <textarea id="descricao" name="descricao" rows="4"></textarea>
-                        <label for="foto">Foto do Pet:</label>
-                        <input type="file" id="foto" name="foto" accept="image/*">
-                        <div id="preview-container">
-                            <img id="preview" src="" alt="Pré-visualização da foto do pet" style="display:none; width: 200px; height: auto;">
+                        <label for="foto">Foto do pet:</label>
+                        <div class="upload-foto">
+                            <label for="foto" class="upload-button">Selecione uma imagem</label>
+                            <input type="file" id="foto" name="foto" accept="image/*" class="hidden-input">
                         </div>
-                        <!-- <input type="submit" value="Cadastrar Pet" id="cad-pet"> -->
+                        <div id="preview-container">
+                            <img id="preview" src="" alt="Pré-visualização da foto do pet" style="display:none; width: 200px; height: 200px;">
+                        </div>
                         <button class="cad-pet" id="cad-pet">Cadastrar Pet</button>
                     </form>
                 </div>

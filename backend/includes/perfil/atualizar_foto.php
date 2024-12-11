@@ -3,7 +3,6 @@ session_start();
 include_once '../db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Verifica se o pet_id e o arquivo de foto foram enviados
     if (isset($_POST['pet_id']) && isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
         $pet_id = $_POST['pet_id'];
         $foto = $_FILES['foto']['name'];
@@ -14,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-        // Verifica se o arquivo é uma imagem real
         $check = getimagesize($_FILES["foto"]["tmp_name"]);
         if ($check === false) {
             echo json_encode(['sucesso' => false, 'mensagem' => "O arquivo não é uma imagem."]);

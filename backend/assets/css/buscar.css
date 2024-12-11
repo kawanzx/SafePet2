@@ -3,7 +3,7 @@
    display: flex;
    align-items: center;
    column-gap: .5rem;
-   background-color: white;
+   background-color: #d7e2e2;
    box-shadow: 0 8px 32px hsla(230, 75%, 15%, .2);
    padding-inline: 1rem;
    border-radius: .5rem;
@@ -17,15 +17,15 @@
  }
 
  .searchButton {
-  background: none;
-  border: none;
-  cursor: pointer;
+   background: none;
+   border: none;
+   cursor: pointer;
  }
 
  .search__input {
    width: 100%;
    padding: 1rem;
-   background-color: white;
+   background-color: #d7e2e2;
    color: var(--text-color);
    cursor: pointer;
  }
@@ -42,17 +42,18 @@
    text-align: center;
    margin-bottom: 30px;
    font-family: 'Roboto', sans-serif;
-   color: #333;
+   color: #1D3557;
+   font-size: 2rem;
  }
 
  /* Estilo dos blocos de cuidadores */
  .cuidador {
    display: flex;
    align-items: center;
-   background-color: #fff;
+   background-color: #d7e2e2;
    border-radius: 10px;
    padding: 20px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
    margin-bottom: 20px;
    position: relative;
    /* Necessário para o posicionamento absoluto do botão */
@@ -60,7 +61,8 @@
 
  /* Estilo do avatar do cuidador */
 
- .avatar-cuidador , .avatar-tutor{
+ .avatar-cuidador,
+ .avatar-tutor {
    width: 80px;
    height: 80px;
    border-radius: 50%;
@@ -71,25 +73,26 @@
 
  /* Estilo dos detalhes do cuidador */
  .details h3 {
-   margin: 0;
-   font-size: 20px;
-   color: #1D3557;;
+   margin-bottom: 15px;
+   margin-top: 0;
+   font-size: 1.5rem;
+   color: #1D3557;
  }
 
  .details p {
-   margin: 5px 0;
-   color: #555;
+   margin: 12px 0;
+   color: #3e3e3f;
  }
 
  i.fa-solid {
-  color: #FFD700; 
-  font-size: 1.2rem;
-  margin-right: 5px;
-}
+   color: #FFD700;
+   font-size: 1.2rem;
+   margin-right: 5px;
+ }
 
  i.fa-regular {
-  color: #ccc; 
-}
+  color: #3e3e3f;
+ }
 
  /* Estilo do botão de agendamento */
  .schedule-button {
