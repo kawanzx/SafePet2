@@ -42,6 +42,27 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
         </aside>
 
         <main class="conteudo">
+            <?php
+            if (isset($_SESSION['notificacao'])) {
+                $mensagem = $_SESSION['notificacao'];
+                echo   "<script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Perfil Incompleto',
+                                    text: '$mensagem',
+                                    confirmButtonText: 'Preencher agora'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = '/backend/views/cuidador/perfil.php';
+                                    }
+                                });
+                            });
+                        </script>";
+                unset($_SESSION['notificacao']);
+            }
+
+            ?>
             <div id="solicitacoes" class="content-section active">
                 <?php $agendamentos = getAgendamentosByUser($mysqli, $user_id, $tipo_usuario, 'pendente'); ?>
                 <h2>Solicitações Pendentes</h2>
@@ -129,7 +150,6 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                             $petIds = explode(',', $agendamento['pet_id']);
                             $pets = getPetNamesByIds($mysqli, $petIds);
 
-                            //$dataAtual = date('Y-m-d');
                             $dataAtual = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
                             $mostrarBotaoConcluir = ($tipo_usuario === 'cuidador' && $dataServico->format('Y-m-d') === $dataAtual->format('Y-m-d'));
                             ?>

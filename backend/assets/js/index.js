@@ -1,24 +1,24 @@
 $(document).ready(function(){
     $('.card-container').slick({
-        dots: true,               // Exibe os pontos de navegação
-        infinite: true,           // Permite navegação infinita
-        speed: 500,               // Velocidade da transição
-        slidesToShow: 3,          // Exibe 3 cards na versão desktop
-        slidesToScroll: 1,        // Avança 1 card por vez
-        autoplay: true,           // Habilita o autoplay
-        autoplaySpeed: 3000,      // Tempo de pausa entre os slides (3 segundos)
+        dots: true,              
+        infinite: true,          
+        speed: 500,              
+        slidesToShow: 3,          
+        slidesToScroll: 1,       
+        autoplay: true,           
+        autoplaySpeed: 3000,      
         responsive: [
             {
-                breakpoint: 1024,  // Para telas médias (tablets)
+                breakpoint: 1024, 
                 settings: {
-                    slidesToShow: 2,   // Exibe 2 cards
+                    slidesToShow: 2,   
                     slidesToScroll: 1,
                 }
             },
             {
-                breakpoint: 768,   // Para telas pequenas (celulares)
+                breakpoint: 768,  
                 settings: {
-                    slidesToShow: 1,   // Exibe 1 card
+                    slidesToShow: 1,   
                     slidesToScroll: 1,
                 }
             }

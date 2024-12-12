@@ -112,13 +112,13 @@ window.concluirAgendamento = concluirAgendamento;
 async function concluirAgendamento(agendamentoId) {
 
     Swal.fire({
-        title: 'Você tem certeza que deseja concluir este agendamento?',
+        title: 'Esse agendamento foi realizado?',
         text: "Esta ação não pode ser desfeita.",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim, aceitar!',
+        confirmButtonText: 'Sim, concluir!',
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {

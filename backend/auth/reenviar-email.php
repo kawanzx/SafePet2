@@ -7,7 +7,6 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
 $id_usuario = $_SESSION['id'];
 $tabela = ($tipo_usuario === 'tutor' ? 'tutores' : 'cuidadores');
 
-// Recuperar dados do usuário
 $sql = "SELECT email, nome, chave FROM $tabela WHERE id = ?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("s", $id_usuario);

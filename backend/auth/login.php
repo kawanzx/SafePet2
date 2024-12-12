@@ -4,9 +4,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-header('Content-Type: application/json'); // Define o cabeçalho para JSON
+header('Content-Type: application/json');
 
 include("../includes/db.php");
+include_once("../includes/functions.php");
 
 if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['tipo_usuario'])) {
 
@@ -43,6 +44,14 @@ if (isset($_POST['email']) || isset($_POST['senha']) || isset($_POST['tipo_usuar
             $_SESSION['id'] = $usuario['id'];
             $_SESSION['nome'] = $usuario['nome'];
             $_SESSION['tipo_usuario'] = $tipo_usuario;
+
+            if($tipo_usuario === 'cuidador'){
+                if (verificarPerfilCuidador($mysqli, $_SESSION['id'])) {
+                    $_SESSION['notificacao'] = "Para estar elegível para ser procurado por tutores, preencha seu perfil.";
+                } else {
+                    unset($_SESSION['notificacao']); 
+                }
+            }
 
             echo json_encode(['sucesso' => true, 'mensagem' => 'Login realizado com sucesso.']);
         } else {

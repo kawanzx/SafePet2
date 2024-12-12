@@ -3,17 +3,13 @@ include __DIR__ . '/../../auth/protect.php';
 include __DIR__ . '/../../includes/db.php';
 include __DIR__ . '/../../includes/perfil/disponibilidade.php';
 
-// Buscar a disponibilidade do cuidador
 $query = "SELECT dia_da_semana, hora_inicio, hora_fim FROM disponibilidade_cuidador WHERE cuidador_id = ?";
 $stmt = $mysqli->prepare($query);
 $stmt->bind_param("i", $cuidador_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
-//Inicializa o array de disponibilidade
 $disponibilidade = [];
 
-// Preenche o array de disponibilidade com os dados da consulta
 while ($row = $result->fetch_assoc()) {
     $disponibilidade[$row['dia_da_semana']] = [
         'hora_inicio' => $row['hora_inicio'],
@@ -49,7 +45,6 @@ $mysqli->close();
                 <div>
                     <h2><?php echo $cuidador['nome']; ?></h2>
                     <?php
-                        // Exibir o preço, se existir, formatado
                         if (isset($cuidador['preco_hora']) && floatval($cuidador['preco_hora']) > 0) {
                             echo '<p class="preco-hora">R$ ' . number_format(floatval($cuidador['preco_hora']), 2, ',', '.') . '/hora</p>';
                         } else {
@@ -93,9 +88,7 @@ $mysqli->close();
                     </form>
                 </div>
                 <div class="preco">
-                    <!-- Exibição do Preço -->
                     <h3>Preço por Hora</h3>
-                    <!-- Formulário para Atualizar Preço -->
                     <form method="POST" action="\backend\includes\perfil\salvar-preco.php">
                         <div class="input-preco-unique">
                             <label for="preco_hora">Defina seu Preço por Hora:</label>
@@ -109,7 +102,6 @@ $mysqli->close();
                         Disponibilidade
                         <button id="btn-editar" class="btn-editar" onclick="exibirFormulario()">Editar</button>
                     </h3>
-                    <!-- Texto exibindo a disponibilidade atual -->
                     <div class="disponibilidade">
                         <input type="text" id="calendario-disponibilidade" style="display: none;">
                         <div id="disponibilidade-texto" <?= empty($disponibilidade) ? 'style="display:none;"' : '' ?>>
@@ -124,19 +116,15 @@ $mysqli->close();
                                 <?php endforeach; ?>
                             </ul>
                         </div>
-                        <!-- Formulário de edição, inicialmente oculto -->
                         <form id="form-disponibilidade" action="" method="POST" <?= empty($disponibilidade) ? '' : 'style="display:none;"' ?> onsubmit="return validarFormulario()">
                             <h4>Definir Disponibilidade</h4>
                             <?php
-                            // Definindo os dias da semana
                             $diasSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
                             foreach ($diasSemana as $dia):
                             ?>
                                 <div class="input-dia" style="margin-bottom: 10px;">
-                                    <!-- Checkbox para marcar o dia -->
                                     <input type="checkbox" name="horarios[<?= $dia ?>][marcado]" value="1" <?= isset($disponibilidade[$dia]) ? 'checked' : '' ?> onclick="toggleHorarios('<?= $dia ?>')" class="checkbox-dia">
                                     <label><strong><?= ucfirst($dia) ?>:</strong></label>
-                                    <!-- Campos de horário -->
                                     <input type="time" name="horarios[<?= $dia ?>][inicio]" value="<?= isset($disponibilidade[$dia]) ? $disponibilidade[$dia]['hora_inicio'] : '' ?>" class="hora-inicio" <?= !isset($disponibilidade[$dia]) ? 'disabled' : '' ?> step="3600" onchange="ajustarHorario(this)">
                                     <input type="time" name="horarios[<?= $dia ?>][fim]" value="<?= isset($disponibilidade[$dia]) ? $disponibilidade[$dia]['hora_fim'] : '' ?>" class="hora-fim" <?= !isset($disponibilidade[$dia]) ? 'disabled' : '' ?> step="3600" onchange="ajustarHorario(this)">
                                 </div>
@@ -162,11 +150,7 @@ $mysqli->close();
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Disponibilidade em JSON do PHP
             const disponibilidade = <?= $json_disponibilidade; ?>;
-
-            console.log(disponibilidade);
-
             const diasSemana = {
                 "domingo": 0,
                 "segunda-feira": 1,
@@ -177,12 +161,8 @@ $mysqli->close();
                 "sábado": 6
             };
 
-            // Mapeia os dados de disponibilidade para as configurações do Flatpickr
             const diasDisponiveis = [...new Set(disponibilidade.map(item => diasSemana[item.dia]))];
 
-            console.log(diasDisponiveis);
-
-            // Inicializa o Flatpickr
             flatpickr("#calendario-disponibilidade", {
                 minDate: "today",
                 dateFormat: "d-m-Y",
@@ -194,7 +174,6 @@ $mysqli->close();
                     }
                 ],
                 onChange: function(selectedDates, dateStr, instance) {
-                    // Exibe os horários disponíveis para o dia selecionado
                     const diaSemana = new Date(dateStr).toLocaleDateString('pt-BR', {
                         weekday: 'long'
                     }).toLowerCase();
@@ -206,8 +185,7 @@ $mysqli->close();
                         horarios.forEach(horario => {
                             horarioTexto += `• ${horario.hora_inicio} - ${horario.hora_fim}\n`;
                         });
-
-                        alert(horarioTexto); // Mostra uma mensagem com os horários (pode ser substituído por algo mais elegante)
+                        Swal.fire(horarioTexto); 
                     }
                 }
             });
@@ -215,17 +193,16 @@ $mysqli->close();
 
         // Função para ajustar os minutos para 00 ao selecionar o horário
         function ajustarHorario(input) {
-            const hora = input.value.split(':')[0]; // Pega a hora
-            input.value = `${hora}:00`; // Define os minutos como 00
+            const hora = input.value.split(':')[0];
+            input.value = `${hora}:00`; 
         }
 
         // Exibe ou oculta o formulário de edição ao clicar no botão de editar
         function exibirFormulario() {
             var form = document.getElementById("form-disponibilidade");
-            var textoDisponibilidade = document.getElementById("disponibilidade-texto"); // Corrigido aqui
+            var textoDisponibilidade = document.getElementById("disponibilidade-texto"); 
             var calendario = document.querySelector(".flatpickr-calendar.inline");
 
-            // Alternar entre exibir o texto ou o formulário
             if (form.style.display === "none") {
                 form.style.display = "block";
                 textoDisponibilidade.style.display = "none";
@@ -240,28 +217,24 @@ $mysqli->close();
         // Habilita ou desabilita os campos de horário com base no checkbox
         function toggleHorarios(dia) {
             var checkbox = document.querySelector(`input[name="horarios[${dia}][marcado]"]`);
-            var horaInicio = document.querySelector(`input[name="horarios[${dia}][inicio]"]`); // Corrigido
-            var horaFim = document.querySelector(`input[name="horarios[${dia}][fim]"]`); // Corrigido
+            var horaInicio = document.querySelector(`input[name="horarios[${dia}][inicio]"]`); 
+            var horaFim = document.querySelector(`input[name="horarios[${dia}][fim]"]`); 
 
             if (checkbox.checked) {
-                // Se o checkbox estiver marcado, habilitar os campos de horário
                 horaInicio.disabled = false;
                 horaFim.disabled = false;
             } else {
-                // Se o checkbox não estiver marcado, desmarcar os campos de horário e desabilitá-los
                 horaInicio.disabled = true;
                 horaFim.disabled = true;
-                horaInicio.value = ''; // Limpar o valor do horário
-                horaFim.value = ''; // Limpar o valor do horário
+                horaInicio.value = ''; 
+                horaFim.value = '';
             }
         }
 
-        // Função para validar o formulário antes de enviar
         function validarFormulario() {
             var dias = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
             var formValido = true;
 
-            // Verificar se os campos de horário foram preenchidos quando o dia for marcado
             dias.forEach(function(dia) {
                 var checkbox = document.querySelector(`input[name="horarios[${dia}][marcado]"]`);
                 var horaInicio = document.querySelector(`input[name="horarios[${dia}][inicio]"]`);
@@ -277,7 +250,6 @@ $mysqli->close();
                         formValido = false;
                     }
 
-                    // Verificar se a hora de início é maior que a de fim
                     if (horaInicio.value && horaFim.value && horaInicio.value >= horaFim.value) {
                         Swal.fire({
                             icon: "error",

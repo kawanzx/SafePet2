@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', function () {
             const petDiv = this.closest('.pet');
 
-            // Armazenar os valores atuais dos textos em atributos data nos inputs
             petDiv.querySelector('.nomePetInput').setAttribute('data-original', petDiv.querySelector('.nomePetInput').value);
             petDiv.querySelector('.especieInput').setAttribute('data-original', petDiv.querySelector('.especieInput').value);
             petDiv.querySelector('.racaInput').setAttribute('data-original', petDiv.querySelector('.racaInput').value);
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
             petDiv.querySelector('.castradoInput').setAttribute('data-original', petDiv.querySelector('.castradoInput').value);
             petDiv.querySelector('.descricaoInput').setAttribute('data-original', petDiv.querySelector('.descricaoInput').value);
 
-            // Ocultar os textos e exibir os inputs
             petDiv.querySelectorAll('.nomePetText, .especieText, .racaText, .idadeText, .sexoText, .pesoText, .castradoText, .descricaoText').forEach(text => {
                 text.style.display = 'none';
             });
@@ -22,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 input.style.display = 'block';
             });
 
-            // Alternar os botões
             this.style.display = 'none';
             petDiv.querySelector('.salvar-btn').style.display = 'inline-block';
             petDiv.querySelector('.cancelar-btn').style.display = 'inline-block';
@@ -32,9 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.salvar-btn').forEach(button => {
         button.addEventListener('click', function () {
             const petDiv = this.closest('.pet');
-            const petId = petDiv.getAttribute('data-pet-id'); // Supondo que você tenha um atributo data-id com o ID do pet
-
-            // Obter os valores dos inputs
+            const petId = petDiv.getAttribute('data-pet-id'); 
             const nome = petDiv.querySelector('.nomePetInput').value;
             const especie = petDiv.querySelector('.especieInput').value;
             const raca = petDiv.querySelector('.racaInput').value;
@@ -60,13 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
             })
                 .then(response => response.text())
                 .then(data => {
-                    console.log(data);
                     if (data.includes("sucesso")) {
                         Swal.fire({
                             icon: "success",
                             text: "Dados atualizados com sucesso!",
                           });
-                        // Atualizar os textos com os novos valores
                         petDiv.querySelector('.nomePetText').textContent = nome;
                         petDiv.querySelector('.especieText').textContent = especie === 'cachorro' ? 'Cachorro' : 'Gato';
                         petDiv.querySelector('.racaText').textContent = raca;
@@ -204,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json()) 
             .then(data => {
-                console.log(data);
                 if (data.status === "sucesso") {
                     Swal.fire({
                         icon: "success",
@@ -275,7 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(response => response.json())
                     .then(data => {
                         if (data.sucesso) {
-                            console.log(data.mensagem);
                             Swal.fire({
                                 icon: "success",
                                 title: "Sucesso!",

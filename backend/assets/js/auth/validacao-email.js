@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         var tipoUsuarioElement = document.getElementById("tipo_usuario");
         var tipo_usuario = tipoUsuarioElement.textContent.trim();
-        console.log(tipo_usuario);
 
         fetch('/backend/auth/confirmar-email.php', {
             method: 'POST',

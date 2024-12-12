@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
             element.classList.add('active');
         }
 
-        // Fecha a sidebar e oculta os submenus
         if (sidebar.classList.contains('sidebar-expandida')) {
             sidebar.classList.remove('sidebar-expandida');
         }
@@ -71,7 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
             submenu.style.display = 'none';
         });
 
-        // Verifica se o link pertence a um submenu
         const isSubmenu = element.closest('ul.submenu');
         if (!isSubmenu) {
             sidebar.classList.remove('sidebar-expandida');

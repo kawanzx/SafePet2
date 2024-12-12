@@ -35,6 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }).then(() => {
                     if (data.sucesso) {
                         window.location.href = tipo_usuario === 'tutor' ? '/backend/views/tutor/buscar.php' : '/backend/views/shared/agendamentos.php';
+                    } else{
+                        document.getElementById("btn-login").innerText = "Entrar";
+                        document.getElementById("btn-login").disabled = false;
                     }
                 });
             })

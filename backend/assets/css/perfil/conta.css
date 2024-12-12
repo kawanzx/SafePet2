@@ -201,3 +201,32 @@ button:disabled {
     margin-left: 20px;
     padding: 8px;
 }
+
+.mensagem-endereco{
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f6fcf4;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 1000px;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px 0;
+}
+
+#mensagemEndereco {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#mensagemEndereco p {
+    margin-bottom: 30px;
+}
+
+#cadastrarEnderecoBtn {
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    background-color: #1D3557;
+    text-decoration: none;
+    margin-top: 30px;
+}

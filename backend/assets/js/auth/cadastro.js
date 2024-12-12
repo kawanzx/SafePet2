@@ -34,17 +34,14 @@ document.addEventListener("DOMContentLoaded", function () {
             })
         })
             .then(response => {
-                //console.log('Resposta completa:', response);
                 if (!response.ok) {
                     throw new Error('Erro na rede: ' + response.statusText);
                 }
                 return response.text();
             })
             .then(text => {
-                console.log('Corpo da resposta:', text);
                 try {
                     const data = JSON.parse(text);
-                    //console.log('JSON Parseado:', data);
                     Swal.fire({
                         icon: data.sucesso ? "success" : "error",
                         title: data.sucesso ? "Sucesso!" : "Erro!",
@@ -52,6 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     }).then(() => {
                         if (data.sucesso) {
                             window.location.href = '/backend/auth/validacao-email.php';
+                        } else{
+                            document.getElementById("btn-cadastrar").innerText = "Cadastrar-se";
+                            document.getElementById("btn-cadastrar").disabled = false;
                         }
                     });
                 } catch (error) {

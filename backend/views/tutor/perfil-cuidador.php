@@ -51,6 +51,7 @@ $stmt->close();
     <link rel="stylesheet" href="/backend/views/tutor/main.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -125,11 +126,7 @@ $stmt->close();
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Disponibilidade em JSON do PHP
             const disponibilidade = <?= $json_disponibilidade; ?>;
-
-            console.log(disponibilidade);
-
             const diasSemana = {
                 "domingo": 0,
                 "segunda-feira": 1,
@@ -140,12 +137,8 @@ $stmt->close();
                 "sábado": 6
             };
 
-            // Mapeia os dados de disponibilidade para as configurações do Flatpickr
             const diasDisponiveis = [...new Set(disponibilidade.map(item => diasSemana[item.dia]))];
 
-            console.log(diasDisponiveis);
-
-            // Inicializa o Flatpickr
             flatpickr("#calendario-disponibilidade", {
                 minDate: "today",
                 dateFormat: "d-m-Y",
@@ -157,7 +150,6 @@ $stmt->close();
                     }
                 ],
                 onChange: function(selectedDates, dateStr, instance) {
-                    // Exibe os horários disponíveis para o dia selecionado
                     const diaSemana = new Date(dateStr).toLocaleDateString('pt-BR', {
                         weekday: 'long'
                     }).toLowerCase();
@@ -170,7 +162,7 @@ $stmt->close();
                             horarioTexto += `• ${horario.hora_inicio} - ${horario.hora_fim}\n`;
                         });
 
-                        alert(horarioTexto); // Mostra uma mensagem com os horários (pode ser substituído por algo mais elegante)
+                        Swal.fire(horarioTexto); 
                     }
                 }
             });

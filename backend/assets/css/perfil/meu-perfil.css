@@ -255,30 +255,22 @@ form {
     color: #1D3557;
 }
 
+.bioInput,
 .experienciaInput {
-    background: rgb(199, 199, 199);
     width: auto;
     border: none;
     border-radius: 10px;
     padding: 10px;
-    font-size: 12pt;
+    background: #f6fcf4;
     outline: none;
     box-sizing: border-box;
     font-size: 1.1rem;
     color: #555;
 }
 
-.bioInput {
-    width: auto;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    background: #f6fcf4;
-    font-size: 12pt;
-    outline: none;
-    box-sizing: border-box;
-    font-size: 1.1rem;
-    color: #555;
+.experienciaInput{
+    background-color: #d7e2e2 ;
+    max-width: 100%;
 }
 
 .salvar-bio,

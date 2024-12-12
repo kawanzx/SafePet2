@@ -57,9 +57,12 @@
                     <span class="cpfText"><?php echo htmlspecialchars($informacoesUsuario['cpf']); ?> <span class="material-symbols-outlined lock">lock</span></span>
                 </div>
             </div>
-            <div id="mensagemEndereco" style="display: none;">
-                <h3>Endereço</h3>
-                <p>Você ainda não cadastrou um endereço. <a href="#" id="cadastrarEnderecoBtn">Clique aqui para cadastrar.</a></p>
+            <div class="mensagem-endereco" id="mensagem-endereco">
+                <div id="mensagemEndereco" style="display: none;">
+                    <h3>Endereço</h3>
+                    <p>Você ainda não cadastrou um endereço.</p>
+                    <a href="#" id="cadastrarEnderecoBtn">Cadastrar endereço</a>
+                </div>
             </div>
             <div class="endereco">
                 <h3>Endereço</h3>
@@ -131,5 +134,5 @@
             </div>
         </div>
     </div>
-    <script src="/backend/views/tutor/main.js" type="module"></script>
+    <script src="/backend/assets/js/perfil/conta.js" type="module"></script>
 </div>

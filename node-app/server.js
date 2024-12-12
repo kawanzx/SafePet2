@@ -26,8 +26,6 @@ const db = mysql.createConnection({
 db.connect((err) => {
     if (err) {
         console.error('Erro ao conectar ao banco de dados:', err);
-    } else {
-        console.log('Conexão com o banco de dados bem-sucedida!');
     }
 });
 
@@ -46,11 +44,6 @@ function notificarAceiteAgendamento(agendamentoId, tutorId, cuidadorId, petNome)
         });
     }
 
-    console.log('Notificação de aceite gerada:', JSON.stringify({
-        tipo_notificacao: 'agendamento_status',
-        mensagem: mensagem
-    }));
-
     // Enviar notificação para o tutor via API
     fetch('http://localhost:8000/backend/includes/notificacoes/criar-notificacoes.php', {
         method: 'POST',
@@ -66,14 +59,10 @@ function notificarAceiteAgendamento(agendamentoId, tutorId, cuidadorId, petNome)
     })
         .then(response => response.json())
         .then(data => {
-            console.log("Resposta do servidor:", data);
-
             const updateQuery = `UPDATE agendamentos SET notificacao_enviada = 1 WHERE id = ?`;
             db.query(updateQuery, [agendamentoId], (err, result) => {
                 if (err) {
                     console.error('Erro ao atualizar agendamento:', err);
-                } else {
-                    console.log(`Agendamento ${agendamentoId} marcado como notificado.`);
                 }
             });
         })
@@ -88,7 +77,6 @@ function atualizarStatusAgendamento(agendamentoId, novoStatus) {
             console.error('Erro ao atualizar status do agendamento:', err);
             return;
         }
-        console.log(`Status do agendamento ${agendamentoId} atualizado para ${novoStatus}.`);
 
         // Verificar se o status é "aceito" e disparar a notificação
         if (novoStatus === 'aceito') {
@@ -116,8 +104,7 @@ function atualizarStatusAgendamento(agendamentoId, novoStatus) {
 }
 
 function verificarAgendamentos() {
-    //const dataAtual = new Date().toISOString().slice(0, 10); // Obtém a data atual no formato YYYY-MM-DD
-    const dataAtual = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+    const dataAtual = new Date().toISOString().slice(0, 10); // Obtém a data atual no formato YYYY-MM-DD
     const SISTEMA_ID = 0;
 
     const query = `
@@ -145,10 +132,6 @@ function verificarAgendamentos() {
             if (cuidadorSocket) {
                 io.to(cuidadorSocket).emit('receiveNotification', mensagem);
             }
-
-            console.log('JSON gerado verificar agendamento:', JSON.stringify({
-                tipo_notificacao: 'verificar_agendamento'
-            }));
 
             // Enviar notificação para o tutor
             fetch('http://localhost:8000/backend/includes/notificacoes/criar-notificacoes.php', {
@@ -187,12 +170,10 @@ verificarAgendamentos();
 setInterval(verificarAgendamentos, 3600000);
 
 
-let userSockets = {};  // Para mapear os sockets aos IDs de usuário
+let userSockets = {};
 io.on('connection', (socket) => {
-    console.log('Usuário conectado:', socket.id);
     socket.on('register', (userId) => {
         userSockets[userId] = socket.id;
-        console.log(`Usuário ${userId} registrado com o socket ID ${socket.id}`);
     });
 
     // Notificar os usuários em tempo real
@@ -206,9 +187,7 @@ io.on('connection', (socket) => {
 
     // Enviar mensagem para o destinatário
     socket.on('chatMessage', (msg) => {
-        console.log('Mensagem recebida no servidor:', msg);  // Log para garantir que está recebendo corretamente
         const { id_remetente, id_destinatario, mensagem, agendamento_id, nome_remetente, tipo_remetente } = msg;  // Extrair os dados da mensagem
-        console.log('Dados da mensagem:', { id_remetente, id_destinatario, mensagem, agendamento_id, nome_remetente, tipo_remetente });
         const recipientSocket = userSockets[id_destinatario]; // Obter o socket do destinatário
         if (recipientSocket) {
             io.to(recipientSocket).emit('chatMessage', { mensagem: mensagem, id_remetente: id_remetente, nome_remetente });  // Enviar a mensagem para o destinatário
@@ -219,14 +198,7 @@ io.on('connection', (socket) => {
                 remetente: id_remetente
             });
         }
-        console.log('JSON gerado chat:', JSON.stringify({
-            id_remetente: msg.id_remetente,
-            id_destinatario: id_destinatario,
-            tipo_remetente: tipo_remetente,
-            mensagem: `Nova mensagem de ${msg.nome_remetente}`,
-            agendamento_id: agendamento_id,
-            tipo_notificacao: 'chat'
-        }));
+
         // Enviar requisição ao PHP para criar notificação no banco
         fetch('http://localhost:8000/backend/includes/notificacoes/criar-notificacoes.php', {
             method: 'POST',
@@ -242,12 +214,6 @@ io.on('connection', (socket) => {
 
         });
 
-        console.log('Enviando mensagem para salvar:', {
-            id_remetente: msg.id_remetente,
-            id_destinatario: id_destinatario,
-            mensagem: msg.mensagem,
-            agendamento_id: agendamento_id
-        });
         fetch('http://localhost:8000/backend/includes/agendamentos/salvar-mensagens.php', {
             method: 'POST',
             body: JSON.stringify({
@@ -261,14 +227,9 @@ io.on('connection', (socket) => {
             }
         })
             .then(response => response.json())
-            .then(data => {
-                console.log('Resposta recebida:', data);
-            })
             .catch(error => console.error('Erro ao salvar mensagem:', error));
     });
     socket.on('disconnect', () => {
-        console.log('Usuário desconectado:', socket.id);
-        // Remover o socket do usuário
         for (let userId in userSockets) {
             if (userSockets[userId] === socket.id) {
                 delete userSockets[userId];

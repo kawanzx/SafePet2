@@ -73,7 +73,6 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch('/backend/includes/notificacoes/buscar-notificacoes.php')
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 listaNotificacoes.innerHTML = '';
                 if (data.length > 0) {
                     contadorNotificacoes.textContent = data.length;
