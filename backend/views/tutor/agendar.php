@@ -81,7 +81,7 @@ $pets = getPetsByTutor($mysqli, $tutor_id);
             </div>
 
             <!-- Botão de Enviar -->
-            <button type="submit">Agendar Serviço</button>
+            <button type="submit" class="btn-agendar-servico">Agendar Serviço</button>
         </form>
     </div>
     <script type="module" src="/backend/assets/js/agendar-servico.js"></script>

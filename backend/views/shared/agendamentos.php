@@ -197,9 +197,21 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                 <div id="agendamentos">
                     <?php if (!empty($agendamentos)): ?>
                         <?php foreach ($agendamentos as $agendamento): ?>
-                            <?php $dataServico = DateTime::createFromFormat('Y-m-d', $agendamento['data_servico']);
+                            <?php 
+                            $dataServico = DateTime::createFromFormat('Y-m-d', $agendamento['data_servico']);
                             $hora_inicio = date('H:i', strtotime($agendamento['hora_inicio']));
                             $hora_fim = date('H:i', strtotime($agendamento['hora_fim']));
+
+                            if ($tipo_usuario === 'tutor') {
+                                $outroUsuario = getCuidadorProfile($mysqli, $agendamento['cuidador_id']);
+                                $outroUsuarioId = $agendamento['cuidador_id'];
+                                $outroUsuarioTipo = 'cuidador';
+                            } elseif ($tipo_usuario === 'cuidador') {
+                                $outroUsuario = getTutorProfile($mysqli, $agendamento['tutor_id']);
+                                $outroUsuarioId = $agendamento['tutor_id'];
+                                $outroUsuarioTipo = 'tutor';
+                            }
+
                             if ($agendamento['status'] === 'cancelado'): ?>
                                 <div class="agendamento-card" data-id="<?= $agendamento['id'] ?>">
                                     <div class="agendamento-details" onclick="location.href='/backend/views/shared/perfil.php?id=<?php echo $outroUsuarioId ?>&tipo=<?php echo $outroUsuarioTipo; ?>'">
@@ -208,6 +220,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                             <p><strong>Data:</strong> <?= $dataServico->format('d/m/Y') ?></p>
                                             <p><strong>Horário:</strong> <?= $hora_inicio . ' às ' . $hora_fim ?></p>
                                             <p><strong>Mensagem:</strong> <?= htmlspecialchars($agendamento['mensagem']) ?></p>
+                                            <p><strong>Cancelado com <?= htmlspecialchars($outroUsuario['nome']) ?></strong></p>
                                         </div>
                                     </div>
                                 </div>
@@ -235,9 +248,11 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
                                 if ($tipo_usuario === 'tutor') {
                                     $outroUsuario = getCuidadorProfile($mysqli, $agendamento['cuidador_id']);
                                     $outroUsuarioId = $agendamento['cuidador_id'];
+                                    $outroUsuarioTipo = 'cuidador';
                                 } else {
                                     $outroUsuario = getTutorProfile($mysqli, $agendamento['tutor_id']);
                                     $outroUsuarioId = $agendamento['tutor_id'];
+                                    $outroUsuarioTipo = 'tutor';
                                 }
 
                                 $petIds = explode(',', $agendamento['pet_id']);

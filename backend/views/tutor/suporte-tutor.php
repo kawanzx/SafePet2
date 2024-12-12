@@ -57,9 +57,57 @@ include __DIR__ . '/../../auth/protect.php';
                 <button type="submit">Enviar</button>
 
                 <input type="hidden" name="accessKey" value="69faecc1-fb39-4467-a250-5ec40ff0baaa">
-                <input type="hidden" name="redirectTo" value="http://localhost:8000/views/tutor/perfil.php#">
             </form>
         </section>
+        <script>
+            document.getElementById('contactForm').onsubmit = async function(event) {
+                event.preventDefault(); 
+
+                const form = event.target;
+
+                const formData = new URLSearchParams();
+                formData.append('name', form.name.value);
+                formData.append('email', form.email.value);
+                formData.append('message', form.message.value);
+                formData.append('accessKey', form.accessKey.value);
+
+                try {
+                    // Envia os dados usando fetch
+                    const response = await fetch("https://api.staticforms.xyz/submit", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded", 
+                        },
+                        body: formData.toString(), 
+                    });
+
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Mensagem enviada!',
+                            text: 'Sua dúvida foi enviada com sucesso.',
+                            confirmButtonText: 'OK'
+                        });
+                        form.reset();
+                    } else {
+                        const result = await response.json();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erro ao enviar!',
+                            text: result.message || 'Ocorreu um erro ao enviar sua dúvida. Tente novamente mais tarde.',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro inesperado!',
+                        text: 'Houve um problema na conexão. Por favor, tente novamente.',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            };
+        </script>
     </div>
     <script src="/backend/views/tutor/main.js" type="module"></script>
 </div>

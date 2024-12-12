@@ -71,7 +71,18 @@ label {
     font-weight: bold;
 }
 
-input, textarea, button {
+select{
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    background: #d7dfdf;
+    color: #000;
+    font-size: 12pt;
+    outline: none;
+    margin: 10px 0;
+} 
+ 
+input, textarea, .btn-agendar-servico {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -84,7 +95,7 @@ textarea {
     resize: vertical;
 }
 
-button {
+.btn-agendar-servico {
     background-color: #E76F51;
     color: white;
     border: none;
@@ -92,7 +103,7 @@ button {
     font-size: 18px;
 }
 
-button:hover {
+.btn-agendar-servico:hover {
     background-color: #e4603f;
 }
 

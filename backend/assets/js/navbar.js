@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const isDropdownOpen = dropdown.style.display === 'block';
         dropdown.style.display = isDropdownOpen ? 'none' : 'block';
         if (!isDropdownOpen) {
-            carregarNotificacoes(); // Recarregar notificações apenas ao abrir
+            carregarNotificacoes();
         }
     });
 

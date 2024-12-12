@@ -23,4 +23,4 @@ session_start();
     <?php } ?>
 </header>
 
-<script type="text/javascript" src="/backend/assets/js/navbar.js"></script>
+<!-- <script type="text/javascript" src="/backend/assets/js/navbar.js"></script> -->
