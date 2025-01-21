@@ -28,7 +28,7 @@ O SafePet é uma plataforma que oferece serviços de agendamento de passeios par
   - Status de agendamentos: Pendente, Aceito, Recusado, Concluído e Cancelado.  
   - Alertas em tempo real para tutores e cuidadores.
 
-- **Chat em Tempo Real*:  
+- **Chat em Tempo Real**:  
   - Interface prática e intuitiva para troca de mensagens entre tutor e cuidador.
   - Notificações instantâneas para novas mensagens.
     
