@@ -58,7 +58,7 @@ O SafePet é uma plataforma que oferece serviços de agendamento de passeios par
 3. **Pagamento**:  
    - Tutor realiza o pagamento -> Passeio confirmado e exibido na aba "Em Breve".
 4. **Avaliação**:  
-   - Passeio concluído -> Tutor e Cuidadores se avaliam.
+   - Passeio concluído -> Tutor e Cuidador se avaliam.
 ---
 
 ## 🤝 Público-Alvo  
