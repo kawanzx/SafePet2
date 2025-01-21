@@ -1,7 +1,3 @@
-Claro! Aqui está uma sugestão inicial para o README do SafePet. Podemos personalizar ainda mais com base nas suas preferências:
-
----
-
 # SafePet 🐾  
 **Uma solução completa para conectar tutores de pets e cuidadores confiáveis.**
 
